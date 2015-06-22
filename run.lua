@@ -1,7 +1,9 @@
 require 'nn'
 require 'image'
+
 local ParamBank = require 'ParamBank'
 local label     = require 'overfeat_label'
+
 
 -----------------------------------------------------------------------------
 -- Initialisation
@@ -17,7 +19,10 @@ end
 -- OverFeat input arguements
 --local network  = 'small'
 local network  = 'big'
-local filename = 'bee.jpg'
+
+-- data directory parameters
+local data_dir = './data/'
+local path2escape = { '.', '..', '.DS_Store' }
 
 -- system parameters
 local threads = 4
@@ -30,6 +35,33 @@ print('==> #threads:', torch.getnumthreads())
 -----------------------------------------------------------------------------
 -- Functions
 -----------------------------------------------------------------------------
+
+function is_in(string, path2escape)
+   for k, name in pairs(path2escape) do
+      if string == name then
+         return true
+      end
+   end
+   return false
+end
+
+function create_path2images(data_dir)
+   local path2images = {}
+   local index
+   for kc, class_dir in pairs(paths.dir(data_dir)) do
+      if not is_in(class_dir, path2escape) then
+         path2images[class_dir] = {}
+         index = 1
+         for kf, image in pairs(paths.dir(data_dir..class_dir)) do
+            if not is_in(image, path2escape) then
+               path2images[class_dir][index] = image
+               index = index + 1
+            end
+         end
+      end
+   end
+   return path2images
+end
 
 local function nilling(module)
    module.gradBias   = nil
@@ -174,7 +206,7 @@ local function net_declaration(network, cuda)
    return net
 end
 
-local function prepare_img(path)
+local function prepare_img(path2image)
    -- load and preprocess image
    print('==> prepare an input image')
    local img_dim
@@ -182,7 +214,7 @@ local function prepare_img(path)
       dim = 231
    elseif network == 'big' then
       dim = 221 end
-   local img_raw = image.load(filename):mul(255) -- [0,1] -> [0,255]
+   local img_raw = image.load(path2image):mul(255) -- [0,1] -> [0,255]
    local rh = img_raw:size(2)
    local rw = img_raw:size(3)
    print(rh, rw)
@@ -228,11 +260,19 @@ end
 
 net = net_declaration(network, cuda)
 
-img = prepare_img(filename)
+path2images = create_path2images(data_dir)
 
 timer = torch.Timer()
 
-prob, idx = net_forward(net, img, cuda)
+for class_name, class in pairs(path2images) do
+   for ki, image in pairs(class) do
+      img = prepare_img(data_dir..class_name..'/'..image)
+      prob, idx = net_forward(net, img, cuda)
+      print(class_name, label[idx:squeeze()], prob:squeeze(), timer:time().real .. 'sec') -- :squeeze Tensor(1) -> float
+   end
+end
 
-print(label[idx:squeeze()], prob:squeeze()) -- :squeeze Tensor(1) -> float
-print('Time elapsed: ' .. timer:time().real .. ' seconds')
+
+
+
+
