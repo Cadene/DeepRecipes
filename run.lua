@@ -3,6 +3,7 @@ require 'image'
 
 local ParamBank = require 'ParamBank'
 local label     = require 'overfeat_label'
+local Config    = require 'Config'
 
 
 -----------------------------------------------------------------------------
@@ -21,7 +22,6 @@ end
 local network  = 'big'
 
 -- data directory parameters
-local data_dir = './data/'
 local path2escape = { '.', '..', '.DS_Store' }
 
 -- system parameters
@@ -260,13 +260,13 @@ end
 
 net = net_declaration(network, cuda)
 
-path2images = create_path2images(data_dir)
+path2images = create_path2images(Config['data_dir'])
 
 timer = torch.Timer()
 
 for class_name, class in pairs(path2images) do
    for ki, image in pairs(class) do
-      img = prepare_img(data_dir..class_name..'/'..image)
+      img = prepare_img(Config['data_dir']..class_name..'/'..image)
       prob, idx = net_forward(net, img, cuda)
       print(class_name, label[idx:squeeze()], prob:squeeze(), timer:time().real .. 'sec') -- :squeeze Tensor(1) -> float
    end
