@@ -13,3 +13,5 @@ download_weights.py
 # ignore all test images
 *.jpg
 *.png
+
+Config.lua
