@@ -6,6 +6,7 @@ local label     = require 'overfeat_label'
 local Config    = require 'Config'
 
 
+
 -----------------------------------------------------------------------------
 -- Initialisation
 -----------------------------------------------------------------------------
@@ -167,9 +168,10 @@ local function net_declaration(network, cuda)
       net:add(nn.Threshold(0, 1e-6))
       net:add(SpatialConvolutionMM(4096, 4096, 1, 1, 1, 1))
       net:add(nn.Threshold(0, 1e-6))
-      net:add(SpatialConvolutionMM(4096, 1000, 1, 1, 1, 1))
-      net:add(nn.View(1000))
-      net:add(nn.SoftMax())
+      net:add(nn.View(4096))
+      --net:add(SpatialConvolutionMM(4096, 1000, 1, 1, 1, 1))
+      -- net:add(nn.View(1000))
+      -- net:add(nn.SoftMax())
       net = net:float()
       print(net)
 
@@ -192,8 +194,8 @@ local function net_declaration(network, cuda)
       ParamBank:read(123774080, {4096},          m[offset+20].bias)
       ParamBank:read(123778176, {4096,4096,1,1}, m[offset+22].weight)
       ParamBank:read(140555392, {4096},          m[offset+22].bias)
-      ParamBank:read(140559488, {1000,4096,1,1}, m[offset+24].weight)
-      ParamBank:read(144655488, {1000},          m[offset+24].bias)
+      -- ParamBank:read(140559488, {1000,4096,1,1}, m[offset+24].weight)
+      -- ParamBank:read(144655488, {1000},          m[offset+24].bias)
 
    end
    -- close file pointer
@@ -217,7 +219,7 @@ local function prepare_img(path2image)
    local img_raw = image.load(path2image):mul(255) -- [0,1] -> [0,255]
    local rh = img_raw:size(2)
    local rw = img_raw:size(3)
-   print(rh, rw)
+   --print(rh, rw)
    if rh < rw then
       rw = math.floor(rw / rh * dim)
       rh = dim
@@ -243,15 +245,32 @@ end
 
 local function net_forward(net, img, cuda)
    print('==> feed the input image')
-   local prob, idx
+   local prob, idx, rslt_forward
    if cuda then 
       img = img:cuda():view(1, img:size(1), img:size(2), img:size(3))
       local out = net:forward(img):clone():float()
-      prob, idx = torch.max(out[1], 1)
+      rslt_forward = out[1]
    else
-      prob, idx = torch.max(net:forward(img), 1)
+      rslt_forward = net:forward(img)
    end
+   prob, idx = torch.max(rslt_forward, 1)
    return prob, idx
+end
+
+local function write2csv(filepath, tab_rslt_forward, separator)
+   
+   
+   -- header
+   
+   -- body
+   for k,v in pairs(tab_rslt_forward) do
+      file:write(k..s..v['class']..s..v['image'])
+      for i = 1, nb_features do
+         file:write(s..v['features'][i])
+      end
+      file:write('\n')
+   end
+   
 end
 
 -----------------------------------------------------------------------------
@@ -264,13 +283,44 @@ path2images = create_path2images(Config['data_dir'])
 
 timer = torch.Timer()
 
+local id = 1
+local tab_rslt_forward
+local img, features, tab_rslt_forward, nb_features
+local s = ',' -- separator csv
+local header = true
+local filepath = Config['csv_dir']..'/test.csv'
+local file = io.open(filepath, "w")
 for class_name, class in pairs(path2images) do
    for ki, image in pairs(class) do
       img = prepare_img(Config['data_dir']..class_name..'/'..image)
-      prob, idx = net_forward(net, img, cuda)
-      print(class_name, label[idx:squeeze()], prob:squeeze(), timer:time().real .. 'sec') -- :squeeze Tensor(1) -> float
+      features = net:forward(img)
+      tab_rslt_forward = {}
+      tab_rslt_forward['class'] = class_name
+      tab_rslt_forward['image'] = image 
+      tab_rslt_forward['features'] = features
+      if header then
+         file:write('id'..s..'class'..s..'image')
+         nb_features = tab_rslt_forward['features']:size(1)
+         for i = 1, nb_features do
+            file:write(s..'feature_'..i)
+         end  
+         file:write('\n')
+         header = false
+      end
+      file:write(id..s..tab_rslt_forward['class']..s..tab_rslt_forward['image'])
+      for i = 1, nb_features do
+         file:write(s..tab_rslt_forward['features'][i])
+      end
+      file:write('\n')
+      id = id + 1
    end
 end
+file:close()
+
+
+
+
+
 
 
 
