@@ -1,3 +1,5 @@
+require('mobdebug').start()
+
 require 'nn'
 require 'image'
 
@@ -218,7 +220,7 @@ local function prepare_img(path2image)
    local img_raw = image.load(path2image):mul(255) -- [0,1] -> [0,255]
    local rh = img_raw:size(2)
    local rw = img_raw:size(3)
-   --print(rh, rw)
+   print(img_raw:size(1), rh, rw)
    if rh < rw then
       rw = math.floor(rw / rh * dim)
       rh = dim
@@ -238,7 +240,7 @@ local function prepare_img(path2image)
    -- print(offsetx, offsety)
    img = img_scale[{{},{offsety,offsety+dim-1},{offsetx,offsetx+dim-1}}]:floor()
    img:add(-118.380948):div(61.896913) -- fixed distn ~ N(118.380948, 61.896913^2) [0,255] -> [0,1]
-   -- print(img:size(2), img:size(3))
+   print(img:size(1),img:size(2), img:size(3))
    return img
 end
 
@@ -282,45 +284,67 @@ path2images = create_path2images(Config['data_dir'])
 
 timer = torch.Timer()
 
+
 local id = 1
-local tab_rslt_forward
 local img, features, tab_rslt_forward, nb_features
 local s = ',' -- separator csv
 local header = true
 local filepath = Config['csv_dir']..'/features.csv'
 local file = io.open(filepath, "w")
+local file_log = io.open(Config['csv_dir']..'/log.csv', "w")
+
 for class_name, class in pairs(path2images) do
-   for ki, image in pairs(class) do
-      print('==> convert "'..Config['data_dir']..class_name..'/'..image..'"')
-      os.execute('convert "'..Config['data_dir']..class_name..'/'..image..'" "'..Config['data_dir']..class_name..'/'..image..'"')
-      print('==> prepare '..image)
-      img = prepare_img(Config['data_dir']..class_name..'/'..image)
-      print('==> feed the network')
-      features = net:forward(img)
-      tab_rslt_forward = {}
-      tab_rslt_forward['class'] = class_name
-      tab_rslt_forward['image'] = image 
-      tab_rslt_forward['features'] = features
-      if header then
-         file:write('id'..s..'class'..s..'image')
-         nb_features = tab_rslt_forward['features']:size(1)
-         for i = 1, nb_features do
-            file:write(s..'feature_'..i)
-         end  
-         file:write('\n')
-         header = false
+   for ki, image_name in pairs(class) do
+      print('==> convert "'..Config['data_dir']..class_name..'/'..image_name..'"')
+      os.execute('convert "'..Config['data_dir']..class_name..'/'..image_name..'" "'..Config['data_dir']..class_name..'/'..image_name..'"')
+      print('==> prepare '..image_name)
+      if pcall(function ()
+        img = prepare_img(Config['data_dir']..class_name..'/'..image_name)
+        if img:size(1) == 3 then
+          print('==> feed the network')
+          features = net:forward(img)
+          tab_rslt_forward = {}
+          tab_rslt_forward['class'] = class_name
+          tab_rslt_forward['image'] = image_name 
+          tab_rslt_forward['features'] = features
+          if header then
+             file:write('id'..s..'class'..s..'image')
+             nb_features = tab_rslt_forward['features']:size(1)
+             for i = 1, nb_features do
+                file:write(s..'feature_'..i)
+             end  
+             file:write('\n')
+             header = false
+          end
+          file:write(id..s..tab_rslt_forward['class']..s..tab_rslt_forward['image'])  
+          for i = 1, nb_features do
+             file:write(s..tab_rslt_forward['features'][i])
+          end
+          file:write('\n')
+          id = id + 1
+        else
+          file_log:write('grey;'..class_name..'/'..image_name..'\n')
+        end
+      end) then
+        file_log:write('corrupt;'..class_name..'/'..image_name..'\n')
       end
-      file:write(id..s..tab_rslt_forward['class']..s..tab_rslt_forward['image'])
-      for i = 1, nb_features do
-         file:write(s..tab_rslt_forward['features'][i])
-      end
-      file:write('\n')
-      id = id + 1
    end
 end
 file:close()
+file_log:close()
 
+--[[
+Config['data_dir'] = "/home/cadene/data/recipe_101/recipe_101/"
+local class_name = "apple_pie"
+local img = "apple_pie_285.jpg"
 
+print('==> convert "'..Config['data_dir']..class_name..'/'..img..'"')
+os.execute('convert "'..Config['data_dir']..class_name..'/'..img..'" "'..Config['data_dir']..class_name..'/'..img..'"')
+print('==> prepare '..img)
+img_forward = prepare_img(Config['data_dir']..class_name..'/'..img)
+print('==> feed the network')
+features = net:forward(img_forward) 
+]]
 
 
 
