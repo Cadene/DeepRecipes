@@ -291,9 +291,11 @@ local filepath = Config['csv_dir']..'/test.csv'
 local file = io.open(filepath, "w")
 for class_name, class in pairs(path2images) do
    for ki, image in pairs(class) do
-      print('==> prepare img '..class_name..' '..image)
+      print('==> convert "'..Config['data_dir']..class_name..'/'..image..'"')
+      os.execute('convert "'..Config['data_dir']..class_name..'/'..image..'" "'..Config['data_dir']..class_name..'/'..image..'"')
+      print('==> prepare '..image)
       img = prepare_img(Config['data_dir']..class_name..'/'..image)
-      print('==> feed the input image')
+      print('==> feed the network')
       features = net:forward(img)
       tab_rslt_forward = {}
       tab_rslt_forward['class'] = class_name
