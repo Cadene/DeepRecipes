@@ -14,4 +14,6 @@ download_weights.py
 *.jpg
 *.png
 
+*.csv
+
 Config.lua

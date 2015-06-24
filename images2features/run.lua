@@ -287,7 +287,7 @@ local tab_rslt_forward
 local img, features, tab_rslt_forward, nb_features
 local s = ',' -- separator csv
 local header = true
-local filepath = Config['csv_dir']..'/test.csv'
+local filepath = Config['csv_dir']..'/features.csv'
 local file = io.open(filepath, "w")
 for class_name, class in pairs(path2images) do
    for ki, image in pairs(class) do

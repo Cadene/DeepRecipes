@@ -7,7 +7,7 @@ from sklearn.cross_validation import StratifiedShuffleSplit
 from sklearn.metrics import accuracy_score
 from sklearn.svm import LinearSVC
 
-df_all = pd.read_csv('../data/features/test.csv')
+df_all = pd.read_csv('../data/features/features.csv')
 
 frames_train = []
 frames_test = []
