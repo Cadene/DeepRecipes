@@ -210,7 +210,6 @@ end
 
 local function prepare_img(path2image)
    -- load and preprocess image
-   print('==> prepare an input image')
    local img_dim
    if network == 'small' then
       dim = 231
@@ -292,7 +291,9 @@ local filepath = Config['csv_dir']..'/test.csv'
 local file = io.open(filepath, "w")
 for class_name, class in pairs(path2images) do
    for ki, image in pairs(class) do
+      print('==> prepare img '..class_name..' '..image)
       img = prepare_img(Config['data_dir']..class_name..'/'..image)
+      print('==> feed the input image')
       features = net:forward(img)
       tab_rslt_forward = {}
       tab_rslt_forward['class'] = class_name
