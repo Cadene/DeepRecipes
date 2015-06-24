@@ -2,12 +2,8 @@
 
 ```bash
 cd ./image2features
-
 sh install.sh
-
 th run.lua 
-
-cd ./svm_sklearn
-
+cd ../svm_sklearn
 python creating_train_test.py
 ```
