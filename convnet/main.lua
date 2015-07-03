@@ -6,63 +6,6 @@ require 'optim'
 require 'Dataset'
 require 'Plot'
 
-------------------------------------------------------------------------
--- Functions
-------------------------------------------------------------------------
-
-function gradUpdate(model, X, y, criterion, learning_rate)
-    local pred = model:forward(X)
-    local err = criterion:forward(pred, y)
-    local gradCriterion = criterion:backward(pred, y)
-    model:zeroGradParameters()            -- reinit gradParameters
-    model:backward(X, gradCriterion)
-    model:updateParameters(learning_rate)
-    -- print('--')
-    -- print(pred)
-    -- print(err)
-    -- print(gradCriterion)
-    return err
-end
-
-
-function train(model, X_train, class, criterion, learning_rate, max_iter, save_every, print_every)
-    local errors = {}
-    local sumErr = 0
-    local ix, X, y, err
-
-    for i = 1, max_iter do
-
-        if i > max_iter * 0.75 then
-            learning_rate = learning_rate * 1e-1
-        end
-
-        if i % save_every == 0 then
-            torch.save("./model_" .. i .. ".model", model)
-        end
-
-        if i % print_every == 0 then
-            -- print('----------------')
-            print('sumErr '..sumErr/print_every)
-            model:evaluate()
-            Plot.plot(model, X_train, class, 'plot'..i ..'.png')
-            model:training()
-            -- print(model:forward(torch.Tensor({1,1})))
-            -- print(model:forward(torch.Tensor({-1,-1})))
-            -- print(model:get(1).weight)
-            -- print(model:get(1).bias)
-            sumErr = 0
-        end
-
-        ix = torch.random(N_train * #class) 
-        -- print(ix)
-        X = X_train[ix]
-        y = y_train[ix]
-        err = gradUpdate(model, X, y, criterion, learning_rate)
-        -- print('err '..err)
-        sumErr = sumErr + err
-        table.insert(errors, err)
-    end
-end
 
 ------------------------------------------------------------------------
 -- Main
@@ -84,28 +27,30 @@ cmd:option('-D',               2,           'number of dimensionality')
 cmd:option('-pc_train',        0.8,         'pourcentage for the training set')
 -- settings net building
 cmd:option('-type',            'float',     'type: float | cuda')
-cmd:option('-seed',            1,           'fixed input seed for repeatable experiments')
+cmd:option('-seed',            2,           'fixed input seed for repeatable experiments')
 cmd:option('-threads',         1,           'number of threads')
 cmd:option('-gpuid',           1,           'gpu id')
 cmd:option('-H',               100,         'number of hidden layers')
 cmd:option('-criterion',       'NLL',       'criterion: NLL - negative log likelihood')
+cmd:option('-dropout',         0.1,           'do dropout with x probability')
 -- settings optimizer
 cmd:option('-optimizer',       'CG',        'CG | LBFGS | SGD | ASGD')
-cmd:option('-max_iter',        2e4,         'max iteration')
-cmd:option('-learning_rate',   2e-1,        'learning rate at t=0')
-cmd:option('-dropout',         0,           'do dropout with x probability')
-
+cmd:option('-max_iter',        1e1,         'max iteration')
+cmd:option('-learning_rate',   1e-1,        'learning rate at t=0')
 cmd:option('-momentum',        0.6,         'momentum')
 cmd:option('-weight_decay',    1e-5,        'weight decay')
-cmd:option('-batch_size',      1,           'mini-batch size (1 = pure stochastic)')
+cmd:option('-batch_size',      100,           'mini-batch size (1 = pure stochastic)')
+cmd:option('-t0',              1e-1,           '??')
 -- settings saving, printing, ploting
 cmd:option('-save_every',      1e10,        'save model')
-cmd:option('-print_every',     1e3,         'print things')
+cmd:option('-print_every',     10,         'print things')
 -- cmd:option('-print_layers_op', false,       'Output the values from each layers')
 cmd:text()
 opt = cmd:parse(arg or {})
 
--- Set options
+------------------------------------------------------------------------
+-- Settings
+
 torch.setdefaulttensortype('torch.FloatTensor')
 if opt.type == 'cuda' then
    print('... switching to CUDA')
@@ -158,6 +103,11 @@ else
     error(opt.criterion..' is not a valid criterion')
 end
 
+-- Retrieve parameters and gradients:
+-- this extracts and flattens all the trainable parameters of the mode
+-- into a 1-dim vector
+parameters, gradParameters = model:getParameters()
+
 -----------------------------------------------------------------------
 -- CUDA?
 
@@ -175,41 +125,133 @@ confusion = optim.ConfusionMatrix(class_str)
 -- Optimizer
 
 if opt.optimizer == 'CG' then
-   optimState = {
-      maxIter = opt.maxIter
-   }
-   optimMethod = optim.cg
+    optimState = {
+        maxIter = opt.max_iter
+    }
+    optimMethod = optim.cg
 
 elseif opt.optimizer == 'LBFGS' then
-   optimState = {
-      learningRate = opt.learningRate,
-      maxIter = opt.maxIter,
-      nCorrection = 10
-   }
-   optimMethod = optim.lbfgs
+    optimState = {
+        maxIter = opt.max_iter,
+        learningRate = opt.learning_rate,
+        nCorrection = 10
+    }
+    optimMethod = optim.lbfgs
 
 elseif opt.optimizer == 'SGD' then
-   optimState = {
-      learningRate = opt.learningRate,
-      weightDecay = opt.weightDecay,
-      momentum = opt.momentum,
-      learningRateDecay = 1e-7
-   }
-   optimMethod = optim.sgd
+    optimState = {
+        maxIter = opt.max_iter,
+        learningRate = opt.learning_rate,
+        weightDecay = opt.weight_decay,
+        momentum = opt.momentum,
+        learningRateDecay = 1e-7
+    }
+    optimMethod = optim.sgd
 
 elseif opt.optimizer == 'ASGD' then
-   optimState = {
-      eta0 = opt.learningRate,
-      t0 = trsize * opt.t0
-   }
-   optimMethod = optim.asgd
+    optimState = {
+        maxIter = opt.max_iter,
+        eta0 = opt.learning_rate,
+        t0 = X_train:size(1) * opt.t0
+    }
+    optimMethod = optim.asgd
+
+elseif opt.optimizer == 'ADAGRAD' then
+    optimState = {
+        maxIter = opt.max_iter,
+        learningRate = opt.learning_rate
+    }
+    optimMethod = optim.adagrad
+
+elseif opt.optimizer == 'RMSPROP' then
+    optimState = {
+        maxIter = opt.max_iter,
+        learningRate = opt.learning_rate,
+        alpha = 0.99,
+        epsilon = 1e-8
+    }
+    optimMethod = optim.rmsprop
 
 else
    error(opt.optimizer..' is not a valid optimizer')
 end
 
+-----------------------------------------------------------------------
+-- Training
 
-train(model, X_train, class, criterion, opt.learning_rate, opt.max_iter, opt.save_every, opt.print_every)
+function train()
+    epoch = epoch or 1
+    local time = sys.clock()
+    model:training()
+    shuffle = torch.randperm(X_train:size(1))
+
+    print('epoch n'..epoch)
+    for t = 1, X_train:size(1), opt.batch_size do
+        xlua.progress(t, X_train:size(1))
+
+        local inputs = {}
+        local targets = {}
+        for i = t, math.min(t+opt.batch_size-1, X_train:size(1)) do
+            local input = X_train[shuffle[i]]
+            local target = y_train[shuffle[i]]
+            if opt.type == 'cuda' then
+                input = input:cuda()
+            end
+            table.insert(inputs, input)
+            table.insert(targets, target)
+        end
+
+        local feval = function(x)
+            if x ~= parameters then -- ?
+                parameters:copy(x)
+            end
+
+            gradParameters:zero()
+
+            local f = 0
+            for i = 1, #inputs do
+                local output = model:forward(inputs[i])
+                -- local target = torch.Tensor{targets[i]}
+                local err = criterion:forward(output, targets[i])
+                f = f + err
+                local df_do = criterion:backward(output, targets[i])
+                model:backward(inputs[i], df_do)
+
+                confusion:add(output, targets[i])
+            end
+
+            gradParameters:div(#inputs)
+            f = f / #inputs
+
+            return f, gradParameters -- f and df/dX
+        end
+
+        if optimMethod == optim.asgd then
+            _,_,average = optimMethod(feval, parameters, optimState)
+        else
+            optimMethod(feval, parameters, optimState)
+        end
+    end
+
+    time = sys.clock() - time
+    time = time / X_train:size(1)
+    print("\ntime to learn 1 sample = "..(time*1000).."ms")
+
+    print(confusion)
+
+    confusion:zero()
+    epoch = epoch + 1
+
+    if epoch % opt.print_every == 0 then
+        Plot.plot(model, X_train, class, 'epoch_'..epoch..'.png')
+    end
+end
+
+while true do
+    train()
+end
+
+-- train(model, X_train, class, criterion, opt.learning_rate, opt.max_iter, opt.save_every, opt.print_every)
 
 
 

@@ -4,6 +4,8 @@ require 'gnuplot'
 local Plot = torch.class('Plot')
 
 function Plot.plot(model, X_train, class, string)
+    model:evaluate()
+
     local x = torch.linspace(-1, 1, 100)
 
     local decision_region = {}
@@ -37,8 +39,8 @@ function Plot.plot(model, X_train, class, string)
 
     -- plot points
     for i = 1, #class   do
-        local x1i = 1+(i-1)*N_train
-        local x2i = i*N_train
+        local x1i = 1 + (i-1) * (X_train:size(1) / #class)
+        local x2i = i * (X_train:size(1) / #class)
         to_plot[i] = {'class'..i, X_train[{{x1i,x2i},1}], X_train[{{x1i,x2i},2}], 'p ls 1 lc rgb '..color[i]}
     end
 
@@ -55,4 +57,6 @@ function Plot.plot(model, X_train, class, string)
     gnuplot.pngfigure(string)
     gnuplot.plot(to_plot)
     gnuplot.plotflush()
+
+    model:training()
 end
