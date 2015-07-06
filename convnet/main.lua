@@ -32,14 +32,14 @@ cmd:option('-threads',         1,           'number of threads')
 cmd:option('-gpuid',           1,           'gpu id')
 cmd:option('-H',               100,         'number of hidden layers')
 cmd:option('-criterion',       'NLL',       'criterion: NLL - negative log likelihood')
-cmd:option('-dropout',         0.1,           'do dropout with x probability')
+cmd:option('-dropout',         0.2,           'do dropout with x probability')
 -- settings optimizer
 cmd:option('-optimizer',       'CG',        'CG | LBFGS | SGD | ASGD')
-cmd:option('-max_iter',        1e1,         'max iteration')
+cmd:option('-max_iter',        1e2,         'max iteration')
 cmd:option('-learning_rate',   1e-1,        'learning rate at t=0')
 cmd:option('-momentum',        0.6,         'momentum')
 cmd:option('-weight_decay',    1e-5,        'weight decay')
-cmd:option('-batch_size',      100,           'mini-batch size (1 = pure stochastic)')
+cmd:option('-batch_size',      200,           'mini-batch size (1 = pure stochastic)')
 cmd:option('-t0',              1e-1,           '??')
 -- settings saving, printing, ploting
 cmd:option('-save_every',      1e10,        'save model')
@@ -158,8 +158,8 @@ elseif opt.optimizer == 'ASGD' then
 
 elseif opt.optimizer == 'ADAGRAD' then
     optimState = {
-        maxIter = opt.max_iter,
-        learningRate = opt.learning_rate
+        learningRate = opt.learning_rate,
+        paramVariance = nil
     }
     optimMethod = optim.adagrad
 
@@ -178,6 +178,8 @@ end
 
 -----------------------------------------------------------------------
 -- Training
+
+table_f = {}
 
 function train()
     epoch = epoch or 1
@@ -223,6 +225,8 @@ function train()
             gradParameters:div(#inputs)
             f = f / #inputs
 
+            table.insert(table_f, f)
+
             return f, gradParameters -- f and df/dX
         end
 
@@ -239,17 +243,34 @@ function train()
 
     print(confusion)
 
+    if epoch % opt.print_every == 0 then
+        Plot.decision_region(model, X_train, class, 'epoch_'..epoch..'.png')
+    end
+
     confusion:zero()
     epoch = epoch + 1
-
-    if epoch % opt.print_every == 0 then
-        Plot.plot(model, X_train, class, 'epoch_'..epoch..'.png')
-    end
 end
 
-while true do
+
+-----------------------------------------------------------------------
+-- Main
+
+for i = 1, 100 do
     train()
 end
+
+table_x = {}
+for i=1, #table_f do
+    table_x[i] = i
+end
+
+table_x = torch.Tensor(table_x)
+table_f = torch.Tensor(table_f)
+
+to_plot = {'test', table_x, torch.log(table_f), '-'}
+
+Plot.figure('curve.png', to_plot)
+
 
 -- train(model, X_train, class, criterion, opt.learning_rate, opt.max_iter, opt.save_every, opt.print_every)
 

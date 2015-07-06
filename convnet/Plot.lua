@@ -3,7 +3,7 @@ require 'gnuplot'
 
 local Plot = torch.class('Plot')
 
-function Plot.plot(model, X_train, class, string)
+function Plot.decision_region(model, X_train, class, string)
     model:evaluate()
 
     local x = torch.linspace(-1, 1, 100)
@@ -59,4 +59,10 @@ function Plot.plot(model, X_train, class, string)
     gnuplot.plotflush()
 
     model:training()
+end
+
+function Plot.figure(string, to_plot)
+    gnuplot.pngfigure(string)
+    gnuplot.plot(to_plot)
+    gnuplot.plotflush()
 end
