@@ -243,7 +243,7 @@ function train()
 
     print(confusion)
 
-    if epoch % opt.print_every == 0 then
+    if opt.type ~= 'cuda' and epoch % opt.print_every == 0 then
         Plot.decision_region(model, X_train, class, 'epoch_'..epoch..'.png')
     end
 
@@ -269,7 +269,7 @@ table_f = torch.Tensor(table_f)
 
 to_plot = {'test', table_x, torch.log(table_f), '-'}
 
-Plot.figure('curve.png', to_plot)
+-- Plot.figure('curve.png', to_plot)
 
 
 -- train(model, X_train, class, criterion, opt.learning_rate, opt.max_iter, opt.save_every, opt.print_every)
