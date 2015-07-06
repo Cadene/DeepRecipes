@@ -3,8 +3,8 @@ require 'nn'
 require 'xlua'
 require 'optim'
 
-require 'Dataset'
-require 'Plot'
+require 'DatasetBuilder'
+require 'Ploter'
 
 
 ------------------------------------------------------------------------
@@ -39,11 +39,12 @@ cmd:option('-max_iter',        1e2,         'max iteration')
 cmd:option('-learning_rate',   1e-1,        'learning rate at t=0')
 cmd:option('-momentum',        0.6,         'momentum')
 cmd:option('-weight_decay',    1e-5,        'weight decay')
-cmd:option('-batch_size',      200,           'mini-batch size (1 = pure stochastic)')
-cmd:option('-t0',              1e-1,           '??')
+cmd:option('-batch_size',      200,         'mini-batch size (1 = pure stochastic)')
+cmd:option('-t0',              1e-1,        '??')
 -- settings saving, printing, ploting
+cmd:option('-epoch',           100,         'epoch number')
 cmd:option('-save_every',      1e10,        'save model')
-cmd:option('-print_every',     10,         'print things')
+cmd:option('-print_every',     10,          'print things')
 -- cmd:option('-print_layers_op', false,       'Output the values from each layers')
 cmd:text()
 opt = cmd:parse(arg or {})
@@ -62,7 +63,7 @@ torch.setnumthreads(opt.threads)
 torch.manualSeed(opt.seed)
 
 ------------------------------------------------------------------------
--- Dataset
+-- DatasetBuilder
 
 class = {}
 class_str = {}
@@ -74,8 +75,8 @@ end
 N_train = opt.N * opt.pc_train
 N_test  = opt.N * (1 - opt.pc_train)
 
-X_train, y_train = Dataset.generate(opt.data_type, N_train, opt.D, opt.K)
-X_test,  y_test  = Dataset.generate(opt.data_type, N_test,  opt.D, opt.K)
+trainSet = DatasetBuilder.generate(opt.data_type, N_train, opt.D, opt.K)
+testSet  = DatasetBuilder.generate(opt.data_type, N_test,  opt.D, opt.K)
 
 ------------------------------------------------------------------------
 -- Model
@@ -152,7 +153,7 @@ elseif opt.optimizer == 'ASGD' then
     optimState = {
         maxIter = opt.max_iter,
         eta0 = opt.learning_rate,
-        t0 = X_train:size(1) * opt.t0
+        t0 = trainSet:size() * opt.t0
     }
     optimMethod = optim.asgd
 
@@ -185,17 +186,16 @@ function train()
     epoch = epoch or 1
     local time = sys.clock()
     model:training()
-    shuffle = torch.randperm(X_train:size(1))
+    shuffle = torch.randperm(trainSet:size())
 
-    print('epoch n'..epoch)
-    for t = 1, X_train:size(1), opt.batch_size do
-        xlua.progress(t, X_train:size(1))
+    print('\nepoch n'..epoch)
+    for t = 1, trainSet:size(), opt.batch_size do
+        xlua.progress(t+opt.batch_size-1, trainSet:size())
 
         local inputs = {}
         local targets = {}
-        for i = t, math.min(t+opt.batch_size-1, X_train:size(1)) do
-            local input = X_train[shuffle[i]]
-            local target = y_train[shuffle[i]]
+        for i = t, math.min(t+opt.batch_size-1, trainSet:size()) do
+            local input, target = trainSet:get(shuffle[i])
             if opt.type == 'cuda' then
                 input = input:cuda()
             end
@@ -213,19 +213,22 @@ function train()
             local f = 0
             for i = 1, #inputs do
                 local output = model:forward(inputs[i])
-                -- local target = torch.Tensor{targets[i]}
                 local err = criterion:forward(output, targets[i])
                 f = f + err
                 local df_do = criterion:backward(output, targets[i])
                 model:backward(inputs[i], df_do)
-
-                confusion:add(output, targets[i])
+                confusion:add(output, targets[i]:squeeze())
             end
 
             gradParameters:div(#inputs)
             f = f / #inputs
 
-            table.insert(table_f, f)
+            -- training curve
+            if _log['err'][epoch] then
+                _log['err'][epoch] = _log['err'][epoch] + f
+            else
+                _log['err'][epoch] = f
+            end
 
             return f, gradParameters -- f and df/dX
         end
@@ -238,13 +241,13 @@ function train()
     end
 
     time = sys.clock() - time
-    time = time / X_train:size(1)
+    time = time / trainSet:size()
     print("\ntime to learn 1 sample = "..(time*1000).."ms")
 
     print(confusion)
 
     if opt.type ~= 'cuda' and epoch % opt.print_every == 0 then
-        Plot.decision_region(model, X_train, class, 'epoch_'..epoch..'.png')
+        Ploter.decision_region(model, trainSet:getData(), class, 'epoch_'..epoch..'.png')
     end
 
     confusion:zero()
@@ -255,25 +258,19 @@ end
 -----------------------------------------------------------------------
 -- Main
 
-for i = 1, 100 do
+_log = {}
+_log['err'] = {}
+
+for i = 1, opt.epoch do
     train()
 end
 
-table_x = {}
-for i=1, #table_f do
-    table_x[i] = i
-end
-
-table_x = torch.Tensor(table_x)
-table_f = torch.Tensor(table_f)
-
-to_plot = {'test', table_x, torch.log(table_f), '-'}
-
--- Plot.figure('curve.png', to_plot)
-
-
--- train(model, X_train, class, criterion, opt.learning_rate, opt.max_iter, opt.save_every, opt.print_every)
-
+Ploter.figure('learning_batch'..opt.batch_size..'.png', {
+    'amount of error',
+    torch.linspace(1,#_log['err'],#_log['err']),
+    torch.log(torch.Tensor(_log['err'])),
+    '-'
+})
 
 
 

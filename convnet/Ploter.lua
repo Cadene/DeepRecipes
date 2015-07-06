@@ -1,9 +1,9 @@
 require 'torch'
 require 'gnuplot'
 
-local Plot = torch.class('Plot')
+local Ploter = torch.class('Ploter')
 
-function Plot.decision_region(model, X_train, class, string)
+function Ploter.decision_region(model, X_train, class, string)
     model:evaluate()
 
     local x = torch.linspace(-1, 1, 100)
@@ -61,7 +61,7 @@ function Plot.decision_region(model, X_train, class, string)
     model:training()
 end
 
-function Plot.figure(string, to_plot)
+function Ploter.figure(string, to_plot)
     gnuplot.pngfigure(string)
     gnuplot.plot(to_plot)
     gnuplot.plotflush()
