@@ -14,7 +14,7 @@ function ImgLoader:__init(path2dir, path2save, path2esc)
 end
 
 function ImgLoader:load()
-    --[ Load all the images ]--
+    --[[ Load all the images ]]--
     for _, dir_class in pairs(paths.dir(self.path2dir)) do
         if not ImgLoader.__is_in(dir_class, self.path2esc) then
             self.path2img[dir_class] = {}
@@ -27,8 +27,60 @@ function ImgLoader:load()
     end
 end
 
+function ImgLoader:loadCsv(path2csv)
+    function ParseCSVLine (line,sep) 
+        local res = {}
+        local pos = 1
+        sep = sep or ','
+        while true do 
+            local c = string.sub(line,pos,pos)
+            if (c == "") then break end
+            if (c == '"') then
+                -- quoted value (ignore separator within)
+                local txt = ""
+                repeat
+                    local startp,endp = string.find(line,'^%b""',pos)
+                    txt = txt..string.sub(line,startp+1,endp-1)
+                    pos = endp + 1
+                    c = string.sub(line,pos,pos) 
+                    if (c == '"') then txt = txt..'"' end 
+                    -- check first char AFTER quoted string, if it is another
+                    -- quoted string without separator, then append it
+                    -- this is the way to "escape" the quote char in a quote. example:
+                    --   value1,"blub""blip""boing",value3  will result in blub"blip"boing  for the middle
+                until (c ~= '"')
+                table.insert(res,txt)
+                assert(c == sep or c == "")
+                pos = pos + 1
+            else    
+                -- no quotes used, just look for the first separator
+                local startp,endp = string.find(line,sep,pos)
+                if (startp) then 
+                    table.insert(res,string.sub(line,pos,startp-1))
+                    pos = endp + 1
+                else
+                    -- no separator found -> use rest of string and terminate
+                    table.insert(res,string.sub(line,pos))
+                    break
+                end 
+            end
+        end
+        return res
+    end
+
+    for line in io.lines('error.log') do
+        col = ParseCSVLine(line, ';')
+        class_name = col[1]
+        img_name = col[2]
+        if not self.path2img[class_name] then
+            self.path2img[class_name] = {}
+        end
+        table.insert(self.path2img[class_name], img_name)
+    end
+end
+
 function ImgLoader:make_train_test(pc_train)
-    --[ Once prepreoccesed, build the train and test sets]
+    --[[ Once prepreoccesed, build the train and test sets ]]--
     local trainSet = ImgDataset()
     local testSet = ImgDataset()
     local label = 1
@@ -54,7 +106,7 @@ function ImgLoader:make_train_test(pc_train)
 end
 
 function ImgLoader:preprocess()
-    --[ Once loaded, convert or remove the images ]--
+    --[[ Once loaded, convert or remove the images ]]--
     local path2img, last_img
     --os.execute('mkdir -p '..sys.dirname(self.path2save))
     
@@ -113,30 +165,17 @@ function ImgLoader:preprocess()
     log_convert:close()
 end
 
-function ImgLoader.__prepare_img(path2img, dim)
-    dim = dim or 221
-    local img_dim
-    local img_raw = image.load(path2img):mul(255) -- [0,1] -> [0,255]img
-    local rh = img_raw:size(2)
-    local rw = img_raw:size(3)
-    if rh < rw then
-       rw = math.floor(rw / rh * dim)
-       rh = dim
-    else
-       rh = math.floor(rh / rw * dim)
-       rw = dim
+function ImgLoader:process(func, ...)
+    func = func or ImgDataset.__prepare_img
+    for class_name, path2class in pairs(self.path2img) do
+        for img_id, img_name in pairs(path2class) do
+            path2img = self.path2dir..class_name..'/'..img_name
+            img = func(path2img, ...)
+            path2save = self.path2save..class_name
+            os.execute('mkdir -p '..path2save)
+            image.save(path2save..'/'..img_name, img)
+        end
     end
-    local img_scale = image.scale(img_raw, rw, rh)
-    local offsetx = 1
-    local offsety = 1
-    if rh < rw then
-        offsetx = offsetx + math.floor((rw-dim)/2)
-    else
-        offsety = offsety + math.floor((rh-dim)/2)
-    end
-    img = img_scale[{{},{offsety,offsety+dim-1},{offsetx,offsetx+dim-1}}]:floor()
-    img:add(-118.380948):div(61.896913) -- fixed distn ~ N(118.380948, 61.896913^2) [0,255] -> [0,1]
-    return img
 end
 
 function ImgLoader.__is_in(string, path2esc)
@@ -147,3 +186,6 @@ function ImgLoader.__is_in(string, path2esc)
     end
     return false
 end
+
+
+
