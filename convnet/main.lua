@@ -25,6 +25,9 @@ cmd:option('-K',               3,           'number of class')
 cmd:option('-N',               500,         'number of points per class')
 cmd:option('-D',               2,           'number of dimensionality')
 cmd:option('-pc_train',        0.8,         'pourcentage for the training set')
+-- settings net loading
+cmd:option('-load_model',      false,       'loading model or not')
+cmd:option('-path2model',      './save/cade.net', 'path to model')
 -- settings net building
 cmd:option('-type',            'float',     'type: float | cuda')
 cmd:option('-seed',            2,           'fixed input seed for repeatable experiments')
@@ -45,6 +48,8 @@ cmd:option('-t0',              1e-1,        '??')
 cmd:option('-epoch',           100,         'epoch number')
 cmd:option('-save_every',      1e10,        'save model')
 cmd:option('-print_every',     10,          'print things')
+cmd:option('-path2save',       './save/',        'path to the saving dir')
+cmd:option('-plot',            true,        'plot things or not')
 -- cmd:option('-print_layers_op', false,       'Output the values from each layers')
 cmd:text()
 opt = cmd:parse(arg or {})
@@ -81,14 +86,19 @@ testSet  = DatasetBuilder.generate(opt.data_type, N_test,  opt.D, opt.K)
 ------------------------------------------------------------------------
 -- Model
 
-model = nn.Sequential()
+if opt.load_model then
+    print('<trainer> reloading previously trained network')
+    model = torch.load(opt.path2model)
+else 
+    model = nn.Sequential()
 
-model:add( nn.Linear(opt.D, opt.H) )
-model:add( nn.ReLU() )
-if opt.dropout ~= 0 then
-    model:add( nn.Dropout(0.2) )
+    model:add( nn.Linear(opt.D, opt.H) )
+    model:add( nn.ReLU() )
+    if opt.dropout ~= 0 then
+        model:add( nn.Dropout(opt.dropout) )
+    end
+    model:add( nn.Linear(opt.H, opt.K) )
 end
-model:add( nn.Linear(opt.H, opt.K) )
 
 -- criterion
 if opt.criterion == 'NLL' then
@@ -121,6 +131,8 @@ end
 -- Logger
 
 confusion = optim.ConfusionMatrix(class_str)
+trainLogger = optim.Logger(paths.concat(opt.path2save, 'train.log'))
+testLogger  = optim.Logger(paths.concat(opt.path2save, 'test.log'))
 
 -----------------------------------------------------------------------
 -- Optimizer
@@ -240,17 +252,32 @@ function train()
         end
     end
 
+    -- time taken
     time = sys.clock() - time
     time = time / trainSet:size()
     print("\ntime to learn 1 sample = "..(time*1000).."ms")
 
+    -- print confusion matrix
     print(confusion)
+    trainLogger:add{['% mean class accuracy (train set)'] = confusion.totalValid * 100}
+    confusion:zero()
 
-    if opt.type ~= 'cuda' and epoch % opt.print_every == 0 then
+    -- plot decision region
+    if opt.plot and opt.type ~= 'cuda' and epoch % opt.print_every == 0 then
         Ploter.decision_region(model, trainSet:getData(), class, 'epoch_'..epoch..'.png')
     end
 
-    confusion:zero()
+    -- save/log current net
+    if epoch % opt.save_every == 0 then
+        local filename = paths.concat(opt.path2save, 'cade.net')
+        os.execute('mkdir -p ' .. sys.dirname(filename))
+        if sys.filep(filename) then
+            os.execute('mv ' .. filename .. ' ' .. filename .. '.old')
+        end
+        print('<trainer> saving network to '..filename)
+        torch.save(filename, model)
+    end
+
     epoch = epoch + 1
 end
 
@@ -272,5 +299,12 @@ Ploter.figure('learning_batch'..opt.batch_size..'.png', {
     '-'
 })
 
+-- plot errors
+if opt.plot then
+    trainLogger:style{['% mean class accuracy (train set)'] = '-'}
+    testLogger:style{['% mean class accuracy (test set)'] = '-'}
+    trainLogger:plot()
+    testLogger:plot()
+end
 
 
