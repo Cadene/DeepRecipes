@@ -39,7 +39,8 @@ function ParseCSVLine (line,sep)
 end
 
 local path2img = {}
-for line in io.lines('error.log') do
+local count = 0
+for line in io.lines('success.log') do
     col = ParseCSVLine(line, ';')
     class_name = col[1]
     img_name = col[2]
@@ -47,6 +48,14 @@ for line in io.lines('error.log') do
         path2img[class_name] = {}
     end
     table.insert(path2img[class_name], img_name)
+    count = count + 1
 end
 
-print(path2img)
+local count2 = 0
+for class_name, path2class in pairs(path2img) do
+    for img_id, img_name in pairs(path2class) do
+        count2 = count2 + 1
+    end
+end
+print(count, count2)
+-- print(path2img)
