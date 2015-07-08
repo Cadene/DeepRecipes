@@ -79,18 +79,6 @@ function ImgLoader:loadCsv(path2csv)
     end
 end
 
-function ImgLoader:make_clean_dir()
-    local path2img, path2dir
-    for class_name, path2class in pairs(loader.path2img) do
-        path2dir = self.path2save..class_name
-        os.execute('mkdir -p '..path2dir)
-        for img_id, img_name in pairs(path2class) do
-            path2img = self.path2dir..class_name..'/'..img_name
-            os.execute('cp '..path2img..' '..path2dir)
-        end
-    end
-end
-
 function ImgLoader:make_train_test(pc_train)
     --[[ Once prepreoccesed, build the train and test sets ]]--
     local trainSet = ImgDataset()
@@ -178,14 +166,27 @@ function ImgLoader:preprocess()
 end
 
 function ImgLoader:process(func, ...)
+    local path2img, path2save
     func = func or ImgDataset.__prepare_img
+
     for class_name, path2class in pairs(self.path2img) do
+        path2save = self.path2save..class_name
+        os.execute('mkdir -p '..path2save)
+        
         for img_id, img_name in pairs(path2class) do
             path2img = self.path2dir..class_name..'/'..img_name
             img = func(path2img, ...)
-            path2save = self.path2save..class_name
-            os.execute('mkdir -p '..path2save)
             image.save(path2save..'/'..img_name, img)
+        end
+    end
+end
+
+function ImgLoader:make_clean_dir()
+    
+    for class_name, path2class in pairs(loader.path2img) do
+                for img_id, img_name in pairs(path2class) do
+            path2img = self.path2dir..class_name..'/'..img_name
+            os.execute('cp '..path2img..' '..path2dir)
         end
     end
 end
