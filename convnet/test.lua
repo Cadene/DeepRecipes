@@ -57,5 +57,19 @@ for class_name, path2class in pairs(path2img) do
         count2 = count2 + 1
     end
 end
-print(count, count2)
+
+
+require 'ImgLoader'
+
+loader = ImgLoader()
+loader:loadCsv('success.log')
+
+local count3 = 0
+for class_name, path2class in pairs(loader.path2img) do
+    for img_id, img_name in pairs(path2class) do
+        count3 = count3 + 1
+    end
+end
+print(count, count2, count3)
+
 -- print(path2img)

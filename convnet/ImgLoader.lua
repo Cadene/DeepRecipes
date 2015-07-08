@@ -68,7 +68,7 @@ function ImgLoader:loadCsv(path2csv)
         return res
     end
 
-    for line in io.lines('error.log') do
+    for line in io.lines(path2csv) do
         col = ParseCSVLine(line, ';')
         class_name = col[1]
         img_name = col[2]
