@@ -15,7 +15,7 @@ end
 function ImgLoader:load()
     --[[ Load all the images ]]--
     for _, dir_class in pairs(paths.dir(self.path2dir)) do
-        if not ImgLoader.__is_in(dir_class, self.path2esc) then
+	if not ImgLoader.__is_in(dir_class, self.path2esc) then
             self.path2img[dir_class] = {}
             for _, path_img in pairs(paths.dir(self.path2dir..dir_class)) do
                 if not ImgLoader.__is_in(path_img, self.path2esc) then

@@ -64,6 +64,7 @@ if opt.type == 'cuda' then
    print('... switching to CUDA')
    require 'cutorch'
    require 'cunn'
+   require 'cudnn'
    cutorch.setDevice(opt.gpuid)
 end
 torch.setnumthreads(opt.threads)
@@ -113,7 +114,7 @@ if opt.run == 'true' then
 
     for i = 1, opt.epoch do
         train()
-        test()
+        -- test()
     end
 
     Ploter.figure('learning_batch'..opt.batch_size..'.png', {
