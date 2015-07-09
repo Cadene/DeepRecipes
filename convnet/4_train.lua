@@ -26,7 +26,7 @@ function train()
             if x ~= parameters then -- ?
                 parameters:copy(x)
             end
-
+            
             gradParameters:zero()
 
             local f = 0
@@ -35,9 +35,12 @@ function train()
                 -- print('\n', output, targets, '\n')
                 local err = criterion:forward(output, targets[i])
                 f = f + err
+		print('1] ',gradParameters[1])
                 local df_do = criterion:backward(output, targets[i])
                 model:backward(inputs[i], df_do)
-                confusion:add(output, targets[i]:squeeze())
+                print('2] ',gradParameters[1])
+		confusion:add(output, targets[i]:squeeze())
+		print('3] ',gradParameters[1])
             end
 
             gradParameters:div(#inputs)
@@ -49,6 +52,9 @@ function train()
             else
                 _log['err'][epoch] = f
             end
+
+	    print(f)
+            print('4] ',gradParameters[1])
 
             return f, gradParameters -- f and df/dX
         end
