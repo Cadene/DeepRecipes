@@ -8,7 +8,7 @@ local ImgLoader = torch.class('ImgLoader')
 function ImgLoader:__init(path2dir, path2save, path2esc)
     self.path2dir  = path2dir or '../data/recipe_101/'
     self.path2save = path2save or '../data/recipe_101_clean/' 
-    self.path2esc  = path2esc or {'.', '..', '.DS_Store'}
+    self.path2esc  = path2esc or {'.', '..', '.DS_Store', '._.DS_Store'}
     self.path2img = {}
 end
 

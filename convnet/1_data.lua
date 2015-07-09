@@ -18,7 +18,7 @@ if opt.data_type == 'Spiral' or opt.data_type == 'Gauss' then
 
 elseif opt.data_type == 'Recipe101' then
     require 'ImgLoader'
-    loader = ImgLoader(opt.path2dir)
+    loader = ImgLoader(opt.path2dir, opt.path2save)
     loader:load()
     class_str = loader:class_str()
     trainSet, testSet = loader:make_train_test(opt.pc_train)
