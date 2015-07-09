@@ -64,6 +64,7 @@ if opt.type == 'cuda' then
    print('... switching to CUDA')
    require 'cutorch'
    require 'cunn'
+   require 'cudnn'
    cutorch.setDevice(opt.gpuid)
 end
 torch.setnumthreads(opt.threads)
