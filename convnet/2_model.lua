@@ -16,6 +16,7 @@ else
         model:add( nn.LogSoftMax() )
 
     elseif opt.model_type == 'overfeat' then
+
         local ParamBank = require 'ParamBank'
         local label = require 'overfeat_label'
         local offset = 0
@@ -25,7 +26,9 @@ else
         SpatialConvolution = nn.SpatialConvolution
         SpatialConvolutionMM = nn.SpatialConvolutionMM
         SpatialMaxPooling = nn.SpatialMaxPooling
+
         if opt.type == 'cuda' then
+            require 'cudnn'
             SpatialConvolution = cudnn.SpatialConvolution
             SpatialConvolutionMM = cudnn.SpatialConvolution
             SpatialMaxPooling = cudnn.SpatialMaxPooling
@@ -59,6 +62,8 @@ else
         model:add(nn.View(#class_str))
         model:add(nn.LogSoftMax())
 
+        model = model:float()
+
         -- model:add(SpatialConvolutionMM(4096, 1000, 1, 1, 1, 1))
         -- model:add(nn.View(1000))
         -- model:add(nn.SoftMax())
@@ -83,6 +88,7 @@ else
         
         -- ParamBank:read(140559488, {1000,4096,1,1}, m[offset+24].weight)
         -- ParamBank:read(144655488, {1000},          m[offset+24].bias)
+        ParamBank:close()
 
     else
         error(opt.model_type..' is not a valid type')
@@ -95,7 +101,7 @@ end
 -- criterion
 
 if opt.criterion == 'NLL' then
-    -- becarefull you have to add a nn.LogSoftMax()
+    -- becareful you have to add a nn.LogSoftMax() to the model
     criterion = nn.ClassNLLCriterion()
 elseif opt.criterion == 'MM' then
     criterion = nn.MultiMarginCriterion()
