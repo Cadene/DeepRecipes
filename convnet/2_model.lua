@@ -26,12 +26,14 @@ else
         SpatialConvolution = nn.SpatialConvolution
         SpatialConvolutionMM = nn.SpatialConvolutionMM
         SpatialMaxPooling = nn.SpatialMaxPooling
+        SoftMax = nn.SoftMax
 
         if opt.type == 'cuda' then
             require 'cudnn'
             SpatialConvolution = cudnn.SpatialConvolution
             SpatialConvolutionMM = cudnn.SpatialConvolution
             SpatialMaxPooling = cudnn.SpatialMaxPooling
+            SoftMax = cudnn.SoftMax
         end
 
         model:add(SpatialConvolution(3, 96, 7, 7, 2, 2))
@@ -60,7 +62,8 @@ else
         -- model:add(nn.View(4096))
         model:add(SpatialConvolutionMM(4096, #class_str, 1, 1, 1, 1))
         model:add(nn.View(#class_str))
-        model:add(nn.LogSoftMax())
+        --model:add(nn.LogSoftMax())
+        model:add(SoftMax())
 
         model = model:float()
 
