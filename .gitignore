@@ -10,6 +10,8 @@ download_weights.py
 *.o
 *.so
 
+*.net
+
 # ignore all test images
 *.jpg
 *.png

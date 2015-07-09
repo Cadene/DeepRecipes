@@ -4,23 +4,35 @@ require 'Dataset'
 
 local ImgDataset = torch.class('ImgDataset', 'Dataset')
 
-function ImgDataset:__init(path2img, label, class_label, label_class)
+function ImgDataset:__init(path2dir, path2img, label, class_label, label_class)
+    self.path2dir = path2dir or '/Users/remicadene/data/recipe_101_tiny/'
     self.path2img = path2img or {}
     self.label = label or {}
     self.class_label = class_label or {}
     self.label_class = label_class or {}
 end
 
-function ImgDataset:get(index)
+function ImgDataset:label2tensor()
+    self.label = torch.Tensor(self.label)
+end
+
+function ImgDataset:get(index, prepare)
+    prepare = prepare or false
     local img
     status, err = pcall(function ()
-        img = ImgLoader.__prepare_img(self.path2img[index])
+        local class_name = self.label_class[self.label[index]]
+        local path2img = self.path2dir..class_name..'/'..self.path2img[index]
+        if prepare then
+            img = ImgLoader.__prepare_img(path2img)
+        else
+            img = image.load(path2img)
+        end
         if img:size(1) ~= 3 then
-            error('e101: invalid image [path='..self.path2img[index]..']')
+            error('e101: invalid image [path='..path2img..']')
         end
     end)
     if status then
-        return self.label[index], img
+        return img, self.label[{ {index} }]
     else
         print(err)
         return false

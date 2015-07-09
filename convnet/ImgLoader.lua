@@ -9,7 +9,6 @@ function ImgLoader:__init(path2dir, path2save, path2esc)
     self.path2dir  = path2dir or '../data/recipe_101/'
     self.path2save = path2save or '../data/recipe_101_clean/' 
     self.path2esc  = path2esc or {'.', '..', '.DS_Store'}
-    self.classes = {}
     self.path2img = {}
 end
 
@@ -25,6 +24,14 @@ function ImgLoader:load()
             end
         end
     end
+end
+
+function ImgLoader:class_str()
+    local class_str = {}
+    for class_name, _ in pairs(self.path2img) do
+        table.insert(class_str, class_name)
+    end
+    return class_str
 end
 
 function ImgLoader:loadCsv(path2csv)
@@ -81,14 +88,14 @@ end
 
 function ImgLoader:make_train_test(pc_train)
     --[[ Once prepreoccesed, build the train and test sets ]]--
-    local trainSet = ImgDataset()
-    local testSet = ImgDataset()
+    local trainSet = ImgDataset(self.path2dir)
+    local testSet = ImgDataset(self.path2dir)
     local label = 1
     for class, path2img in pairs(self.path2img) do
         trainSet.class_label[class] = label
-        trainSet.class_label[label] = class
+        trainSet.label_class[label] = class
         testSet.class_label[class] = label
-        testSet.class_label[label] = class
+        testSet.label_class[label] = class
         shuffle = torch.randperm(#self.path2img[class])
         limit = #self.path2img[class] * pc_train 
         for i = 1, #self.path2img[class] do
@@ -102,6 +109,8 @@ function ImgLoader:make_train_test(pc_train)
         end
         label = label + 1
     end
+    trainSet:label2tensor()
+    testSet:label2tensor()
     return trainSet, testSet
 end
 
@@ -172,7 +181,7 @@ function ImgLoader:process(func, ...)
     for class_name, path2class in pairs(self.path2img) do
         path2save = self.path2save..class_name
         os.execute('mkdir -p '..path2save)
-        
+
         for img_id, img_name in pairs(path2class) do
             path2img = self.path2dir..class_name..'/'..img_name
             img = func(path2img, ...)

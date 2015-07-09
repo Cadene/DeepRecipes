@@ -3,7 +3,6 @@ require 'nn'
 require 'xlua'
 require 'optim'
 
-require 'DatasetBuilder'
 require 'Ploter'
 
 
@@ -20,18 +19,20 @@ cmd:text('CadNet')
 cmd:text()
 cmd:text('Options:')
 -- settings dataset building
-cmd:option('-data_type',       'Spiral',    'data_type: Spiral | Gauss')
+cmd:option('-data_type',       'Spiral',    'data_type: Spiral | Gauss | Recipe101')
 cmd:option('-K',               3,           'number of class')
 cmd:option('-N',               500,         'number of points per class')
 cmd:option('-D',               2,           'number of dimensionality')
 cmd:option('-pc_train',        0.8,         'pourcentage for the training set')
+cmd:option('-path2dir',        '../data/recipe_101/recipe_101_clean', 'path2img')
 -- settings net loading
-cmd:option('-load_model',      false,       'loading model or not')
+cmd:option('-load_model',      'false',       'loading model or not')
 cmd:option('-path2model',      './save/cade.net', 'path to model')
 -- settings net building
 cmd:option('-type',            'float',     'type: float | cuda')
+cmd:option('-model_type',      'standard',  'model_type: standard | overfeat | cadnet')
 cmd:option('-seed',            2,           'fixed input seed for repeatable experiments')
-cmd:option('-threads',         1,           'number of threads')
+cmd:option('-threads',         4,           'number of threads')
 cmd:option('-gpuid',           1,           'gpu id')
 cmd:option('-H',               100,         'number of hidden layers')
 cmd:option('-criterion',       'NLL',       'criterion: NLL - negative log likelihood')
@@ -47,10 +48,11 @@ cmd:option('-t0',              1e-1,        '??')
 -- settings saving, printing, ploting
 cmd:option('-epoch',           100,         'epoch number')
 cmd:option('-save_every',      1e10,        'save model')
-cmd:option('-print_every',     10,          'print things')
+cmd:option('-plot_every',      10,          'plot things')
 cmd:option('-path2save',       './save/',        'path to the saving dir')
-cmd:option('-plot',            true,        'plot things or not')
+cmd:option('-plot',            'true',      'plot')
 -- cmd:option('-print_layers_op', false,       'Output the values from each layers')
+cmd:option('-run',             'true',      'run main')
 cmd:text()
 opt = cmd:parse(arg or {})
 
@@ -68,64 +70,14 @@ torch.setnumthreads(opt.threads)
 torch.manualSeed(opt.seed)
 
 ------------------------------------------------------------------------
--- DatasetBuilder
+-- Dataset
 
-class = {}
-class_str = {}
-for i = 1, opt.K do
-    class[i] = i
-    class_str[i] = tostring(i)
-end
-
-N_train = opt.N * opt.pc_train
-N_test  = opt.N * (1 - opt.pc_train)
-
-trainSet = DatasetBuilder.generate(opt.data_type, N_train, opt.D, opt.K)
-testSet  = DatasetBuilder.generate(opt.data_type, N_test,  opt.D, opt.K)
+dofile('1_data.lua')
 
 ------------------------------------------------------------------------
 -- Model
 
-if opt.load_model then
-    print('<trainer> reloading previously trained network')
-    model = torch.load(opt.path2model)
-else 
-    model = nn.Sequential()
-
-    model:add( nn.Linear(opt.D, opt.H) )
-    model:add( nn.ReLU() )
-    if opt.dropout ~= 0 then
-        model:add( nn.Dropout(opt.dropout) )
-    end
-    model:add( nn.Linear(opt.H, opt.K) )
-end
-
--- criterion
-if opt.criterion == 'NLL' then
-    model:add( nn.LogSoftMax() )
-    criterion = nn.ClassNLLCriterion()
-elseif opt.criterion == 'MM' then
-    criterion = nn.MultiMarginCriterion()
--- elseif opt.criterion == 'MSE' then
---     model:add(nn.Tanh())
---     criterion = nn.MSECriterion()
---     criterion.sizeAverage()
-else
-    error(opt.criterion..' is not a valid criterion')
-end
-
--- Retrieve parameters and gradients:
--- this extracts and flattens all the trainable parameters of the mode
--- into a 1-dim vector
-parameters, gradParameters = model:getParameters()
-
------------------------------------------------------------------------
--- CUDA?
-
-if opt.type == 'cuda' then
-   model:cuda()
-   criterion:cuda()
-end
+dofile('2_model.lua')
 
 -----------------------------------------------------------------------
 -- Logger
@@ -137,174 +89,48 @@ testLogger  = optim.Logger(paths.concat(opt.path2save, 'test.log'))
 -----------------------------------------------------------------------
 -- Optimizer
 
-if opt.optimizer == 'CG' then
-    optimState = {
-        maxIter = opt.max_iter
-    }
-    optimMethod = optim.cg
+dofile('3_optimizer.lua')
 
-elseif opt.optimizer == 'LBFGS' then
-    optimState = {
-        maxIter = opt.max_iter,
-        learningRate = opt.learning_rate,
-        nCorrection = 10
-    }
-    optimMethod = optim.lbfgs
-
-elseif opt.optimizer == 'SGD' then
-    optimState = {
-        maxIter = opt.max_iter,
-        learningRate = opt.learning_rate,
-        weightDecay = opt.weight_decay,
-        momentum = opt.momentum,
-        learningRateDecay = 1e-7
-    }
-    optimMethod = optim.sgd
-
-elseif opt.optimizer == 'ASGD' then
-    optimState = {
-        maxIter = opt.max_iter,
-        eta0 = opt.learning_rate,
-        t0 = trainSet:size() * opt.t0
-    }
-    optimMethod = optim.asgd
-
-elseif opt.optimizer == 'ADAGRAD' then
-    optimState = {
-        learningRate = opt.learning_rate,
-        paramVariance = nil
-    }
-    optimMethod = optim.adagrad
-
-elseif opt.optimizer == 'RMSPROP' then
-    optimState = {
-        maxIter = opt.max_iter,
-        learningRate = opt.learning_rate,
-        alpha = 0.99,
-        epsilon = 1e-8
-    }
-    optimMethod = optim.rmsprop
-
-else
-   error(opt.optimizer..' is not a valid optimizer')
-end
 
 -----------------------------------------------------------------------
 -- Training
 
-table_f = {}
+dofile('4_train.lua')
 
-function train()
-    epoch = epoch or 1
-    local time = sys.clock()
-    model:training()
-    shuffle = torch.randperm(trainSet:size())
 
-    print('\nepoch n'..epoch)
-    for t = 1, trainSet:size(), opt.batch_size do
-        xlua.progress(t+opt.batch_size-1, trainSet:size())
+-----------------------------------------------------------------------
+-- Testing
 
-        local inputs = {}
-        local targets = {}
-        for i = t, math.min(t+opt.batch_size-1, trainSet:size()) do
-            local input, target = trainSet:get(shuffle[i])
-            if opt.type == 'cuda' then
-                input = input:cuda()
-            end
-            table.insert(inputs, input)
-            table.insert(targets, target)
-        end
-
-        local feval = function(x)
-            if x ~= parameters then -- ?
-                parameters:copy(x)
-            end
-
-            gradParameters:zero()
-
-            local f = 0
-            for i = 1, #inputs do
-                local output = model:forward(inputs[i])
-                local err = criterion:forward(output, targets[i])
-                f = f + err
-                local df_do = criterion:backward(output, targets[i])
-                model:backward(inputs[i], df_do)
-                confusion:add(output, targets[i]:squeeze())
-            end
-
-            gradParameters:div(#inputs)
-            f = f / #inputs
-
-            -- training curve
-            if _log['err'][epoch] then
-                _log['err'][epoch] = _log['err'][epoch] + f
-            else
-                _log['err'][epoch] = f
-            end
-
-            return f, gradParameters -- f and df/dX
-        end
-
-        if optimMethod == optim.asgd then
-            _,_,average = optimMethod(feval, parameters, optimState)
-        else
-            optimMethod(feval, parameters, optimState)
-        end
-    end
-
-    -- time taken
-    time = sys.clock() - time
-    time = time / trainSet:size()
-    print("\ntime to learn 1 sample = "..(time*1000).."ms")
-
-    -- print confusion matrix
-    print(confusion)
-    trainLogger:add{['% mean class accuracy (train set)'] = confusion.totalValid * 100}
-    confusion:zero()
-
-    -- plot decision region
-    if opt.plot and opt.type ~= 'cuda' and epoch % opt.print_every == 0 then
-        Ploter.decision_region(model, trainSet:getData(), class, 'epoch_'..epoch..'.png')
-    end
-
-    -- save/log current net
-    if epoch % opt.save_every == 0 then
-        local filename = paths.concat(opt.path2save, 'cade.net')
-        os.execute('mkdir -p ' .. sys.dirname(filename))
-        if sys.filep(filename) then
-            os.execute('mv ' .. filename .. ' ' .. filename .. '.old')
-        end
-        print('<trainer> saving network to '..filename)
-        torch.save(filename, model)
-    end
-
-    epoch = epoch + 1
-end
-
+dofile('5_test.lua')
 
 -----------------------------------------------------------------------
 -- Main
 
-_log = {}
-_log['err'] = {}
+if opt.run == 'true' then
 
-for i = 1, opt.epoch do
-    train()
-end
+    _log = {}
+    _log['err'] = {}
 
-Ploter.figure('learning_batch'..opt.batch_size..'.png', {
-    'amount of error',
-    torch.linspace(1,#_log['err'],#_log['err']),
-    torch.log(torch.Tensor(_log['err'])),
-    '-'
-})
+    for i = 1, opt.epoch do
+        train()
+        test()
+    end
 
--- plot errors
-if opt.plot then
-    trainLogger:style{['% mean class accuracy (train set)'] = '-'}
-    testLogger:style{['% mean class accuracy (test set)'] = '-'}
-    trainLogger:plot()
-    testLogger:plot()
+    Ploter.figure('learning_batch'..opt.batch_size..'.png', {
+        'amount of error',
+        torch.linspace(1,#_log['err'],#_log['err']),
+        torch.log(torch.Tensor(_log['err'])),
+        '-'
+    })
+
+    -- plot errors
+    if opt.plot == 'true' then
+        trainLogger:style{['% mean class accuracy (train set)'] = '-'}
+        testLogger:style{['% mean class accuracy (test set)'] = '-'}
+        trainLogger:plot()
+        testLogger:plot()
+    end
+
 end
 
 
