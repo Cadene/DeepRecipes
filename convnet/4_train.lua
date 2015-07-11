@@ -1,16 +1,18 @@
+local time = {}
 
 table_f = {}
 
 function train()
     epoch = epoch or 1
-    local time = sys.clock()
+    time['train'] = sys.clock()
     model:training()
     shuffle = torch.randperm(trainSet:size())
 
     print('\nepoch n'..epoch)
     for t = 1, trainSet:size(), opt.batch_size do
-        xlua.progress(t+opt.batch_size-1, trainSet:size())
-
+        -- xlua.progress(t+opt.batch_size-1, trainSet:size())
+        print("batch: "..(t+opt.batch_size-1).." / "..trainSet:size())
+	time['inputs'] = sys.clock()
         local inputs = {}
         local targets = {}
         for i = t, math.min(t+opt.batch_size-1, trainSet:size()) do
@@ -21,26 +23,24 @@ function train()
             table.insert(inputs, input)
             table.insert(targets, target)
         end
+	time['inputs'] = sys.clock() - time['inputs']
 
         local feval = function(x)
-            if x ~= parameters then -- ?
+            if x ~= parameters then -- optim
                 parameters:copy(x)
             end
             
-            gradParameters:zero()
+            model:zeroGradParameters()
 
             local f = 0
             for i = 1, #inputs do
+		local time_m_f = sys.clock()
                 local output = model:forward(inputs[i])
-                -- print('\n', output, targets, '\n')
                 local err = criterion:forward(output, targets[i])
                 f = f + err
-		print('1] ',gradParameters[1])
-                local df_do = criterion:backward(output, targets[i])
-                model:backward(inputs[i], df_do)
-                print('2] ',gradParameters[1])
-		confusion:add(output, targets[i]:squeeze())
-		print('3] ',gradParameters[1])
+               	local df_do = criterion:backward(output, targets[i])
+                gradInput = model:backward(inputs[i], df_do)
+                -- confusion:add(output, targets[i]:squeeze())
             end
 
             gradParameters:div(#inputs)
@@ -53,8 +53,9 @@ function train()
                 _log['err'][epoch] = f
             end
 
-	    print(f)
-            print('4] ',gradParameters[1])
+            --print('loss total: ', f)
+            --print('sum gradParameters: ', torch.sum(gradParameters))
+            --print('sum gradInput: ', torch.sum(gradInput))
 
             return f, gradParameters -- f and df/dX
         end
@@ -67,14 +68,14 @@ function train()
     end
 
     -- time taken
-    time = sys.clock() - time
-    time = time / trainSet:size()
-    print("\ntime to learn 1 sample = "..(time*1000).."ms")
+    time['train'] = sys.clock() - time['train']
+    time['train'] = time['train'] / trainSet:size()
+    print("time to learn 1 sample = "..(time['train']*1000).."ms")
 
     -- print confusion matrix
-    print(confusion)
-    trainLogger:add{['% mean class accuracy (train set)'] = confusion.totalValid * 100}
-    confusion:zero()
+    -- print(confusion)
+    -- trainLogger:add{['% mean class accuracy (train set)'] = confusion.totalValid * 100}
+    -- confusion:zero()
 
     -- plot decision region
     if  opt.type ~= 'cuda'

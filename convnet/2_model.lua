@@ -26,14 +26,12 @@ else
         SpatialConvolution = nn.SpatialConvolution
         SpatialConvolutionMM = nn.SpatialConvolutionMM
         SpatialMaxPooling = nn.SpatialMaxPooling
-        SoftMax = nn.SoftMax
 
-        if opt.type == 'cuda' then
+        if opt.type == 'cuda' and opt.cudnn == 'true' then
             require 'cudnn'
             SpatialConvolution = cudnn.SpatialConvolution
             SpatialConvolutionMM = cudnn.SpatialConvolution
             SpatialMaxPooling = cudnn.SpatialMaxPooling
-            SoftMax = cudnn.SoftMax
         end
 
         model:add(SpatialConvolution(3, 96, 7, 7, 2, 2))
@@ -62,8 +60,8 @@ else
         -- model:add(nn.View(4096))
         model:add(SpatialConvolutionMM(4096, #class_str, 1, 1, 1, 1))
         model:add(nn.View(#class_str))
-        --model:add(nn.LogSoftMax())
-        model:add(SoftMax())
+        model:add(nn.LogSoftMax())
+        --model:add(SoftMax())
 
         model = model:float()
 
@@ -116,10 +114,7 @@ else
     error(opt.criterion..' is not a valid criterion')
 end
 
--- Retrieve parameters and gradients:
--- this extracts and flattens all the trainable parameters of the mode
--- into a 1-dim vector
-parameters, gradParameters = model:getParameters()
+
 
 -----------------------------------------------------------------------
 -- CUDA?
@@ -128,3 +123,15 @@ if opt.type == 'cuda' then
    model:cuda()
    criterion:cuda()
 end
+
+-- Retrieve parameters and gradients:
+-- this extracts and flattens all the trainable parameters of the mode
+-- into a 1-dim vector
+parameters, gradParameters = model:getParameters()
+
+
+print(model)
+
+print(criterion)
+
+
