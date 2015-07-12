@@ -1,4 +1,3 @@
-
 th -i main.lua \
     -optimizer ADAGRAD \
     -learning_rate 1e-4 \
@@ -13,7 +12,7 @@ th -i main.lua \
     -path2dir /home/cadene/data/recipe_101_clean/ \
     -run true \
     -type cuda \
-    -cudnn true \
+    -cudnn false \
     -threads 1 \
-    -gpuid 1 \
-    -path2save ./save1/ 
+    -gpuid 3 \
+    -path2save ./save_kepler_3/ 

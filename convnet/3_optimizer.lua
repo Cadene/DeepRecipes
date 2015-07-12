@@ -50,3 +50,9 @@ elseif opt.optimizer == 'RMSPROP' then
 else
    error(opt.optimizer..' is not a valid optimizer')
 end
+
+print("# Optimizer")
+print(opt.optimizer)
+
+print("# OptimState")
+print(optimState)

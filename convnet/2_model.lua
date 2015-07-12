@@ -129,9 +129,10 @@ end
 -- into a 1-dim vector
 parameters, gradParameters = model:getParameters()
 
-
+print("# Model")
 print(model)
 
+print("# Criterion")
 print(criterion)
 
 

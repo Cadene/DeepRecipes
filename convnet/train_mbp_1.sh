@@ -6,13 +6,10 @@ th -i main.lua \
     -batch_size 200 \
     -epoch 1000 \
     -save_every 1 \
-    -load_model false \
+    -load_model true \
+    -path2model ./save_mbp_1/cade.net \
     -model_type overfeat \
     -data_type Recipe101 \
-    -path2dir /home/cadene/data/recipe_101_clean/ \
+    -path2dir /Users/remicadene/data/recipe_101_low/ \
     -run true \
-    -type cuda \
-    -cudnn false \
-    -threads 1 \
-    -gpuid 3 \
-    -path2save ./save_model3/ 
+    -path2save ./save_mbp_1/ 

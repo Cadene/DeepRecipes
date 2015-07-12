@@ -1,3 +1,9 @@
+######################################################################
+#     Experience n°1
+######################################################################
+
+# Cli
+
 th -i main.lua \
     -optimizer ADAGRAD \
     -learning_rate 1e-6 \
@@ -15,4 +21,13 @@ th -i main.lua \
     -cudnn true \
     -threads 8 \
     -gpuid 2 \
-    -path2save ./save2/ 
+    -path2save ./save_kepler_2/ 
+
+# Durée d'une epoch approximativement
+ 6h40
+
+# % mean class accuracy (train set) par epoch 
+ 1.1503 
+ 1.1918 
+ 1.2042 
+

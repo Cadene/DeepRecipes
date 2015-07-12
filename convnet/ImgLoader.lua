@@ -87,7 +87,7 @@ function ImgLoader:loadCsv(path2csv)
 end
 
 function ImgLoader:make_train_test(pc_train)
-    --[[ Once prepreoccesed, build the train and test sets ]]--
+    --[[ Once preprocessed and processed, build the train and test sets ]]--
     local trainSet = ImgDataset(self.path2dir)
     local testSet = ImgDataset(self.path2dir)
     local label = 1
@@ -115,7 +115,9 @@ function ImgLoader:make_train_test(pc_train)
 end
 
 function ImgLoader:preprocess()
-    --[[ Once loaded, convert or remove the images ]]--
+    --[[ Once loaded, convert or remove the images using path2img
+         making success.log, error.log (bad format, grey, or other),
+         convert.log (if convert needed) ]]--
     local path2img, last_img
     --os.execute('mkdir -p '..sys.dirname(self.path2save))
     
@@ -175,6 +177,7 @@ function ImgLoader:preprocess()
 end
 
 function ImgLoader:process(func, ...)
+    --[[ Make a new database using func to process images ]]--
     local path2img, path2save
     func = func or ImgDataset.__prepare_img
 
@@ -193,7 +196,7 @@ end
 function ImgLoader:make_clean_dir()
     
     for class_name, path2class in pairs(loader.path2img) do
-                for img_id, img_name in pairs(path2class) do
+        for img_id, img_name in pairs(path2class) do
             path2img = self.path2dir..class_name..'/'..img_name
             os.execute('cp '..path2img..' '..path2dir)
         end
