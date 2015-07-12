@@ -5,16 +5,20 @@ table_f = {}
 
 function train()
     epoch = epoch or 1
-    time['train'] = sys.clock()
+    time['train'] = torch.Timer()
     model:training()
     shuffle = torch.randperm(trainSet:size())
 
     print('# Epoch n° '..epoch)
 
     for t = 1, trainSet:size(), opt.batch_size do
-        time['batch'] = sys.clock()
+        time['batch'] = torch.Timer()
         -- xlua.progress(t-1, trainSet:size())
-        print("# Batch size "..t.." to "..(t-1)*opt.batch_size)
+        local batch_to = t+opt.batch_size-1
+        if batch_to > trainSet:size() then
+            batch_to = trainSet:size()
+        end
+        print("# Batch "..t.." to "..batch_to.." on "..trainSet:size().." images")
         
 	    -- time['inputs'] = sys.clock()
         local inputs = {}
@@ -70,20 +74,20 @@ function train()
             optimMethod(feval, parameters, optimState)
         end
 
-        print("# Time to learn "..opt.batch_size.." samples = "..(time['batch']*1000).."ms")
+        print("# Time to learn "..opt.batch_size.." samples = "..(time['batch']:time().real).." sec")
+        print("# Time to learn "..opt.batch_size.." samples = "..(time['batch']:time().user).." user")
+        print("# Time to learn "..opt.batch_size.." samples = "..(time['batch']:time().sys).." sys")
     end
 
     -- time taken
-    time['train'] = sys.clock() - time['train']
-    time['train'] = time['train'] / trainSet:size()
-    print("# Time to learn 1 sample = "..(time['train']*1000).."ms")
+    print("# Time to learn 1 sample = "..(time['train']:time().real/trainSet:size()).." sec")
 
     -- print confusion matrix
-    time['confusion'] = sys.clock()
+    time['confusion'] = torch.Timer()
     print(confusion)
     trainLogger:add{['% mean class accuracy (train set)'] = confusion.totalValid * 100}
     confusion:zero()
-    print("# Time to print confusion and log = "..(sys.clock() - time['confusion']))
+    print("# Time to print confusion and log = "..(time['confusion']:time().real).." sec")
 
     -- plot decision region
     if  opt.type ~= 'cuda' and opt.data_type ~= 'Recipe101' and epoch % opt.plot_every == 0 then
@@ -92,12 +96,12 @@ function train()
 
     -- save/log current net
     if epoch % opt.save_every == 0 then
-        time['save_every'] = sys.clock()
+        time['save_every'] = torch.Timer()
         local filename = paths.concat(opt.path2save, 'cade.net')
         print('# Saving model to '..filename)
         os.execute('mkdir -p ' .. sys.dirname(filename))
         torch.save(filename, model)
-        print("# Time to save model = "..(sys.clock() - time['save_every']))
+        print("# Time to save model = "..(time['save_every']:time().real).." sec")
     end
 
     epoch = epoch + 1

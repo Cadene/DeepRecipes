@@ -1,5 +1,5 @@
 if opt.load_model == 'true' then
-    print('<trainer> reloading previously trained network')
+    print('# Reloading previously trained network')
     model = torch.load(opt.path2model)
 
 else
