@@ -94,7 +94,9 @@ function train()
         if optimMethod == optim.asgd then
             _,_,average = optimMethod(feval, parameters, optimState)
         else
+            time['optimMethod'] = torch.Timer()
             optimMethod(feval, parameters, optimState)
+            print("# Time to optimMethod = "..(time['optimMethod']:time().real).." sec")
         end
 
         print("# Time to learn "..opt.batch_size.." samples = "..(time['batch']:time().real).." sec = "..(time['batch']:time().user).." user = "..(time['batch']:time().sys).." sys")
