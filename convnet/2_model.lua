@@ -28,7 +28,7 @@ else
         SpatialMaxPooling = nn.SpatialMaxPooling
 
         if opt.type == 'cuda' and opt.cudnn == 'true' then
-            require 'cudnn'
+            require 'cudnn' -- time to train *6
             SpatialConvolution = cudnn.SpatialConvolution
             SpatialConvolutionMM = cudnn.SpatialConvolution
             SpatialMaxPooling = cudnn.SpatialMaxPooling
@@ -63,8 +63,6 @@ else
         model:add(nn.LogSoftMax())
         --model:add(SoftMax())
 
-        model = model:float()
-
         -- model:add(SpatialConvolutionMM(4096, 1000, 1, 1, 1, 1))
         -- model:add(nn.View(1000))
         -- model:add(nn.SoftMax())
@@ -90,6 +88,41 @@ else
         -- ParamBank:read(140559488, {1000,4096,1,1}, m[offset+24].weight)
         -- ParamBank:read(144655488, {1000},          m[offset+24].bias)
         ParamBank:close()
+
+    elseif opt.model_type == 'overfeat_scratch' then
+
+        model:add(nn.SpatialConvolutionMM(3, 96, 7, 7, 2, 2))
+        model:add(nn.Threshold(0, 1e-6))
+        model:add(nn.SpatialMaxPooling(3, 3, 3, 3))
+        model:add(nn.SpatialConvolutionMM(96, 256, 7, 7, 1, 1))
+        model:add(nn.Threshold(0, 1e-6))
+        model:add(nn.SpatialMaxPooling(2, 2, 2, 2))
+        model:add(nn.SpatialZeroPadding(1, 1, 1, 1))
+        model:add(nn.SpatialConvolutionMM(256, 512, 3, 3, 1, 1))
+        model:add(nn.Threshold(0, 1e-6))
+        model:add(nn.SpatialZeroPadding(1, 1, 1, 1))
+        model:add(nn.SpatialConvolutionMM(512, 512, 3, 3, 1, 1))
+        model:add(nn.Threshold(0, 1e-6))
+        model:add(nn.SpatialZeroPadding(1, 1, 1, 1))
+        model:add(nn.SpatialConvolutionMM(512, 1024, 3, 3, 1, 1))
+        model:add(nn.Threshold(0, 1e-6))
+        model:add(nn.SpatialZeroPadding(1, 1, 1, 1))
+        model:add(nn.SpatialConvolutionMM(1024, 1024, 3, 3, 1, 1))
+        model:add(nn.Threshold(0, 1e-6))
+        model:add(nn.SpatialMaxPooling(3, 3, 3, 3))
+        model:add(nn.SpatialConvolutionMM(1024, 4096, 5, 5, 1, 1))
+        model:add(nn.Threshold(0, 1e-6))
+        if opt.dropout ~= 0 then
+            model:add( nn.Dropout(opt.dropout) )
+        end
+        model:add(nn.SpatialConvolutionMM(4096, 4096, 1, 1, 1, 1))
+        model:add(nn.Threshold(0, 1e-6))
+        if opt.dropout ~= 0 then
+            model:add( nn.Dropout(opt.dropout) )
+        end
+        model:add(nn.SpatialConvolutionMM(4096, #class_str, 1, 1, 1, 1))
+        model:add(nn.View(#class_str))
+        model:add(nn.LogSoftMax())
 
     else
         error(opt.model_type..' is not a valid type')
@@ -122,6 +155,8 @@ end
 if opt.type == 'cuda' then
    model:cuda()
    criterion:cuda()
+else
+    model = model:float()
 end
 
 -- Retrieve parameters and gradients:
