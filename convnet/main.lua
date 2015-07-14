@@ -54,6 +54,8 @@ cmd:option('-path2save',       './save/',        'path to the saving dir')
 cmd:option('-plot',            'true',      'plot')
 -- cmd:option('-print_layers_op', false,       'Output the values from each layers')
 cmd:option('-run',             'true',      'run main')
+cmd:option('-train',	       'true',	    'train net')
+cmd:option('-test',	       'false',     'test net')
 cmd:text()
 opt = cmd:parse(arg or {})
 
@@ -116,8 +118,12 @@ if opt.run == 'true' then
     _log['err'] = {}
 
     for i = 1, opt.epoch do
-        train()
-        -- test()
+        if opt.train == 'true' then
+	    train()
+        end
+	if opt.test == 'true' then
+	    test()
+  	end
     end
 
     Ploter.figure('learning_batch'..opt.batch_size..'.png', {

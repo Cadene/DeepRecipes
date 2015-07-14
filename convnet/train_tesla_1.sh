@@ -13,6 +13,6 @@ th -i main.lua \
     -run true \
     -type cuda \
     -cudnn false \
-    -threads 1 \
+    -threads 4 \
     -gpuid 1 \
-    -path2save ./save_kepler_2/ 
+    -path2save ./save_tesla_2/ 
