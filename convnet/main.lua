@@ -39,7 +39,7 @@ cmd:option('-H',               100,         'number of hidden layers')
 cmd:option('-criterion',       'NLL',       'criterion: NLL - negative log likelihood')
 cmd:option('-dropout',         0.2,           'do dropout with x probability')
 -- settings optimizer
-cmd:option('-optimizer',       'CG',        'CG | LBFGS | SGD | ASGD')
+cmd:option('-optimizer',       'CG',        'CG | LBFGS | SGD | ASGD | ADAGRAD')
 cmd:option('-max_iter',        1e2,         'max iteration')
 cmd:option('-learning_rate',   1e-1,        'learning rate at t=0')
 cmd:option('-momentum',        0.6,         'momentum')
@@ -62,11 +62,13 @@ opt = cmd:parse(arg or {})
 
 torch.setdefaulttensortype('torch.FloatTensor')
 if opt.type == 'cuda' then
-   print('... switching to CUDA')
-   require 'cutorch'
-   require 'cunn'
-   require 'cudnn'
-   cutorch.setDevice(opt.gpuid)
+    print('... switching to CUDA')
+    require 'cutorch'
+    require 'cunn'
+    if opt.cudnn == 'true' then
+        require 'cudnn'
+    end
+    cutorch.setDevice(opt.gpuid)
 end
 torch.setnumthreads(opt.threads)
 torch.manualSeed(opt.seed)
