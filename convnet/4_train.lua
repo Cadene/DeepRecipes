@@ -88,6 +88,8 @@ function train()
             --print('sum gradParameters: ', torch.sum(gradParameters))
             --print('sum gradInput: ', torch.sum(gradInput))
 
+            collectgarbage()
+
             return f, gradParameters -- f and df/dX
         end
 

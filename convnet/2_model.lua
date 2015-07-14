@@ -91,7 +91,7 @@ else
 
     elseif opt.model_type == 'overfeat_scratch' then
 	
-	model = nn.Sequential()
+	    model = nn.Sequential()
         model:add(nn.SpatialConvolutionMM(3, 96, 7, 7, 2, 2))
         model:add(nn.Threshold(0, 1e-6))
         model:add(nn.SpatialMaxPooling(3, 3, 3, 3))
