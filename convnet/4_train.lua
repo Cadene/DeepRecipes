@@ -20,7 +20,7 @@ function train()
         end
         print("# Batch "..t.." to "..batch_to.." on "..trainSet:size().." images")
         
-	    -- time['inputs'] = sys.clock()
+	    time['inputs'] = torch.Timer()
         local inputs = {}
         local targets = {}
         for i = t, math.min(t+opt.batch_size-1, trainSet:size()) do
@@ -31,7 +31,7 @@ function train()
             table.insert(inputs, input)
             table.insert(targets, target)
         end
-	    -- time['inputs'] = sys.clock() - time['inputs']
+	    print("# Time to load inputs = "..(Time['inputs']:time().real/opt.batch_size).." sec")
 
         local feval = function(x)
             if x ~= parameters then -- optim
@@ -74,9 +74,8 @@ function train()
             optimMethod(feval, parameters, optimState)
         end
 
-        print("# Time to learn "..opt.batch_size.." samples = "..(time['batch']:time().real).." sec")
-        print("# Time to learn "..opt.batch_size.." samples = "..(time['batch']:time().user).." user")
-        print("# Time to learn "..opt.batch_size.." samples = "..(time['batch']:time().sys).." sys")
+        print("# Time to learn "..opt.batch_size.." samples = "..(time['batch']:time().real).." sec = "..(time['batch']:time().user).." user = "..(time['batch']:time().sys).." sys")
+        print("# Time left to train the all dataset "..(time['batch']:time().real*trainSet:size()/opt.batch_size).." sec")
     end
 
     -- time taken
