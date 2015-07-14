@@ -31,7 +31,7 @@ function train()
             table.insert(inputs, input)
             table.insert(targets, target)
         end
-	    print("# Time to load inputs = "..(Time['inputs']:time().real/opt.batch_size).." sec")
+	    print("# Time to load inputs = "..(time['inputs']:time().real/opt.batch_size).." sec")
 
         local feval = function(x)
             if x ~= parameters then -- optim
