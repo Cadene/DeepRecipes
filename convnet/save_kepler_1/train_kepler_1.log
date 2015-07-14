@@ -1,10 +1,1 @@
 [0m... switching to CUDA[0m	
-/home/cadene/torch/install/bin/luajit: 2_model.lua:95: overfeat_scratch is not a valid type
-stack traceback:
-	[C]: in function 'error'
-	2_model.lua:95: in main chunk
-	[C]: in function 'dofile'
-	main.lua:86: in main chunk
-	[C]: in function 'dofile'
-	...dene/torch/install/lib/luarocks/rocks/trepl/scm-1/bin/th:131: in main chunk
-	[C]: at 0x00405d30
