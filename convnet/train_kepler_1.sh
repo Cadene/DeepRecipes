@@ -1,4 +1,3 @@
-
 th -i main.lua \
     -optimizer ADAGRAD \
     -learning_rate 1e-4 \
@@ -8,12 +7,16 @@ th -i main.lua \
     -epoch 1000 \
     -save_every 1 \
     -load_model false \
-    -model_type overfeat \
+    -path2model ./save_kepler_1/cade.net \
+    -model_type overfeat_scratch \
+    -dropout 0.30 \
     -data_type Recipe101 \
     -path2dir /home/cadene/data/recipe_101_clean/ \
     -run true \
+    -train true \
+    -test false \
     -type cuda \
-    -cudnn true \
+    -cudnn false \
     -threads 1 \
     -gpuid 1 \
     -path2save ./save_kepler_1/ 
