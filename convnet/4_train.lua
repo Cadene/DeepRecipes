@@ -40,19 +40,42 @@ function train()
             
             model:zeroGradParameters()
 
+            time['model_f'] = torch.Timer()
+            time['criterion_f'] = torch.Timer()
+            time['criterion_b'] = torch.Timer()
+            time['model_b'] = torch.Timer()
+            time['confusion_add'] = torch.Timer()
+
             local f = 0
             for i = 1, #inputs do
-		        local time_m_f = sys.clock()
+                time['model_f']:resume()
                 local output = model:forward(inputs[i])
+                time['model_f']:stop()
+                time['criterion_f']:resume()
                 local err = criterion:forward(output, targets[i])
+                time['criterion_f']:stop()
                 f = f + err
+                time['criterion_b']:resume()
                	local df_do = criterion:backward(output, targets[i])
+                time['criterion_b']:stop()
+                time['model_b']:resume()
                 gradInput = model:backward(inputs[i], df_do)
+                time['model_b']:stop()
+                time['confusion_add']:resume()
                 confusion:add(output, targets[i]:squeeze())
+                time['confusion_add']:stop()
             end
 
+            print("# Time to model_f = "..(time['model_f']:time().real/#inputs).." sec")
+            print("# Time to criterion_f = "..(time['criterion_f']:time().real/#inputs).." sec")
+            print("# Time to criterion_b = "..(time['criterion_b']:time().real/#inputs).." sec")
+            print("# Time to model_b = "..(time['model_b']:time().real/#inputs).." sec")
+            print("# Time to confusion_add = "..(time['confusion_add']:time().real/#inputs).." sec")
+
+            time['gradParam_div'] = torch.Timer()
             gradParameters:div(#inputs)
             f = f / #inputs
+            print("# Time to gradParam_div = "..(time['gradParam_div']:time().real).." sec")
 
             -- training curve
             -- if _log['err'][epoch] then
