@@ -62,6 +62,10 @@ function train()
                 gradInput = model:backward(inputs[i], df_do)
                 time['model_b']:stop()
                 time['confusion_add']:resume()
+                if i == 1 then
+                    print(output)
+                    print(targets[i]:squeeze())
+                end
                 confusion:add(output, targets[i]:squeeze())
                 time['confusion_add']:stop()
             end

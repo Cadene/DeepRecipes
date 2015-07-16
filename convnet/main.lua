@@ -119,11 +119,11 @@ if opt.run == 'true' then
 
     for i = 1, opt.epoch do
         if opt.train == 'true' then
-	    train()
+           train()
         end
-	if opt.test == 'true' then
-	    test()
-  	end
+        if opt.test == 'true' then
+            test()
+        end
     end
 
     Ploter.figure('learning_batch'..opt.batch_size..'.png', {
