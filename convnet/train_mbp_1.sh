@@ -12,4 +12,6 @@ th -i main.lua \
     -data_type Recipe101 \
     -path2dir /Users/remicadene/data/recipe_101_low/ \
     -run true \
-    -path2save ./save_mbp_1/ 
+    -path2save ./save_mbp_1/ \
+    -load_seed true \
+    -path2seed ./save_mbp_1/seed.save

@@ -1,4 +1,6 @@
 th -i main.lua \
+    -load_seed true \
+    -path2seed ./save_kepler_1/seed.save \
     -optimizer ADAGRAD \
     -learning_rate 1e-2 \
     -criterion NLL \
@@ -6,10 +8,10 @@ th -i main.lua \
     -batch_size 200 \
     -epoch 1000 \
     -save_every 1 \
-    -load_model true \
+    -load_model false \
     -path2model ./save_kepler_1_2/cade.net \
-    -model_type overfeat_scratch \
-    -dropout 0.30 \
+    -model_type overfeat \
+    -dropout 0.50 \
     -data_type Recipe101 \
     -path2dir /home/cadene/data/recipe_101_clean/ \
     -run true \
