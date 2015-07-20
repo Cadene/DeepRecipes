@@ -1,15 +1,15 @@
 th -i main.lua \
-    -load_seed true \
-    -path2seed ./save_kepler_1/seed.save \
+    -load_seed false \
+    -path2seed ./sk1/seed.save \
     -optimizer ADAGRAD \
-    -learning_rate 1e-2 \
+    -learning_rate 1e-1 \
     -criterion NLL \
     -plot_every 2000 \
     -batch_size 200 \
     -epoch 1000 \
     -save_every 1 \
     -load_model false \
-    -path2model ./save_kepler_1_2/cade.net \
+    -path2model ./sk1/cade.net \
     -model_type overfeat \
     -dropout 0.50 \
     -data_type Recipe101 \
@@ -21,4 +21,4 @@ th -i main.lua \
     -cudnn false \
     -threads 1 \
     -gpuid 1 \
-    -path2save ./save_kepler_1/ 
+    -path2save ./sk1/ 
