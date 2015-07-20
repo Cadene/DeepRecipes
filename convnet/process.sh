@@ -1,0 +1,1 @@
+th -i process.lua
