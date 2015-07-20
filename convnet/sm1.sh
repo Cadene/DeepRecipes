@@ -1,17 +1,19 @@
 th -i main.lua \
     -optimizer ADAGRAD \
-    -learning_rate 1e-4 \
+    -learning_rate 1e-1 \
     -criterion NLL \
     -plot_every 2000 \
     -batch_size 200 \
     -epoch 1000 \
     -save_every 1 \
-    -load_model true \
-    -path2model ./save_mbp_1/cade.net \
+    -load_model false \
+    -path2model ./sm1/cade.net \
     -model_type overfeat \
     -data_type Recipe101 \
     -path2dir /Users/remicadene/data/recipe_101_low/ \
     -run true \
-    -path2save ./save_mbp_1/ \
-    -load_seed true \
-    -path2seed ./save_mbp_1/seed.save
+    -train true \
+    -test true \
+    -path2save ./sm1/ \
+    -load_seed false \
+    -path2seed ./sm1/seed.save

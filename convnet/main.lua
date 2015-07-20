@@ -138,12 +138,13 @@ if opt.run == 'true' then
     _log = {}
     _log['err'] = {}
 
-    for i = 1, opt.epoch do
+    for epoch = 1, opt.epoch do
+
         if opt.train == 'true' then
-           train()
+           train(epoch)
         end
         if opt.test == 'true' then
-            test()
+            test(epoch)
         end
     end
 
