@@ -21,6 +21,10 @@ function test(epoch)
         --[[ test sample ]]
         local pred = model:forward(input)
         confusion:add(pred, target:squeeze())
+
+        if t % 50 == 0 then
+            collectgarbage()
+        end
     end
 
     --[[ time taken ]]
