@@ -24,8 +24,12 @@ function test(epoch)
     end
 
     --[[ time taken ]]
-    print("# Time to test 1 sample = "..(time['test']:time().real/testSet:size()).." sec")
-    print("# Time to test all samples = "..(time['test']:time().real).." sec")
+    s = time['test']:time().real/testSet:size()
+    print("# Time to test 1 sample = "
+        ..string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60))
+    s = time['test']:time().real
+    print("# Time to test all samples = "
+        ..string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60))
 
 
     --[[ confusion & log ]]

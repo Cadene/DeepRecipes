@@ -14,12 +14,19 @@ elseif opt.optimizer == 'LBFGS' then
     optimMethod = optim.lbfgs
 
 elseif opt.optimizer == 'SGD' then
+    -- Given the function above, we can now easily train the model using SGD.
+    -- For that, we need to define four key parameters:
+    --   + a learning rate: the size of the step taken at each stochastic 
+    --     estimate of the gradient
+    --   + a weight decay, to regularize the solution (L2 regularization)
+    --   + a momentum term, to average steps over time
+    --   + a learning rate decay, to let the algorithm converge more precisely
     optimState = {
         maxIter = opt.max_iter,
         learningRate = opt.learning_rate,
         weightDecay = opt.weight_decay,
         momentum = opt.momentum,
-        learningRateDecay = 1e-7
+        learningRateDecay = opt.learning_rate_decay
     }
     optimMethod = optim.sgd
 

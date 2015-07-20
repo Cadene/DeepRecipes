@@ -104,9 +104,12 @@ function train(epoch)
             -- print("# Time to optimMethod = "..(time['optimMethod']:time().real).." sec")
         end
 
-
-        print("# Time to learn "..opt.batch_size.." samples = "..(time['batch']:time().real).." sec = "..(time['batch']:time().user).." user = "..(time['batch']:time().sys).." sys")
-        print("# Time left to learn full batch "..(time['batch']:time().real*trainSet:size()/opt.batch_size).." sec")
+        s = time['batch']:time().real
+        print("# Time to learn "..opt.batch_size.." samples = "
+            ..string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60))
+        s = time['batch']:time().real*trainSet:size()/opt.batch_size
+        print("# Time left to learn full batch = "
+            ..string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60))
     end
 
     --[[ time taken ]]
