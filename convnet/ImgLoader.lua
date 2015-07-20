@@ -5,9 +5,10 @@ require 'string'
 
 local ImgLoader = torch.class('ImgLoader')
 
-function ImgLoader:__init(path2dir, path2save, path2esc)
+function ImgLoader:__init(path2dir, path2save, path2log, path2esc)
     self.path2dir  = path2dir or '../data/recipe_101/'
     self.path2save = path2save or '../data/recipe_101_clean/' 
+    self.path2log  = path2log or '../data/'
     self.path2esc  = path2esc or {'.', '..', '.DS_Store', '._.DS_Store'}
     self.path2img = {}
 end
@@ -121,9 +122,9 @@ function ImgLoader:preprocess()
     local path2img, last_img
     --os.execute('mkdir -p '..sys.dirname(self.path2save))
     
-    local log_success = io.open(self.path2save..'success.log', 'w')
-    local log_error   = io.open(self.path2save..'error.log', 'w')
-    local log_convert   = io.open(self.path2save..'convert.log', 'w')
+    local log_success = io.open(self.path2log..'success.log', 'w')
+    local log_error   = io.open(self.path2log..'error.log', 'w')
+    local log_convert   = io.open(self.path2log..'convert.log', 'w')
     
     function load_img(path2img)
 		img = image.load(path2img)
