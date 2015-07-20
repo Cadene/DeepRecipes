@@ -1,4 +1,6 @@
 th -i main.lua \
+    -load_seed true \
+    -path2seed ./save_kepler_2/seed.save \
     -optimizer ADAGRAD \
     -learning_rate 1e-2 \
     -criterion NLL \

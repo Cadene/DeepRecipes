@@ -25,6 +25,8 @@ cmd:option('-N',               500,         'number of points per class')
 cmd:option('-D',               2,           'number of dimensionality')
 cmd:option('-pc_train',        0.8,         'pourcentage for the training set')
 cmd:option('-path2dir',        '../data/recipe_101/recipe_101_clean', 'path2img')
+cmd:option('-load_seed',       'false',      'load seed')
+cmd:option('-path2seed',       './save/seed.save', 'path to seed used during the dataset making process')
 -- settings net loading
 cmd:option('-load_model',      'false',       'loading model or not')
 cmd:option('-path2model',      './save/cade.net', 'path to model')
@@ -73,7 +75,20 @@ if opt.type == 'cuda' then
     cutorch.setDevice(opt.gpuid)
 end
 torch.setnumthreads(opt.threads)
-torch.manualSeed(opt.seed)
+
+if opt.load_seed == 'false' then
+    print('... saving seed in '..opt.path2seed)
+    seed = torch.seed()
+    seed_save = io.open(opt.path2seed, 'w')
+    seed_save:write(string.format('%.0f', seed)) -- scientific to full number
+    seed_save:close()
+else
+    print('... loading seed in '..opt.path2seed)
+    for line in io.lines(opt.path2seed) do
+        seed = tonumber(line)
+    end
+end
+torch.manualSeed(seed)
 
 ------------------------------------------------------------------------
 -- Dataset
@@ -88,9 +103,15 @@ dofile('2_model.lua')
 -----------------------------------------------------------------------
 -- Logger
 
-confusion = optim.ConfusionMatrix(class_str)
-trainLogger = optim.Logger(paths.concat(opt.path2save, 'train.log'))
-testLogger  = optim.Logger(paths.concat(opt.path2save, 'test.log'))
+if opt.run == 'true' then
+    confusion = optim.ConfusionMatrix(class_str)
+end
+if opt.train == 'true' then
+    trainLogger = optim.Logger(paths.concat(opt.path2save, 'train.log'))
+end
+if opt.test == 'true' then
+    testLogger  = optim.Logger(paths.concat(opt.path2save, 'test.log'))
+end
 
 -----------------------------------------------------------------------
 -- Optimizer
@@ -135,10 +156,14 @@ if opt.run == 'true' then
 
     -- plot errors
     if opt.plot == 'true' then
-        trainLogger:style{['% mean class accuracy (train set)'] = '-'}
-        testLogger:style{['% mean class accuracy (test set)'] = '-'}
-        trainLogger:plot()
-        testLogger:plot()
+        if opt.train == 'true' then
+            trainLogger:style{['% mean class accuracy (train set)'] = '-'}
+            trainLogger:plot()
+        end
+        if opt.test == 'true' then
+            testLogger:style{['% mean class accuracy (test set)'] = '-'}
+            testLogger:plot()
+        end
     end
 
 end

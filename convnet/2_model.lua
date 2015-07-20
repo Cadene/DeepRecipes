@@ -55,17 +55,17 @@ else
         model:add(SpatialMaxPooling(3, 3, 3, 3))
         model:add(SpatialConvolutionMM(1024, 4096, 5, 5, 1, 1))
         model:add(nn.Threshold(0, 1e-6))
+        if opt.dropout ~= 0 then
+            model:add( nn.Dropout(opt.dropout) )
+        end
         model:add(SpatialConvolutionMM(4096, 4096, 1, 1, 1, 1))
         model:add(nn.Threshold(0, 1e-6))
-        -- model:add(nn.View(4096))
+        if opt.dropout ~= 0 then
+            model:add( nn.Dropout(opt.dropout) )
+        end
         model:add(SpatialConvolutionMM(4096, #class_str, 1, 1, 1, 1))
         model:add(nn.View(#class_str))
         model:add(nn.LogSoftMax())
-        --model:add(SoftMax())
-
-        -- model:add(SpatialConvolutionMM(4096, 1000, 1, 1, 1, 1))
-        -- model:add(nn.View(1000))
-        -- model:add(nn.SoftMax())
 
         ParamBank:init("net_weight_1")
         ParamBank:read(        0, {96,3,7,7},      m[offset+1].weight)
