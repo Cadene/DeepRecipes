@@ -32,7 +32,4 @@ th -i main.lua \
 \
     -run true \
     -train true \
-    -test true \
-    
-    
-    
+    -test true
