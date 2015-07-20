@@ -1,12 +1,22 @@
 require 'torch'
 
 require 'ImgLoader'
+require 'ImgDataset'
 
-loader = ImgLoader.new('/local/cadene/recipe_101/recipe_101/',
-					   '/local/cadene/recipe_101/recipe_101_clean/')
+--[[ create success.log ]]
+
+loader = ImgLoader.new('/home/cadene/data/recipe_101/recipe_101/',
+					   '/home/cadene/data/recipe_101/recipe_101_clean/',
+                       '/home/cadene/data/recipe_101/')
 loader:load()
 
 loader:preprocess()
---loader.path2img = {}
---loader.path2img['apple_pie'] = {}
---loader.path2img['apple_pie'][1] = 'apple_pie_390.jpg'
+
+--[[ process ]]
+
+loader = ImgLoader.new('/home/cadene/data/recipe_101/recipe_101_clean/',
+                        '/home/cadene/data/recipe_101/recipe_101_clean_224/')
+
+loader:loadCsv('/home/cadene/data/recipe_101/success.log')
+
+loader:process(ImgDataset.__prepare_img, 224)
