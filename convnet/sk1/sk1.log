@@ -873,3 +873,36 @@ nn.ClassNLLCriterion
 [0m# Time to learn 128 samples = 00:00:07[0m	
 [0m# Time left to learn full batch = 01:13:10[0m	
 [0m# Batch 35201 to 35328 on 72328 images[0m	
+[0m# Time to learn 128 samples = 00:00:07[0m	
+[0m# Time left to learn full batch = 01:13:15[0m	
+[0m# Batch 35329 to 35456 on 72328 images[0m	
+[0m# Time to learn 128 samples = 00:00:07[0m	
+[0m# Time left to learn full batch = 01:13:06[0m	
+[0m# Batch 35457 to 35584 on 72328 images[0m	
+[0m# Time to learn 128 samples = 00:00:07[0m	
+[0m# Time left to learn full batch = 01:13:10[0m	
+[0m# Batch 35585 to 35712 on 72328 images[0m	
+[0m# Time to learn 128 samples = 00:00:07[0m	
+[0m# Time left to learn full batch = 01:13:07[0m	
+[0m# Batch 35713 to 35840 on 72328 images[0m	
+[0m# Time to learn 128 samples = 00:00:07[0m	
+[0m# Time left to learn full batch = 01:13:12[0m	
+[0m# Batch 35841 to 35968 on 72328 images[0m	
+[0m# Time to learn 128 samples = 00:00:07[0m	
+[0m# Time left to learn full batch = 01:13:10[0m	
+[0m# Batch 35969 to 36096 on 72328 images[0m	
+[0m# Time to learn 128 samples = 00:00:07[0m	
+[0m# Time left to learn full batch = 01:13:08[0m	
+[0m# Batch 36097 to 36224 on 72328 images[0m	
+[0m# Time to learn 128 samples = 00:00:07[0m	
+[0m# Time left to learn full batch = 01:13:07[0m	
+[0m# Batch 36225 to 36352 on 72328 images[0m	
+[0m# Time to learn 128 samples = 00:00:07[0m	
+[0m# Time left to learn full batch = 01:13:15[0m	
+[0m# Batch 36353 to 36480 on 72328 images[0m	
+[0m# Time to learn 128 samples = 00:00:07[0m	
+[0m# Time left to learn full batch = 01:13:15[0m	
+[0m# Batch 36481 to 36608 on 72328 images[0m	
+[0m# Time to learn 128 samples = 00:00:07[0m	
+[0m# Time left to learn full batch = 01:13:09[0m	
+[0m# Batch 36609 to 36736 on 72328 images[0m	
