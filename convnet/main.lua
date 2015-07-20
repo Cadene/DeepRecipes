@@ -103,9 +103,15 @@ dofile('2_model.lua')
 -----------------------------------------------------------------------
 -- Logger
 
-confusion = optim.ConfusionMatrix(class_str)
-trainLogger = optim.Logger(paths.concat(opt.path2save, 'train.log'))
-testLogger  = optim.Logger(paths.concat(opt.path2save, 'test.log'))
+if opt.run == 'true' then
+    confusion = optim.ConfusionMatrix(class_str)
+end
+if opt.train == 'true' then
+    trainLogger = optim.Logger(paths.concat(opt.path2save, 'train.log'))
+end
+if opt.test == 'true' then
+    testLogger  = optim.Logger(paths.concat(opt.path2save, 'test.log'))
+end
 
 -----------------------------------------------------------------------
 -- Optimizer
@@ -150,10 +156,14 @@ if opt.run == 'true' then
 
     -- plot errors
     if opt.plot == 'true' then
-        trainLogger:style{['% mean class accuracy (train set)'] = '-'}
-        testLogger:style{['% mean class accuracy (test set)'] = '-'}
-        trainLogger:plot()
-        testLogger:plot()
+        if opt.train == 'true' then
+            trainLogger:style{['% mean class accuracy (train set)'] = '-'}
+            trainLogger:plot()
+        end
+        if opt.test == 'true' then
+            testLogger:style{['% mean class accuracy (test set)'] = '-'}
+            testLogger:plot()
+        end
     end
 
 end
