@@ -1,0 +1,10 @@
+######################################################################
+#     Experience n°1
+######################################################################
+
+# Cli
+
+# Durée d'une epoch approximativement
+
+# % mean class accuracy (train set) par epoch 
+
