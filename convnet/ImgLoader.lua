@@ -181,11 +181,15 @@ function ImgLoader:process(func, ...)
     --[[ Make a new database using func to process images ]]--
     local path2img, path2save
     func = func or ImgDataset.__prepare_img
-
+    -- create all directory
     for class_name, path2class in pairs(self.path2img) do
         path2save = self.path2save..class_name
         os.execute('mkdir -p '..path2save)
-
+    end
+    -- create all images
+    for class_name, path2class in pairs(self.path2img) do
+        path2save = self.path2save..class_name
+ 
         for img_id, img_name in pairs(path2class) do
             path2img = self.path2dir..class_name..'/'..img_name
             img = func(path2img, ...)

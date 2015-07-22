@@ -13,7 +13,7 @@ th -i main.lua \
 \
     -type cuda \
     -threads 8 \
-    -gpuid 3 \
+    -gpuid 5 \
     -model_type overfeat_scratch \
     -criterion NLL \
     -dropout 0.5 \
