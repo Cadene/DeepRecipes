@@ -125,12 +125,49 @@ else
         model:add(nn.View(#class_str))
         model:add(nn.LogSoftMax())
 
+    elseif opt.model_type == 'small' then
+
+        --[[
+            Input size 221*221*3
+        ]]--
+
+        model = nn.Sequential()
+
+        model:add(nn.SpatialConvolutionMM(3, 64, 3, 3, 1, 1, 1, 1))
+        model:add(nn.ReLU())
+        model:add(nn.SpatialMaxPooling(2, 2, 2, 2))
+
+        model:add(nn.SpatialConvolutionMM(64, 128, 3, 3, 1, 1, 1, 1))
+        model:add(nn.ReLU())
+        model:add(nn.SpatialMaxPooling(2, 2, 2, 2))
+
+        model:add(nn.SpatialConvolutionMM(128, 128, 3, 3, 1, 1, 1, 1))
+        model:add(nn.ReLU())
+        model:add(nn.SpatialMaxPooling(2, 2, 2, 2))
+
+        model:add(nn.Reshape(97682))
+        model:add(nn.Linear(97682,4096))
+        model:add(nn.ReLU())
+        if opt.dropout ~= 0 then
+            model:add( nn.Dropout(opt.dropout) )
+        end
+
+        model:add(nn.Linear(4096,4096))
+        model:add(nn.ReLU())
+        if opt.dropout ~= 0 then
+            model:add( nn.Dropout(opt.dropout) )
+        end
+        model:add(nn.Linear(4096,#class_str))
+        model:add(nn.LogSoftMax())
+
     elseif opt.model_type == 'verydeep_A' then
 
-        --[[ Convolution : kernel 3*3, step 1:1, zero padding 1:1 ]]-- 
+        --[[
+            Input size 224*224*3 
+            Convolution : kernel 3*3, step 1:1, zero padding 1:1
+        ]]-- 
 
         -- not tested
-        
         model = nn.Sequential()
         -- 1
         model:add(nn.SpatialConvolutionMM(3, 64, 3, 3, 1, 1, 1, 1))
@@ -173,7 +210,7 @@ else
         end
         -- 11
         model:add(nn.Linear(4096,#class_str))
-        model:add(nn.LogSoftMax())--]]
+        model:add(nn.LogSoftMax())
 
     else
         error(opt.model_type..' is not a valid type')
@@ -217,6 +254,7 @@ parameters, gradParameters = model:getParameters()
 
 print("# Model")
 print(model)
+print("Number of parameters "..#parameters)
 
 print("# Criterion")
 print(criterion)
