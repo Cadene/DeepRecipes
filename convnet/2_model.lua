@@ -254,7 +254,7 @@ parameters, gradParameters = model:getParameters()
 
 print("# Model")
 print(model)
-print("Number of parameters "..#parameters)
+print("Number of parameters "..parameters:size(1))
 
 print("# Criterion")
 print(criterion)
