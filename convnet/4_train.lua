@@ -23,7 +23,7 @@ function train(epoch)
         if batch_to > trainSet:size() then
             batch_to = trainSet:size()
         end
-        print("# Batch "..t.." to "..batch_to.." on "..trainSet:size().." images")
+        print(".:. Batch "..t.." to "..batch_to.." on "..trainSet:size().." images")
         
 	    -- time['inputs'] = torch.Timer()
         local inputs = {}
@@ -107,22 +107,22 @@ function train(epoch)
         end
 
         s = time['batch']:time().real
-        print("# Time to learn "..opt.batch_size.." samples = "
+        print(": Time to learn "..opt.batch_size.." samples = "
             ..string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60))
         s = time['batch']:time().real * (trainSet:size()/opt.batch_size - nb_batch)
-        print("# Time left to learn full batch = "
+        print(": Time left to learn full batch = "
             ..string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60))
 
         nb_batch = nb_batch + 1
     end
 
     --[[ time taken ]]
-    print("# End of Epoch n° "..epoch)
+    print(".:. End of Epoch n° "..epoch)
     s = time['train']:time().real/trainSet:size()
-    print("# Real time to learn 1 sample = "
+    print(": Real time to learn 1 sample = "
         ..string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60))
     s = time['train']:time().real
-    print("# Real time to learn full batch = "
+    print(": Real time to learn full batch = "
         ..string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60))
 
     --[[ confusion ]]
@@ -141,7 +141,7 @@ function train(epoch)
     if epoch % opt.save_every == 0 then
         -- time['save_every'] = torch.Timer()
         local filename = paths.concat(opt.path2save, 'cade.net')
-        print('# Saving model to '..filename)
+        print('# ... saving model to '..filename)
         os.execute('mkdir -p ' .. sys.dirname(filename))
         torch.save(filename, model)
         -- print("# Time to save model = "..(time['save_every']:time().real).." sec")

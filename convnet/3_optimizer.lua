@@ -1,3 +1,4 @@
+print("# ... building optimizer")
 
 if opt.optimizer == 'CG' then
     optimState = {

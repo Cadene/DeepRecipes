@@ -65,14 +65,31 @@ opt = cmd:parse(arg or {})
 
 
 pid = posix.getpid("pid")
-print("... lunching using pid = "..pid)
+print("# ... lunching using pid = "..pid)
 
 ------------------------------------------------------------------------
--- Settings
+-- Seed
+
+if opt.load_seed == 'false' then
+    print('# ... saving seed in '..opt.path2seed)
+    seed = torch.seed()
+    seed_save = io.open(opt.path2seed, 'w')
+    seed_save:write(string.format('%.0f', seed)) -- scientific to full number
+    seed_save:close()
+else
+    print('# ... loading seed in '..opt.path2seed)
+    for line in io.lines(opt.path2seed) do
+        seed = tonumber(line)
+    end
+end
+torch.manualSeed(seed)
+
+------------------------------------------------------------------------
+-- Cuda
 
 torch.setdefaulttensortype('torch.FloatTensor')
 if opt.type == 'cuda' then
-    print('... switching to CUDA')
+    print('# ... switching to CUDA')
     require 'cutorch'
     require 'cunn'
     if opt.cudnn == 'true' then
@@ -81,20 +98,6 @@ if opt.type == 'cuda' then
     cutorch.setDevice(opt.gpuid)
 end
 torch.setnumthreads(opt.threads)
-
-if opt.load_seed == 'false' then
-    print('... saving seed in '..opt.path2seed)
-    seed = torch.seed()
-    seed_save = io.open(opt.path2seed, 'w')
-    seed_save:write(string.format('%.0f', seed)) -- scientific to full number
-    seed_save:close()
-else
-    print('... loading seed in '..opt.path2seed)
-    for line in io.lines(opt.path2seed) do
-        seed = tonumber(line)
-    end
-end
-torch.manualSeed(seed)
 
 ------------------------------------------------------------------------
 -- Dataset

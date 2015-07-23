@@ -1,8 +1,9 @@
 if opt.load_model == 'true' then
-    print('# Reloading previously trained network')
+    print('# ...reloading previously trained network')
     model = torch.load(opt.path2model)
 
 else
+    print('# ... building model')
 
     if opt.model_type == 'standard' then
         model = nn.Sequential()

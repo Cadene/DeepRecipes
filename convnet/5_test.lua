@@ -29,10 +29,10 @@ function test(epoch)
 
     --[[ time taken ]]
     s = time['test']:time().real/testSet:size()
-    print("# Time to test 1 sample = "
+    print(": Time to test 1 sample = "
         ..string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60))
     s = time['test']:time().real
-    print("# Time to test all samples = "
+    print(": Time to test all samples = "
         ..string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60))
 
 
