@@ -45,4 +45,4 @@ Options:
   -train               train net [true]
   -test                test net [false]
 
-./sk2.sh: 27: ./sk2.sh: -optimizer: not found
+./sk6.sh: 27: ./sk6.sh: -optimizer: not found

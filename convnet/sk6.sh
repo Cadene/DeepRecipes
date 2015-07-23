@@ -13,7 +13,7 @@ th -i main.lua \
 \
     -type cuda \
     -threads 8 \
-    -gpuid 1 \
+    -gpuid 6 \
     -model_type small \
     -criterion NLL \
     -dropout 0.5 \

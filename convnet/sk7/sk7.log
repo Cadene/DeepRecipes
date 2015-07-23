@@ -1,0 +1,14 @@
+[0m... lunching using pid = 25392[0m	
+[0m... switching to CUDA[0m	
+[0m... saving seed in ./sk7/seed.save[0m	
+/home/cadene/torch/install/bin/luajit: /home/cadene/torch/install/share/lua/5.1/nn/Module.lua:191: /home/cadene/torch/extra/cutorch/lib/THC/THCStorage.cu(30) : cuda runtime error (2) : out of memory at /home/cadene/torch/extra/cutorch/lib/THC/THCGeneral.c:241
+stack traceback:
+	[C]: in function 'Tensor'
+	/home/cadene/torch/install/share/lua/5.1/nn/Module.lua:191: in function 'flatten'
+	/home/cadene/torch/install/share/lua/5.1/nn/Module.lua:223: in function 'getParameters'
+	2_model.lua:253: in main chunk
+	[C]: in function 'dofile'
+	main.lua:107: in main chunk
+	[C]: in function 'dofile'
+	...dene/torch/install/lib/luarocks/rocks/trepl/scm-1/bin/th:131: in main chunk
+	[C]: at 0x00405d30
