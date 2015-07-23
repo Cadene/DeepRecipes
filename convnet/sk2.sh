@@ -18,12 +18,14 @@ th -i main.lua \
     -criterion NLL \
     -dropout 0.5 \
 \
-    -optimizer SGD \
-    -learning_rate 5e-1 \
+    '#-optimizer SGD \
+    -learning_rate 5e-2 \
     -learning_rate_decay 0.033 \
     -momentum 0.06 \
     -weight_decay 1e-5 \
-    -batch_size 128 \
+    -batch_size 128 \'
+    -optimizer ADAGRAD \
+    -learning_rate 5e-1 \
 \
     -epoch 1000 \
     -path2save ./sk2/ \

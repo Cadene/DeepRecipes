@@ -6,10 +6,10 @@ th -i main.lua \
     -pc_train 0.8 \
 \
     -load_seed false \
-    -path2seed ./sk2/seed.save \
+    -path2seed ./sk4/seed.save \
 \
-    -load_model false \
-    -path2model ./sk2/cade.net \
+    -load_model true \
+    -path2model ./sk4/cade.net \
 \
     -type cuda \
     -threads 8 \
@@ -18,12 +18,14 @@ th -i main.lua \
     -criterion NLL \
     -dropout 0.5 \
 \
-    -optimizer SGD \
-    -learning_rate 5e-1 \
+    '#-optimizer SGD \
+    -learning_rate 5e-2 \
     -learning_rate_decay 0.033 \
     -momentum 0.06 \
     -weight_decay 1e-5 \
-    -batch_size 128 \
+    -batch_size 128 \'
+    -optimizer ADAGRAD \
+    -learning_rate 1e-1 \
 \
     -epoch 1000 \
     -path2save ./sk4/ \
