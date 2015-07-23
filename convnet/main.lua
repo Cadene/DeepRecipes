@@ -2,8 +2,10 @@ require 'torch'
 require 'nn'
 require 'xlua'
 require 'optim'
+posix = require 'posix'
 
 require 'Ploter'
+
 
 
 ------------------------------------------------------------------------
@@ -60,6 +62,10 @@ cmd:option('-train',	       'true',	    'train net')
 cmd:option('-test',	       'false',     'test net')
 cmd:text()
 opt = cmd:parse(arg or {})
+
+
+pid = posix.getpid("pid")
+print("... lunching using pid = "..pid)
 
 ------------------------------------------------------------------------
 -- Settings
