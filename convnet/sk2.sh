@@ -5,10 +5,10 @@ th -i main.lua \
 \
     -pc_train 0.8 \
 \
-    -load_seed false \
+    -load_seed true \
     -path2seed ./sk2/seed.save \
 \
-    -load_model false \
+    -load_model true \
     -path2model ./sk2/cade.net \
 \
     -type cuda \
@@ -19,7 +19,7 @@ th -i main.lua \
     -dropout 0.5 \
 \
     -optimizer SGD \
-    -learning_rate 5e-2 \
+    -learning_rate 5e-1 \
     -learning_rate_decay 0.033 \
     -momentum 0.06 \
     -weight_decay 1e-5 \
