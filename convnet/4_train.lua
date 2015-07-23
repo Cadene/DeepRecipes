@@ -14,6 +14,8 @@ function train(epoch)
 
     shuffle = torch.randperm(trainSet:size())
 
+    nb_batch = 1
+
     for t = 1, trainSet:size(), opt.batch_size do
         time['batch'] = torch.Timer()
         -- xlua.progress(t-1, trainSet:size())
@@ -107,14 +109,21 @@ function train(epoch)
         s = time['batch']:time().real
         print("# Time to learn "..opt.batch_size.." samples = "
             ..string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60))
-        s = time['batch']:time().real*trainSet:size()/opt.batch_size
+        s = time['batch']:time().real * (trainSet:size()/opt.batch_size - nb_batch)
         print("# Time left to learn full batch = "
             ..string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60))
+
+        nb_batch = nb_batch + 1
     end
 
     --[[ time taken ]]
-    print("# Time to learn 1 sample = "..(time['train']:time().real/trainSet:size()).." sec")
-    print("# Time to learn full batch = "..(time['train']:time().real).." sec")
+    print("# End of Epoch n° "..epoch)
+    s = time['train']:time().real/trainSet:size()
+    print("# Real time to learn 1 sample = "
+        ..string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60))
+    s = time['train']:time().real
+    print("# Real time to learn full batch = "
+        ..string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60))
 
     --[[ confusion ]]
     --time['confusion'] = torch.Timer()
