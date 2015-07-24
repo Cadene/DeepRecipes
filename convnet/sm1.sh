@@ -5,16 +5,16 @@ th -i main.lua \
 \
     -pc_train 0.8 \
 \
-    -load_seed true \
+    -load_seed false \
     -path2seed ./sm1/seed.save \
 \
-    -load_model true \
+    -load_model false \
     -path2model ./sm1/cade.net \
 \
     -type float \
     -threads 8 \
     -gpuid 1 \
-    -model_type overfeat \
+    -model_type verydeep_D \
     -criterion NLL \
     -dropout 0.5 \
 \
@@ -30,7 +30,7 @@ th -i main.lua \
     -plot_every 2000 \
     -save_every 1 \
 \
-    -run true \
+    -run false \
     -train true \
     -test true \
     
