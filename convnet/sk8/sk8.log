@@ -1,0 +1,908 @@
+[0m# ... lunching using pid = 9527[0m	
+[0m# ... saving seed in ./sk8/seed.save[0m	
+[0m# ... switching to CUDA[0m	
+[0m# ... loading Dataset[0m	
+[0m# ... building model[0m	
+[0m# Model[0m	
+nn.Sequential {
+  [input -> (1) -> (2) -> (3) -> (4) -> (5) -> (6) -> (7) -> (8) -> (9) -> (10) -> (11) -> (12) -> (13) -> (14) -> (15) -> (16) -> (17) -> (18) -> output]
+  (1): nn.SpatialConvolutionMM(in: 3, out: 16, kW: 3, kH: 3, padding: 1)
+  (2): nn.ReLU
+  (3): nn.SpatialMaxPooling(kW: 2, kH: 2, dW: 2, dH: 2)
+  (4): nn.SpatialConvolutionMM(in: 16, out: 32, kW: 3, kH: 3, padding: 1)
+  (5): nn.ReLU
+  (6): nn.SpatialMaxPooling(kW: 2, kH: 2, dW: 2, dH: 2)
+  (7): nn.SpatialConvolutionMM(in: 32, out: 32, kW: 3, kH: 3, padding: 1)
+  (8): nn.ReLU
+  (9): nn.SpatialMaxPooling(kW: 3, kH: 3, dW: 3, dH: 3)
+  (10): nn.Reshape(10368)
+  (11): nn.Linear(10368 -> 2048)
+  (12): nn.ReLU
+  (13): nn.Dropout(0.500000)
+  (14): nn.Linear(2048 -> 1024)
+  (15): nn.ReLU
+  (16): nn.Dropout(0.500000)
+  (17): nn.Linear(1024 -> 101)
+  (18): nn.LogSoftMax
+}
+[0mNumber of parameters 23451749[0m	
+[0m# Criterion[0m	
+nn.ClassNLLCriterion
+[0m# ... building optimizer[0m	
+[0m# Optimizer[0m	
+[0mSGD[0m	
+[0m# OptimState[0m	
+{
+  learningRateDecay : [0;36m0.033[0m
+  learningRate : [0;36m0.001[0m
+  weightDecay : [0;36m1e-05[0m
+  momentum : [0;36m0.06[0m
+}
+[0m[0m	
+[0m#####################[0m	
+[0m# Epoch n° 1[0m	
+[0m.:. Batch 1 to 128 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:16:50[0m	
+[0m.:. Batch 129 to 256 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:16:37[0m	
+[0m.:. Batch 257 to 384 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:16:45[0m	
+[0m.:. Batch 385 to 512 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:17:14[0m	
+[0m.:. Batch 513 to 640 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:16:56[0m	
+[0m.:. Batch 641 to 768 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:17:05[0m	
+[0m.:. Batch 769 to 896 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:16:58[0m	
+[0m.:. Batch 897 to 1024 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:03[0m	
+[0m: Time left to learn full batch = 00:33:15[0m	
+[0m.:. Batch 1025 to 1152 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:22:51[0m	
+[0m.:. Batch 1153 to 1280 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:21:36[0m	
+[0m.:. Batch 1281 to 1408 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:19:55[0m	
+[0m.:. Batch 1409 to 1536 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:17:45[0m	
+[0m.:. Batch 1537 to 1664 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:16:16[0m	
+[0m.:. Batch 1665 to 1792 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:16:34[0m	
+[0m.:. Batch 1793 to 1920 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:20:13[0m	
+[0m.:. Batch 1921 to 2048 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:18:24[0m	
+[0m.:. Batch 2049 to 2176 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:17:40[0m	
+[0m.:. Batch 2177 to 2304 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:17:56[0m	
+[0m.:. Batch 2305 to 2432 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:17:26[0m	
+[0m.:. Batch 2433 to 2560 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:17:10[0m	
+[0m.:. Batch 2561 to 2688 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:18:21[0m	
+[0m.:. Batch 2689 to 2816 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:17:30[0m	
+[0m.:. Batch 2817 to 2944 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:17:44[0m	
+[0m.:. Batch 2945 to 3072 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:17:19[0m	
+[0m.:. Batch 3073 to 3200 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:17:24[0m	
+[0m.:. Batch 3201 to 3328 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:16:45[0m	
+[0m.:. Batch 3329 to 3456 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:17:52[0m	
+[0m.:. Batch 3457 to 3584 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:16:39[0m	
+[0m.:. Batch 3585 to 3712 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:16:27[0m	
+[0m.:. Batch 3713 to 3840 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:16:11[0m	
+[0m.:. Batch 3841 to 3968 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:16:22[0m	
+[0m.:. Batch 3969 to 4096 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:16:25[0m	
+[0m.:. Batch 4097 to 4224 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:17:04[0m	
+[0m.:. Batch 4225 to 4352 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:16:54[0m	
+[0m.:. Batch 4353 to 4480 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:16:58[0m	
+[0m.:. Batch 4481 to 4608 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:16:59[0m	
+[0m.:. Batch 4609 to 4736 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:16:23[0m	
+[0m.:. Batch 4737 to 4864 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:05[0m	
+[0m: Time left to learn full batch = 00:44:36[0m	
+[0m.:. Batch 4865 to 4992 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:21:19[0m	
+[0m.:. Batch 4993 to 5120 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:21:14[0m	
+[0m.:. Batch 5121 to 5248 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:19:41[0m	
+[0m.:. Batch 5249 to 5376 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:17:49[0m	
+[0m.:. Batch 5377 to 5504 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:17:32[0m	
+[0m.:. Batch 5505 to 5632 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:17:19[0m	
+[0m.:. Batch 5633 to 5760 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:15:50[0m	
+[0m.:. Batch 5761 to 5888 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:15:54[0m	
+[0m.:. Batch 5889 to 6016 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:16:42[0m	
+[0m.:. Batch 6017 to 6144 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:16:52[0m	
+[0m.:. Batch 6145 to 6272 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:17:43[0m	
+[0m.:. Batch 6273 to 6400 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:17:45[0m	
+[0m.:. Batch 6401 to 6528 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:18:45[0m	
+[0m.:. Batch 6529 to 6656 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:17:49[0m	
+[0m.:. Batch 6657 to 6784 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:18:46[0m	
+[0m.:. Batch 6785 to 6912 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:18:31[0m	
+[0m.:. Batch 6913 to 7040 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:17:30[0m	
+[0m.:. Batch 7041 to 7168 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:18:01[0m	
+[0m.:. Batch 7169 to 7296 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:15:09[0m	
+[0m.:. Batch 7297 to 7424 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:17:13[0m	
+[0m.:. Batch 7425 to 7552 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:18:20[0m	
+[0m.:. Batch 7553 to 7680 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:18:34[0m	
+[0m.:. Batch 7681 to 7808 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:20:30[0m	
+[0m.:. Batch 7809 to 7936 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:20:43[0m	
+[0m.:. Batch 7937 to 8064 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:20:28[0m	
+[0m.:. Batch 8065 to 8192 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:18:03[0m	
+[0m.:. Batch 8193 to 8320 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:04[0m	
+[0m: Time left to learn full batch = 00:39:45[0m	
+[0m.:. Batch 8321 to 8448 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:19:42[0m	
+[0m.:. Batch 8449 to 8576 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:20:30[0m	
+[0m.:. Batch 8577 to 8704 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:15:02[0m	
+[0m.:. Batch 8705 to 8832 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:14:52[0m	
+[0m.:. Batch 8833 to 8960 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:16:02[0m	
+[0m.:. Batch 8961 to 9088 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:16:50[0m	
+[0m.:. Batch 9089 to 9216 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:17:23[0m	
+[0m.:. Batch 9217 to 9344 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:19:36[0m	
+[0m.:. Batch 9345 to 9472 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:19:26[0m	
+[0m.:. Batch 9473 to 9600 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:18:05[0m	
+[0m.:. Batch 9601 to 9728 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:16:53[0m	
+[0m.:. Batch 9729 to 9856 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:17:57[0m	
+[0m.:. Batch 9857 to 9984 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:16:56[0m	
+[0m.:. Batch 9985 to 10112 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:14:24[0m	
+[0m.:. Batch 10113 to 10240 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:14:27[0m	
+[0m.:. Batch 10241 to 10368 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:15:10[0m	
+[0m.:. Batch 10369 to 10496 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:15:24[0m	
+[0m.:. Batch 10497 to 10624 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:15:27[0m	
+[0m.:. Batch 10625 to 10752 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:15:49[0m	
+[0m.:. Batch 10753 to 10880 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:15:30[0m	
+[0m.:. Batch 10881 to 11008 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:15:28[0m	
+[0m.:. Batch 11009 to 11136 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:15:34[0m	
+[0m.:. Batch 11137 to 11264 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:15:42[0m	
+[0m.:. Batch 11265 to 11392 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:16:02[0m	
+[0m.:. Batch 11393 to 11520 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:15:27[0m	
+[0m.:. Batch 11521 to 11648 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:14:53[0m	
+[0m.:. Batch 11649 to 11776 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:14:49[0m	
+[0m.:. Batch 11777 to 11904 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:05[0m	
+[0m: Time left to learn full batch = 00:41:05[0m	
+[0m.:. Batch 11905 to 12032 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:19:00[0m	
+[0m.:. Batch 12033 to 12160 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:18:27[0m	
+[0m.:. Batch 12161 to 12288 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:17:33[0m	
+[0m.:. Batch 12289 to 12416 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:15:53[0m	
+[0m.:. Batch 12417 to 12544 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:16:27[0m	
+[0m.:. Batch 12545 to 12672 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:13:57[0m	
+[0m.:. Batch 12673 to 12800 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:13:50[0m	
+[0m.:. Batch 12801 to 12928 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:13:42[0m	
+[0m.:. Batch 12929 to 13056 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:13:44[0m	
+[0m.:. Batch 13057 to 13184 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:13:56[0m	
+[0m.:. Batch 13185 to 13312 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:13:58[0m	
+[0m.:. Batch 13313 to 13440 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:14:10[0m	
+[0m.:. Batch 13441 to 13568 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:14:25[0m	
+[0m.:. Batch 13569 to 13696 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:14:45[0m	
+[0m.:. Batch 13697 to 13824 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:14:35[0m	
+[0m.:. Batch 13825 to 13952 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:14:57[0m	
+[0m.:. Batch 13953 to 14080 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:14:51[0m	
+[0m.:. Batch 14081 to 14208 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:14:00[0m	
+[0m.:. Batch 14209 to 14336 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:13:50[0m	
+[0m.:. Batch 14337 to 14464 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:13:48[0m	
+[0m.:. Batch 14465 to 14592 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:13:49[0m	
+[0m.:. Batch 14593 to 14720 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:13:50[0m	
+[0m.:. Batch 14721 to 14848 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:13:41[0m	
+[0m.:. Batch 14849 to 14976 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:03[0m	
+[0m: Time left to learn full batch = 00:27:49[0m	
+[0m.:. Batch 14977 to 15104 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:19:27[0m	
+[0m.:. Batch 15105 to 15232 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:18:04[0m	
+[0m.:. Batch 15233 to 15360 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:16:30[0m	
+[0m.:. Batch 15361 to 15488 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:05[0m	
+[0m: Time left to learn full batch = 00:41:33[0m	
+[0m.:. Batch 15489 to 15616 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:19:58[0m	
+[0m.:. Batch 15617 to 15744 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:19:20[0m	
+[0m.:. Batch 15745 to 15872 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:16:49[0m	
+[0m.:. Batch 15873 to 16000 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:15:49[0m	
+[0m.:. Batch 16001 to 16128 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:15:36[0m	
+[0m.:. Batch 16129 to 16256 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:15:33[0m	
+[0m.:. Batch 16257 to 16384 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:15:04[0m	
+[0m.:. Batch 16385 to 16512 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:14:26[0m	
+[0m.:. Batch 16513 to 16640 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:15:37[0m	
+[0m.:. Batch 16641 to 16768 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:15:01[0m	
+[0m.:. Batch 16769 to 16896 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:13:24[0m	
+[0m.:. Batch 16897 to 17024 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:05[0m	
+[0m: Time left to learn full batch = 00:41:31[0m	
+[0m.:. Batch 17025 to 17152 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:15:45[0m	
+[0m.:. Batch 17153 to 17280 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:16:13[0m	
+[0m.:. Batch 17281 to 17408 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:14:59[0m	
+[0m.:. Batch 17409 to 17536 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:14:29[0m	
+[0m.:. Batch 17537 to 17664 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:17:39[0m	
+[0m.:. Batch 17665 to 17792 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:16:04[0m	
+[0m.:. Batch 17793 to 17920 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:14:39[0m	
+[0m.:. Batch 17921 to 18048 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:13:59[0m	
+[0m.:. Batch 18049 to 18176 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:16:46[0m	
+[0m.:. Batch 18177 to 18304 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:14:30[0m	
+[0m.:. Batch 18305 to 18432 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:14:08[0m	
+[0m.:. Batch 18433 to 18560 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:05[0m	
+[0m: Time left to learn full batch = 00:41:13[0m	
+[0m.:. Batch 18561 to 18688 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:16:32[0m	
+[0m.:. Batch 18689 to 18816 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:16:18[0m	
+[0m.:. Batch 18817 to 18944 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:16:11[0m	
+[0m.:. Batch 18945 to 19072 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:13:17[0m	
+[0m.:. Batch 19073 to 19200 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:13:13[0m	
+[0m.:. Batch 19201 to 19328 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:13:22[0m	
+[0m.:. Batch 19329 to 19456 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:13:24[0m	
+[0m.:. Batch 19457 to 19584 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:13:07[0m	
+[0m.:. Batch 19585 to 19712 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:13:26[0m	
+[0m.:. Batch 19713 to 19840 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:13:54[0m	
+[0m.:. Batch 19841 to 19968 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:14:15[0m	
+[0m.:. Batch 19969 to 20096 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:14:12[0m	
+[0m.:. Batch 20097 to 20224 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:13:09[0m	
+[0m.:. Batch 20225 to 20352 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:03[0m	
+[0m: Time left to learn full batch = 00:24:47[0m	
+[0m.:. Batch 20353 to 20480 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:17:19[0m	
+[0m.:. Batch 20481 to 20608 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:16:13[0m	
+[0m.:. Batch 20609 to 20736 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:18:16[0m	
+[0m.:. Batch 20737 to 20864 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:16:22[0m	
+[0m.:. Batch 20865 to 20992 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:16:02[0m	
+[0m.:. Batch 20993 to 21120 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:16:43[0m	
+[0m.:. Batch 21121 to 21248 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:17:49[0m	
+[0m.:. Batch 21249 to 21376 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:16:37[0m	
+[0m.:. Batch 21377 to 21504 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:18:29[0m	
+[0m.:. Batch 21505 to 21632 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:06[0m	
+[0m: Time left to learn full batch = 00:42:44[0m	
+[0m.:. Batch 21633 to 21760 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:14:35[0m	
+[0m.:. Batch 21761 to 21888 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:14:02[0m	
+[0m.:. Batch 21889 to 22016 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:13:52[0m	
+[0m.:. Batch 22017 to 22144 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:13:03[0m	
+[0m.:. Batch 22145 to 22272 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:13:10[0m	
+[0m.:. Batch 22273 to 22400 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:13:24[0m	
+[0m.:. Batch 22401 to 22528 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:13:32[0m	
+[0m.:. Batch 22529 to 22656 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:13:36[0m	
+[0m.:. Batch 22657 to 22784 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:13:37[0m	
+[0m.:. Batch 22785 to 22912 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:13:11[0m	
+[0m.:. Batch 22913 to 23040 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:13:11[0m	
+[0m.:. Batch 23041 to 23168 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:05[0m	
+[0m: Time left to learn full batch = 00:33:22[0m	
+[0m.:. Batch 23169 to 23296 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:16:16[0m	
+[0m.:. Batch 23297 to 23424 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:16:23[0m	
+[0m.:. Batch 23425 to 23552 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:17:15[0m	
+[0m.:. Batch 23553 to 23680 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:17:31[0m	
+[0m.:. Batch 23681 to 23808 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:14:59[0m	
+[0m.:. Batch 23809 to 23936 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:13:35[0m	
+[0m.:. Batch 23937 to 24064 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:13:14[0m	
+[0m.:. Batch 24065 to 24192 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:14:26[0m	
+[0m.:. Batch 24193 to 24320 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:14:17[0m	
+[0m.:. Batch 24321 to 24448 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:14:49[0m	
+[0m.:. Batch 24449 to 24576 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:13:29[0m	
+[0m.:. Batch 24577 to 24704 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:07[0m	
+[0m: Time left to learn full batch = 00:47:05[0m	
+[0m.:. Batch 24705 to 24832 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:16:02[0m	
+[0m.:. Batch 24833 to 24960 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:14:51[0m	
+[0m.:. Batch 24961 to 25088 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:14:29[0m	
+[0m.:. Batch 25089 to 25216 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:12:40[0m	
+[0m.:. Batch 25217 to 25344 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:12:48[0m	
+[0m.:. Batch 25345 to 25472 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:12:04[0m	
+[0m.:. Batch 25473 to 25600 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:13:04[0m	
+[0m.:. Batch 25601 to 25728 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:12:01[0m	
+[0m.:. Batch 25729 to 25856 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:13:04[0m	
+[0m.:. Batch 25857 to 25984 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:14:47[0m	
+[0m.:. Batch 25985 to 26112 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:12:53[0m	
+[0m.:. Batch 26113 to 26240 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:11:14[0m	
+[0m.:. Batch 26241 to 26368 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:12:05[0m	
+[0m.:. Batch 26369 to 26496 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:12:11[0m	
+[0m.:. Batch 26497 to 26624 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:12:33[0m	
+[0m.:. Batch 26625 to 26752 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:13:53[0m	
+[0m.:. Batch 26753 to 26880 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:15:45[0m	
+[0m.:. Batch 26881 to 27008 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:12:33[0m	
+[0m.:. Batch 27009 to 27136 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:12:03[0m	
+[0m.:. Batch 27137 to 27264 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:12:36[0m	
+[0m.:. Batch 27265 to 27392 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:12:41[0m	
+[0m.:. Batch 27393 to 27520 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:11:57[0m	
+[0m.:. Batch 27521 to 27648 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:11:27[0m	
+[0m.:. Batch 27649 to 27776 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:11:12[0m	
+[0m.:. Batch 27777 to 27904 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:06[0m	
+[0m: Time left to learn full batch = 00:38:20[0m	
+[0m.:. Batch 27905 to 28032 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:11:47[0m	
+[0m.:. Batch 28033 to 28160 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:10:49[0m	
+[0m.:. Batch 28161 to 28288 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:11:12[0m	
+[0m.:. Batch 28289 to 28416 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:11:15[0m	
+[0m.:. Batch 28417 to 28544 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:10:56[0m	
+[0m.:. Batch 28545 to 28672 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:11:20[0m	
+[0m.:. Batch 28673 to 28800 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:11:10[0m	
+[0m.:. Batch 28801 to 28928 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:11:14[0m	
+[0m.:. Batch 28929 to 29056 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:11:08[0m	
+[0m.:. Batch 29057 to 29184 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:10:14[0m	
+[0m.:. Batch 29185 to 29312 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:10:33[0m	
+[0m.:. Batch 29313 to 29440 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:10:24[0m	
+[0m.:. Batch 29441 to 29568 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:10:25[0m	
+[0m.:. Batch 29569 to 29696 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:10:17[0m	
+[0m.:. Batch 29697 to 29824 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:10:34[0m	
+[0m.:. Batch 29825 to 29952 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:10:16[0m	
+[0m.:. Batch 29953 to 30080 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:10:35[0m	
+[0m.:. Batch 30081 to 30208 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:10:08[0m	
+[0m.:. Batch 30209 to 30336 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:10:08[0m	
+[0m.:. Batch 30337 to 30464 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:10:05[0m	
+[0m.:. Batch 30465 to 30592 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:10:00[0m	
+[0m.:. Batch 30593 to 30720 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:09:57[0m	
+[0m.:. Batch 30721 to 30848 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:09:32[0m	
+[0m.:. Batch 30849 to 30976 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:09:35[0m	
+[0m.:. Batch 30977 to 31104 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:09:30[0m	
+[0m.:. Batch 31105 to 31232 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:09:48[0m	
+[0m.:. Batch 31233 to 31360 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:09:48[0m	
+[0m.:. Batch 31361 to 31488 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:09:54[0m	
+[0m.:. Batch 31489 to 31616 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:09:54[0m	
+[0m.:. Batch 31617 to 31744 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:05[0m	
+[0m: Time left to learn full batch = 00:31:33[0m	
+[0m.:. Batch 31745 to 31872 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:13:04[0m	
+[0m.:. Batch 31873 to 32000 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:12:01[0m	
+[0m.:. Batch 32001 to 32128 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:12:58[0m	
+[0m.:. Batch 32129 to 32256 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:11:52[0m	
+[0m.:. Batch 32257 to 32384 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:10:47[0m	
+[0m.:. Batch 32385 to 32512 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:10:35[0m	
+[0m.:. Batch 32513 to 32640 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:09:53[0m	
+[0m.:. Batch 32641 to 32768 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:09:06[0m	
+[0m.:. Batch 32769 to 32896 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:09:40[0m	
+[0m.:. Batch 32897 to 33024 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:10:48[0m	
+[0m.:. Batch 33025 to 33152 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:11:36[0m	
+[0m.:. Batch 33153 to 33280 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:13:10[0m	
+[0m.:. Batch 33281 to 33408 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:13:22[0m	
+[0m.:. Batch 33409 to 33536 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:14:01[0m	
+[0m.:. Batch 33537 to 33664 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:11:32[0m	
+[0m.:. Batch 33665 to 33792 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:10:42[0m	
+[0m.:. Batch 33793 to 33920 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:10:17[0m	
+[0m.:. Batch 33921 to 34048 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:10:18[0m	
+[0m.:. Batch 34049 to 34176 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:08:51[0m	
+[0m.:. Batch 34177 to 34304 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:08:58[0m	
+[0m.:. Batch 34305 to 34432 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:10:22[0m	
+[0m.:. Batch 34433 to 34560 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:10:11[0m	
+[0m.:. Batch 34561 to 34688 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:10:11[0m	
+[0m.:. Batch 34689 to 34816 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:10:23[0m	
+[0m.:. Batch 34817 to 34944 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:09:44[0m	
+[0m.:. Batch 34945 to 35072 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:06[0m	
+[0m: Time left to learn full batch = 00:29:21[0m	
+[0m.:. Batch 35073 to 35200 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:11:15[0m	
+[0m.:. Batch 35201 to 35328 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:10:04[0m	
+[0m.:. Batch 35329 to 35456 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:10:01[0m	
+[0m.:. Batch 35457 to 35584 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:09:42[0m	
+[0m.:. Batch 35585 to 35712 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:08:28[0m	
+[0m.:. Batch 35713 to 35840 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:08:34[0m	
+[0m.:. Batch 35841 to 35968 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:12:37[0m	
+[0m.:. Batch 35969 to 36096 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:11:56[0m	
+[0m.:. Batch 36097 to 36224 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:12:34[0m	
+[0m.:. Batch 36225 to 36352 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:10:22[0m	
+[0m.:. Batch 36353 to 36480 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:02[0m	
+[0m: Time left to learn full batch = 00:09:32[0m	
+[0m.:. Batch 36481 to 36608 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:09:18[0m	
+[0m.:. Batch 36609 to 36736 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:08:57[0m	
+[0m.:. Batch 36737 to 36864 on 72328 images[0m	
+[0m: Time to learn 128 samples = 00:00:01[0m	
+[0m: Time left to learn full batch = 00:09:08[0m	
+[0m.:. Batch 36865 to 36992 on 72328 images[0m	
