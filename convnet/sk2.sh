@@ -8,19 +8,19 @@ th -i main.lua \
     -load_seed false \
     -path2seed ./sk2/seed.save \
 \
-    -load_model true \
+    -load_model false \
     -path2model ./sk2/cade.net \
 \
     -type cuda \
     -threads 8 \
     -gpuid 2 \
-    -model_type overfeat_scratch \
+    -model_type overfeat \
     -criterion NLL \
     -dropout 0.5 \
 \
     -batch_size 128 \
     -optimizer ADAGRAD \
-    -learning_rate 5e-1 \
+    -learning_rate 1e-3 \
 \
     -epoch 1000 \
     -path2save ./sk2/ \
@@ -29,7 +29,7 @@ th -i main.lua \
 \
     -run true \
     -train true \
-    -test true \
+    -test true
     
     
     

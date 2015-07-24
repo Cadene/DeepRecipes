@@ -5,7 +5,7 @@ th -i main.lua \
 \
     -pc_train 0.8 \
 \
-    -load_seed false \
+    -load_seed true \
     -path2seed ./sk3/seed.save \
 \
     -load_model true \
@@ -20,7 +20,7 @@ th -i main.lua \
 \
     -batch_size 128 \
     -optimizer ADAGRAD \
-    -learning_rate 1e-1 \
+    -learning_rate 1e-2 \
 \
     -epoch 1000 \
     -path2save ./sk3/ \
@@ -29,7 +29,7 @@ th -i main.lua \
 \
     -run true \
     -train true \
-    -test true \
+    -test true
     
     
     
