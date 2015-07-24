@@ -161,6 +161,41 @@ else
         model:add(nn.Linear(1024,#class_str))
         model:add(nn.LogSoftMax())
 
+    elseif opt.model_type == 'small_nMM' then
+
+        --[[
+            Input size 221*221*3
+        ]]--
+
+        model = nn.Sequential()
+
+        model:add(nn.SpatialConvolution(3, 16, 3, 3, 1, 1, 1, 1))
+        model:add(nn.ReLU())
+        model:add(nn.SpatialMaxPooling(2, 2, 2, 2))
+
+        model:add(nn.SpatialConvolution(16, 32, 3, 3, 1, 1, 1, 1))
+        model:add(nn.ReLU())
+        model:add(nn.SpatialMaxPooling(2, 2, 2, 2))
+
+        model:add(nn.SpatialConvolution(32, 32, 3, 3, 1, 1, 1, 1))
+        model:add(nn.ReLU())
+        model:add(nn.SpatialMaxPooling(3, 3, 3, 3))
+
+        model:add(nn.Reshape(10368))
+        model:add(nn.Linear(10368,2048))
+        model:add(nn.ReLU())
+        if opt.dropout ~= 0 then
+            model:add( nn.Dropout(opt.dropout) )
+        end
+
+        model:add(nn.Linear(2048,1024))
+        model:add(nn.ReLU())
+        if opt.dropout ~= 0 then
+            model:add( nn.Dropout(opt.dropout) )
+        end
+        model:add(nn.Linear(1024,#class_str))
+        model:add(nn.LogSoftMax())
+
     elseif opt.model_type == 'verydeep_A' then
 
         --[[
@@ -191,6 +226,68 @@ else
         model:add(nn.ReLU())
         model:add(nn.SpatialMaxPooling(2, 2, 2, 2))
         -- 7 & 8
+        model:add(nn.SpatialConvolutionMM(512, 512, 3, 3, 1, 1, 1, 1))
+        model:add(nn.ReLU())
+        model:add(nn.SpatialConvolutionMM(512, 512, 3, 3, 1, 1, 1, 1))
+        model:add(nn.ReLU())
+        model:add(nn.SpatialMaxPooling(2, 2, 2, 2))
+        -- 9
+        model:add(nn.Reshape(25088)) -- (224/2^5)^2 * 512
+        model:add(nn.Linear(25088,4096))
+        model:add(nn.ReLU())
+        if opt.dropout ~= 0 then
+            model:add( nn.Dropout(opt.dropout) )
+        end
+        -- 10
+        model:add(nn.Linear(4096,4096))
+        model:add(nn.ReLU())
+        if opt.dropout ~= 0 then
+            model:add( nn.Dropout(opt.dropout) )
+        end
+        -- 11
+        model:add(nn.Linear(4096,#class_str))
+        model:add(nn.LogSoftMax())
+
+    elseif opt.model_type == 'verydeep_D' then
+
+        --[[
+            Input size 224*224*3 
+            Convolution : kernel 3*3, step 1:1, zero padding 1:1
+        ]]-- 
+
+        -- not tested
+        model = nn.Sequential()
+        -- 1
+        model:add(nn.SpatialConvolutionMM(3, 64, 3, 3, 1, 1, 1, 1))
+        model:add(nn.ReLU())
+        model:add(nn.SpatialConvolutionMM(64, 64, 3, 3, 1, 1, 1, 1))
+        model:add(nn.ReLU())
+        model:add(nn.SpatialMaxPooling(2, 2, 2, 2))
+        -- 2
+        model:add(nn.SpatialConvolutionMM(64, 128, 3, 3, 1, 1, 1, 1))
+        model:add(nn.ReLU())
+        model:add(nn.SpatialConvolutionMM(128, 128, 3, 3, 1, 1, 1, 1))
+        model:add(nn.ReLU())
+        model:add(nn.SpatialMaxPooling(2, 2, 2, 2))
+        -- 3 & 4
+        model:add(nn.SpatialConvolutionMM(128, 256, 3, 3, 1, 1, 1, 1))
+        model:add(nn.ReLU())
+        model:add(nn.SpatialConvolutionMM(256, 256, 3, 3, 1, 1, 1, 1))
+        model:add(nn.ReLU())
+        model:add(nn.SpatialConvolutionMM(256, 256, 3, 3, 1, 1, 1, 1))
+        model:add(nn.ReLU())
+        model:add(nn.SpatialMaxPooling(2, 2, 2, 2))
+        -- 5 & 6
+        model:add(nn.SpatialConvolutionMM(256, 512, 3, 3, 1, 1, 1, 1))
+        model:add(nn.ReLU())
+        model:add(nn.SpatialConvolutionMM(512, 512, 3, 3, 1, 1, 1, 1))
+        model:add(nn.ReLU())
+        model:add(nn.SpatialConvolutionMM(512, 512, 3, 3, 1, 1, 1, 1))
+        model:add(nn.ReLU())
+        model:add(nn.SpatialMaxPooling(2, 2, 2, 2))
+        -- 7 & 8
+        model:add(nn.SpatialConvolutionMM(512, 512, 3, 3, 1, 1, 1, 1))
+        model:add(nn.ReLU())
         model:add(nn.SpatialConvolutionMM(512, 512, 3, 3, 1, 1, 1, 1))
         model:add(nn.ReLU())
         model:add(nn.SpatialConvolutionMM(512, 512, 3, 3, 1, 1, 1, 1))
