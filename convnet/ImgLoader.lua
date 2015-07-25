@@ -87,8 +87,11 @@ function ImgLoader:loadCsv(path2csv)
     end
 end
 
-function ImgLoader:make_train_test(pc_train)
+function ImgLoader:make_train_test(pc_train, seed)
     --[[ Once preprocessed and processed, build the train and test sets ]]--
+    if seed then
+        torch.manualSeed(seed)
+    end
     local trainSet = ImgDataset(self.path2dir)
     local testSet = ImgDataset(self.path2dir)
     local label = 1

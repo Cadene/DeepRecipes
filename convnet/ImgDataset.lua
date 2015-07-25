@@ -68,3 +68,15 @@ function ImgDataset.__prepare_img(path2img, dim)
     img:add(-118.380948):div(61.896913) -- fixed distn ~ N(118.380948, 61.896913^2) [0,255] -> [0,1]
     return img
 end
+
+function ImgDataset:equal(img_dataset)
+    -- print(#self.path2img)
+    for id = 1, #self.path2img do
+        -- print(self.path2img[id], img_dataset.path2img[id], self.path2img[id] = img_dataset.path2img[id])
+        if self.path2img[id] ~= img_dataset.path2img[id] then
+            return false
+        end
+    end
+    return true
+end
+
