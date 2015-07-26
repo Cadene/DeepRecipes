@@ -5,10 +5,10 @@ th -i main.lua \
 \
     -pc_train 0.8 \
 \
-    -load_seed false \
+    -load_seed true \
     -path2seed ./sm1/seed.save \
 \
-    -load_model false \
+    -load_model true \
     -path2model ./sm1/cade.net \
 \
     -type float \
