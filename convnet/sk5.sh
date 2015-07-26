@@ -20,7 +20,7 @@ th -i main.lua \
 \
     -batch_size 128 \
     -optimizer ADAGRAD \
-    -learning_rate 2e-2 \
+    -learning_rate 1e-1 \
 \
     -epoch 1000 \
     -path2save ./sk5/ \
