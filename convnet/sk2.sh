@@ -5,10 +5,10 @@ th -i main.lua \
 \
     -pc_train 0.8 \
 \
-    -load_seed false \
+    -load_seed true \
     -path2seed ./sk2/seed.save \
 \
-    -load_model false \
+    -load_model true \
     -path2model ./sk2/cade.net \
 \
     -type cuda \

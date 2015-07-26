@@ -145,7 +145,8 @@ if opt.run == 'true' then
 
     _log = {}
     _log['err'] = {}
-
+	
+	test(0)
     for epoch = 1, opt.epoch do
 
         if opt.train == 'true' then

@@ -28,6 +28,6 @@ th -i main.lua \
     -save_every 1 \
 \
     -run true \
-    -train false \
+    -train true \
     -test true 
     
