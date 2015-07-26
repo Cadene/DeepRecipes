@@ -1,5 +1,5 @@
 if opt.load_model == 'true' then
-    print('# ...reloading previously trained network')
+    print('# ...reloading previously trained model')
     model = torch.load(opt.path2model)
     --collectgarbage()
     parameters, gradParameters = model:getParameters()

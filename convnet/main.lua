@@ -31,7 +31,8 @@ cmd:option('-load_seed',       'false',      'load seed')
 cmd:option('-path2seed',       './save/seed.save', 'path to seed used during the dataset making process')
 -- settings net loading
 cmd:option('-load_model',      'false',       'loading model or not')
-cmd:option('-path2model',      './save/cade.net', 'path to model')
+cmd:option('-path2model',      './save/model.net', 'path to model')
+cmd:option('-path2optim',      './save/optim.net', 'path to optimMethod')
 -- settings net building
 cmd:option('-type',            'float',     'type: float | cuda')
 cmd:option('-cudnn',           'false',     'false | true')
@@ -111,15 +112,9 @@ dofile('2_model.lua')
 -----------------------------------------------------------------------
 -- Logger
 
-if opt.run == 'true' then
-    confusion = optim.ConfusionMatrix(class_str)
-end
-if opt.train == 'true' then
-    trainLogger = optim.Logger(paths.concat(opt.path2save, 'train.log'))
-end
-if opt.test == 'true' then
-    testLogger  = optim.Logger(paths.concat(opt.path2save, 'test.log'))
-end
+confusion = optim.ConfusionMatrix(class_str)
+trainLogger = optim.Logger(paths.concat(opt.path2save, 'train.log'))
+testLogger  = optim.Logger(paths.concat(opt.path2save, 'test.log'))
 
 -----------------------------------------------------------------------
 -- Optimizer
@@ -146,9 +141,7 @@ if opt.run == 'true' then
     _log = {}
     _log['err'] = {}
 	
-	test(0)
     for epoch = 1, opt.epoch do
-
         if opt.train == 'true' then
            train(epoch)
         end

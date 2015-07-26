@@ -1,10 +1,19 @@
+if opt.load_model == 'true' then
+    
+    print('# ...reloading previously trained optimMethod')
+    optimMethod = torch.load(opt.path2optim)
+
+end
+
 print("# ... building optimizer")
 
 if opt.optimizer == 'CG' then
     optimState = {
         maxIter = opt.max_iter
     }
-    optimMethod = optim.cg
+    if opt.load_model ~= 'true' then
+        optimMethod = optim.cg
+    end
 
 elseif opt.optimizer == 'LBFGS' then
     optimState = {
@@ -12,7 +21,9 @@ elseif opt.optimizer == 'LBFGS' then
         learningRate = opt.learning_rate,
         nCorrection = 10
     }
-    optimMethod = optim.lbfgs
+    if opt.load_model ~= 'true' then
+        optimMethod = optim.lbfgs
+    end
 
 elseif opt.optimizer == 'SGD' then
     -- Given the function above, we can now easily train the model using SGD.
@@ -29,7 +40,9 @@ elseif opt.optimizer == 'SGD' then
         momentum = opt.momentum,
         learningRateDecay = opt.learning_rate_decay
     }
-    optimMethod = optim.sgd
+    if opt.load_model ~= 'true' then
+        optimMethod = optim.sgd
+    end
 
 elseif opt.optimizer == 'ASGD' then
     optimState = {
@@ -37,14 +50,18 @@ elseif opt.optimizer == 'ASGD' then
         eta0 = opt.learning_rate,
         t0 = trainSet:size() * opt.t0
     }
-    optimMethod = optim.asgd
+    if opt.load_model ~= 'true' then
+        optimMethod = optim.asgd
+    end
 
 elseif opt.optimizer == 'ADAGRAD' then
     optimState = {
         learningRate = opt.learning_rate,
         paramVariance = nil
     }
-    optimMethod = optim.adagrad
+    if opt.load_model ~= 'true' then
+        optimMethod = optim.adagrad
+    end
 
 elseif opt.optimizer == 'RMSPROP' then
     optimState = {
@@ -53,7 +70,9 @@ elseif opt.optimizer == 'RMSPROP' then
         alpha = 0.99,
         epsilon = 1e-8
     }
-    optimMethod = optim.rmsprop
+    if opt.load_model ~= 'true' then
+        optimMethod = optim.rmsprop
+    end
 
 else
    error(opt.optimizer..' is not a valid optimizer')

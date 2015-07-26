@@ -1,6 +1,6 @@
 th -i main.lua \
 \
-    -data_type Spiral \
+    -data_type Recipe101 \
     -path2dir /Users/remicadene/data/recipe_101_low/ \
 \
     -pc_train 0.8 \
@@ -9,26 +9,27 @@ th -i main.lua \
     -path2seed ./sm1/seed.save \
 \
     -load_model true \
-    -path2model ./sm1/cade.net \
+    -path2model ./sm1/model.net \
+    -path2optim ./sm1/optim.net \
 \
     -type float \
     -threads 8 \
     -gpuid 1 \
-    -model_type standard \
+    -model_type small \
     -criterion NLL \
     -dropout 0 \
 \
     -batch_size 128 \
     -optimizer ADAGRAD \
-    -learning_rate 1e-2 \
+    -learning_rate 0.001 \
 \
     -epoch 100 \
     -path2save ./sm1/ \
     -plot_every 2000 \
     -plot false \
-    -save_every 100 \
+    -save_every 1 \
 \
-    -run true \
+    -run false \
     -train true \
     -test true \
     

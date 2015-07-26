@@ -12,9 +12,14 @@ function train(epoch)
     
     model:training()
 
+    local time_mean = {}
+    local limit = 0
+
     shuffle = torch.randperm(trainSet:size())
 
     nb_batch = 1
+
+    nb_batch_max = math.ceil(trainSet:size() / opt.batch_size)
 
     for t = 1, trainSet:size(), opt.batch_size do
         time['batch'] = torch.Timer()
@@ -23,8 +28,13 @@ function train(epoch)
         if batch_to > trainSet:size() then
             batch_to = trainSet:size()
         end
-        print(".:. Batch "..t.." to "..batch_to.." on "..trainSet:size().." images")
-        
+
+        local pc_done = math.floor(nb_batch / nb_batch_max * 100 + .5)
+
+        if(pc_done > limit) then
+            print(".:. Batch "..t.." to "..batch_to.." on "..trainSet:size().." images")
+        end
+
 	    -- time['inputs'] = torch.Timer()
         local inputs = {}
         local targets = {}
@@ -106,12 +116,21 @@ function train(epoch)
             -- print("# Time to optimMethod = "..(time['optimMethod']:time().real).." sec")
         end
 
-        s = time['batch']:time().real
-        print(": Time to learn "..opt.batch_size.." samples = "
-            ..string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60))
-        s = time['batch']:time().real * (trainSet:size()/opt.batch_size - nb_batch)
-        print(": Time left to learn full batch = "
-            ..string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60))
+        table.insert(time_mean, time['train']:time().real)
+
+        if(pc_done > limit) then
+            local mean = 0
+            for i = 1, #time_mean do
+                mean = mean + time_mean[i]
+            end
+            mean = mean / #time_mean
+            s = mean * (nb_batch_max - nb_batch)
+            print(":", pc_done, "% done", "\t",
+                string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60), "left")
+            limit = limit + 5
+            time_mean = {}
+            collectgarbage()
+        end
 
         nb_batch = nb_batch + 1
     end
@@ -140,12 +159,17 @@ function train(epoch)
     --[[ save/log current net ]]
     if epoch % opt.save_every == 0 then
         -- time['save_every'] = torch.Timer()
-        local filename = paths.concat(opt.path2save, 'cade.net')
-        print('# ... saving model to '..filename)
-        os.execute('mkdir -p ' .. sys.dirname(filename))
-        torch.save(filename, model)
+
+        local path2model = paths.concat(opt.path2model)
+        local path2optim = paths.concat(opt.path2optim)
+        print('# ... saving model to '..path2model)
+        os.execute('mkdir -p ' .. sys.dirname(path2model))
+        torch.save(path2model, model)
+        print('# ... saving optimMethod to '..path2optim)
+        os.execute('mkdir -p ' .. sys.dirname(path2optim))
+        torch.save(path2optim, optimMethod)
+
         -- print("# Time to save model = "..(time['save_every']:time().real).." sec")
     end
 
-    epoch = epoch + 1
 end
