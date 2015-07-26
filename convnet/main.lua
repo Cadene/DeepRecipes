@@ -156,23 +156,21 @@ if opt.run == 'true' then
         end
     end
 
-    Ploter.figure('learning_batch'..opt.batch_size..'.png', {
-        'amount of error',
-        torch.linspace(1,#_log['err'],#_log['err']),
-        torch.log(torch.Tensor(_log['err'])),
-        '-'
-    })
+    -- Ploter.figure('learning_batch'..opt.batch_size..'.png', {
+    --     'amount of error',
+    --     torch.linspace(1,#_log['err'],#_log['err']),
+    --     torch.log(torch.Tensor(_log['err'])),
+    --     '-'
+    -- })
 
     -- plot errors
-    if opt.plot == 'true' then
-        if opt.train == 'true' then
-            trainLogger:style{['% mean class accuracy (train set)'] = '-'}
-            trainLogger:plot()
-        end
-        if opt.test == 'true' then
-            testLogger:style{['% mean class accuracy (test set)'] = '-'}
-            testLogger:plot()
-        end
+    if opt.train == 'true' then
+        trainLogger:style{['% mean class accuracy (train set)'] = '-'}
+        trainLogger:plot()
+    end
+    if opt.test == 'true' then
+        testLogger:style{['% mean class accuracy (test set)'] = '-'}
+        testLogger:plot()
     end
 
 end

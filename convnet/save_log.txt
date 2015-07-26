@@ -15,7 +15,11 @@ sk1 overfeat Adagrad run
 sk2 overfeat Adagrad run
 sk3 overfeat_scratch Adagrad reload
 sk4 overfeat_scratch SGD run  
-sk5 small ADAGRAD reload
+sk5 small ADAGRAD reload 9%train
 sk6 small ADAGRAD reload
 sk7 small SGD run
 sk8 small SGD run
+
+25 juillet 23:30
+
+sk5 small ADAGRAD reload 10%train

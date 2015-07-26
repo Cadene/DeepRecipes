@@ -2,6 +2,29 @@ if opt.load_model == 'true' then
     print('# ...reloading previously trained network')
     model = torch.load(opt.path2model)
 
+    collectgarbage()
+
+    model2 = torch.load(opt.path2model)
+
+    parameters, gradParameters = model:getParameters()
+    parameters2, gradParameters2 = model2:getParameters()
+
+    print(#parameters)
+    print(parameters[1])
+    print(parameters2[1])
+
+    function compare_param(parameters, parameters2)
+        for id = 1, #parameters:size() do
+            if parameters[i] ~= parameters2[i] then
+                return false
+            end
+        end
+        return true
+    end
+
+    print("compare_param ", compare_param(parameters, parameters2))
+    --print("compare_grad_param ", compare_param(gradParameters, gradParameters2))
+
 else
     print('# ... building model')
 
@@ -93,6 +116,41 @@ else
     elseif opt.model_type == 'overfeat_scratch' then
 	
 	    model = nn.Sequential()
+        model:add(nn.SpatialConvolutionMM(3, 96, 7, 7, 2, 2))
+        model:add(nn.Threshold(0, 1e-6))
+        model:add(nn.SpatialMaxPooling(3, 3, 3, 3))
+        model:add(nn.SpatialConvolutionMM(96, 256, 7, 7, 1, 1))
+        model:add(nn.Threshold(0, 1e-6))
+        model:add(nn.SpatialMaxPooling(2, 2, 2, 2))
+        model:add(nn.SpatialZeroPadding(1, 1, 1, 1))
+        model:add(nn.SpatialConvolutionMM(256, 512, 3, 3, 1, 1))
+        model:add(nn.Threshold(0, 1e-6))
+        model:add(nn.SpatialZeroPadding(1, 1, 1, 1))
+        model:add(nn.SpatialConvolutionMM(512, 512, 3, 3, 1, 1))
+        model:add(nn.Threshold(0, 1e-6))
+        model:add(nn.SpatialZeroPadding(1, 1, 1, 1))
+        model:add(nn.SpatialConvolutionMM(512, 1024, 3, 3, 1, 1))
+        model:add(nn.Threshold(0, 1e-6))
+        model:add(nn.SpatialZeroPadding(1, 1, 1, 1))
+        model:add(nn.SpatialConvolutionMM(1024, 1024, 3, 3, 1, 1))
+        model:add(nn.Threshold(0, 1e-6))
+        model:add(nn.SpatialMaxPooling(3, 3, 3, 3))
+        model:add(nn.SpatialConvolutionMM(1024, 4096, 5, 5, 1, 1))
+        model:add(nn.Threshold(0, 1e-6))
+        if opt.dropout ~= 0 then
+            model:add( nn.Dropout(opt.dropout) )
+        end
+        model:add(nn.SpatialConvolutionMM(4096, 4096, 1, 1, 1, 1))
+        model:add(nn.Threshold(0, 1e-6))
+        if opt.dropout ~= 0 then
+            model:add( nn.Dropout(opt.dropout) )
+        end
+        model:add(nn.SpatialConvolutionMM(4096, #class_str, 1, 1, 1, 1))
+        model:add(nn.View(#class_str))
+        model:add(nn.LogSoftMax())
+
+
+        model = nn.Sequential()
         model:add(nn.SpatialConvolutionMM(3, 96, 7, 7, 2, 2))
         model:add(nn.Threshold(0, 1e-6))
         model:add(nn.SpatialMaxPooling(3, 3, 3, 3))

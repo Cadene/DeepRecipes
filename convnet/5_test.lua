@@ -39,7 +39,7 @@ function test(epoch)
     --[[ confusion & log ]]
     print(confusion)
     testLogger:add{['% mean class accuracy (test set)'] = confusion.totalValid * 100}
-    if opt.plot then
+    if opt.plot == 'true' then
         testLogger:style{['% mean class accuracy (test set)'] = '-'}
         testLogger:plot()
     end
