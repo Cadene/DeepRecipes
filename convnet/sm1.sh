@@ -1,6 +1,6 @@
 th -i main.lua \
 \
-    -data_type Recipe101 \
+    -data_type Spiral \
     -path2dir /Users/remicadene/data/recipe_101_low/ \
 \
     -pc_train 0.8 \
@@ -14,23 +14,21 @@ th -i main.lua \
     -type float \
     -threads 8 \
     -gpuid 1 \
-    -model_type verydeep_D \
+    -model_type standard \
     -criterion NLL \
-    -dropout 0.5 \
+    -dropout 0 \
 \
-    -optimizer SGD \
-    -learning_rate 5e-3 \
-    -learning_rate_decay 0.033 \
-    -momentum 0.06 \
-    -weight_decay 1e-5 \
     -batch_size 128 \
+    -optimizer ADAGRAD \
+    -learning_rate 1e-2 \
 \
-    -epoch 1000 \
+    -epoch 100 \
     -path2save ./sm1/ \
     -plot_every 2000 \
-    -save_every 1 \
+    -plot false \
+    -save_every 100 \
 \
-    -run false \
+    -run true \
     -train true \
     -test true \
     

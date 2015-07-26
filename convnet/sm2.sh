@@ -1,20 +1,20 @@
 th -i main.lua \
 \
-    -data_type Spiral \
+    -data_type Recipe101 \
     -path2dir /Users/remicadene/data/recipe_101_tiny/ \
 \
     -pc_train 0.8 \
 \
-    -load_seed true \
+    -load_seed false \
     -path2seed ./sm2/seed.save \
 \
-    -load_model true \
+    -load_model false \
     -path2model ./sm2/cade.net \
 \
     -type float \
     -threads 8 \
     -gpuid 7 \
-    -model_type standard \
+    -model_type small \
     -criterion NLL \
     -dropout 0.5 \
 \
@@ -28,6 +28,6 @@ th -i main.lua \
     -plot false \
     -save_every 1 \
 \
-    -run true \
-    -train true \
+    -run false \
+    -train false \
     -test true

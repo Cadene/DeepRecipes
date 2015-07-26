@@ -164,13 +164,15 @@ if opt.run == 'true' then
     -- })
 
     -- plot errors
-    if opt.train == 'true' then
-        trainLogger:style{['% mean class accuracy (train set)'] = '-'}
-        trainLogger:plot()
-    end
-    if opt.test == 'true' then
-        testLogger:style{['% mean class accuracy (test set)'] = '-'}
-        testLogger:plot()
+    if opt.plot == 'true' then
+        if opt.train == 'true' then
+            trainLogger:style{['% mean class accuracy (train set)'] = '-'}
+            trainLogger:plot()
+        end
+        if opt.test == 'true' then
+            testLogger:style{['% mean class accuracy (test set)'] = '-'}
+            testLogger:plot()
+        end
     end
 
 end

@@ -1,17 +1,15 @@
 if opt.load_model == 'true' then
     print('# ...reloading previously trained network')
     model = torch.load(opt.path2model)
-
-    collectgarbage()
-
-    model2 = torch.load(opt.path2model)
-
+    --collectgarbage()
     parameters, gradParameters = model:getParameters()
-    parameters2, gradParameters2 = model2:getParameters()
+    
+    -- model2 = torch.load(opt.path2model)
+    -- collectgarbage()
+    -- parameters2, gradParameters2 = model2:getParameters()
 
-    print(#parameters)
-    print(parameters[1])
-    print(parameters2[1])
+    -- print(parameters[1])
+    -- print(parameters2[1])
 
     function compare_param(parameters, parameters2)
         for id = 1, #parameters:size() do
@@ -22,8 +20,8 @@ if opt.load_model == 'true' then
         return true
     end
 
-    print("compare_param ", compare_param(parameters, parameters2))
-    --print("compare_grad_param ", compare_param(gradParameters, gradParameters2))
+    -- print("compare_param ", compare_param(parameters, parameters2))
+    -- print("compare_grad_param ", compare_param(gradParameters, gradParameters2))
 
 else
     print('# ... building model')
