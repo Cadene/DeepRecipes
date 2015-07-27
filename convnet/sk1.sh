@@ -5,13 +5,13 @@ th -i main.lua \
 \
     -pc_train 0.8 \
 \
-    -load_seed false \
+    -load_seed true \
     -path2seed ./sk1/seed.save \
 \
-    -load_model false \
-    -path2model ./sk1/cade.net \
+    -load_model true \
+    -path2model ./sk1/model.net \
 \
-    -load_optim false \
+    -load_optim true \
     -path2model ./sk1/optim.state \
 \
     -type cuda \
@@ -23,7 +23,7 @@ th -i main.lua \
 \
     -batch_size 128 \
     -optimizer ADAGRAD \
-    -learning_rate 1e-2 \
+    -learning_rate 2e-2 \
 \
     -epoch 1000 \
     -path2save ./sk1/ \
