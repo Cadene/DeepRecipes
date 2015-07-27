@@ -2,13 +2,12 @@ local time = {}
 
 function test(epoch)
 
-    print('')
-    print('#####################')
-    print('# Test n° '..epoch)
+    print("\n# ... test model")
+    model:evaluate()
 
     time['test'] = torch.Timer()
+
     local pc_max = 0
-    model:evaluate()
 
     for t = 1, testSet:size() do
 
@@ -33,21 +32,26 @@ function test(epoch)
     end
 
     --[[ time taken ]]
-    s = time['test']:time().real/testSet:size()
-    print(": Time to test 1 sample = "
-        ..string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60))
     s = time['test']:time().real
     print(": Time to test all samples = "
         ..string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60))
 
 
-    --[[ confusion & log ]]
-    print(confusion)
+    --[[ confusion ]]
+    --print(confusion)
+    confusion:updateValids()
+    print("# Confusion Matrix")
+    print(": average row correct: "..(confusion.averageValid*100).."%")
+    print(": average rowUcol correct (VOC measure): "..(confusion.averageUnionValid*100).."%")
+    print(": > global correct: "..(confusion.totalValid*100).."%")
+    confusion:zero()
+
+    --[[ trainLogger ]]
     testLogger:add{['% mean class accuracy (test set)'] = confusion.totalValid * 100}
     if opt.plot == 'true' then
         testLogger:style{['% mean class accuracy (test set)'] = '-'}
         testLogger:plot()
     end
-    confusion:zero()
+    
 
 end

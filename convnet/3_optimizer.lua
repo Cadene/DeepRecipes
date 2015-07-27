@@ -74,12 +74,11 @@ else
    error(opt.optimizer..' is not a valid optimizer')
 end
 
+if opt.load_model == 'true' then
+    print('# ...reloading previously trained optimfunc.state')
+    optimfunc.state  = torch.load(path2optim_state)
+    optimfunc.method = torch.load(path2optim_method)
+end
+
 print("# Optimizer")
 print(optimfunc)
-
-if opt.load_optim == 'true' then
-    
-    print('# ...reloading previously trained optimfunc.state')
-    optimfunc.state = torch.load(opt.path2optim)
-
-end

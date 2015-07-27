@@ -1,6 +1,6 @@
 if opt.load_model == 'true' then
     print('# ...reloading previously trained model')
-    model = torch.load(opt.path2model)
+    model = torch.load(opt.path2save..'model.net')
     --collectgarbage()
     parameters, gradParameters = model:getParameters()
     
@@ -402,7 +402,7 @@ else
 end
 
 -- Retrieve parameters and gradients:
--- this extracts and flattens all the trainable parameters of the mode
+-- this extracts and flattens all the trainable parameters of the model
 -- into a 1-dim vector
 parameters, gradParameters = model:getParameters()
 

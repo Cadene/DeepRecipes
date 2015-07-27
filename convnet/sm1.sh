@@ -5,15 +5,6 @@ th -i main.lua \
 \
     -pc_train 0.8 \
 \
-    -load_seed false \
-    -path2seed ./sm1/seed.save \
-\
-    -load_model false \
-    -path2model ./sm1/model.net \
-\
-    -load_optim false \
-    -path2optim ./sm1/optim.state \
-\
     -type float \
     -threads 8 \
     -gpuid 1 \
@@ -23,8 +14,9 @@ th -i main.lua \
 \
     -batch_size 128 \
     -optimizer ADAGRAD \
-    -learning_rate 0.001 \
+    -learning_rate 0.00001 \
 \
+    -load_model true \
     -epoch 100 \
     -path2save ./sm1/ \
     -plot_every 2000 \

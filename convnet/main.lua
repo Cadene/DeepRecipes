@@ -31,9 +31,6 @@ cmd:option('-load_seed',       'false',      'load seed')
 cmd:option('-path2seed',       './save/seed.save', 'path to seed used during the dataset making process')
 -- settings net loading
 cmd:option('-load_model',      'false',       'loading model or not')
-cmd:option('-path2model',      './save/model.net', 'path to model')
-cmd:option('-load_optim',      'false',         'loading')
-cmd:option('-path2optim',      './save/optim.state', 'path to optimMethod')
 -- settings net building
 cmd:option('-type',            'float',     'type: float | cuda')
 cmd:option('-cudnn',           'false',     'false | true')
@@ -64,22 +61,36 @@ cmd:option('-test',	       'false',     'test net')
 cmd:text()
 opt = cmd:parse(arg or {})
 
+------------------------------------------------------------------------
+-- PID
 
 pid = posix.getpid("pid")
 print("# ... lunching using pid = "..pid)
 
 ------------------------------------------------------------------------
+-- Path2
+
+path2seed = opt.path2save.."seed.save"
+path2train_logger = paths.concat(opt.path2save, 'train.logger')
+path2test_logger = paths.concat(opt.path2save, 'test.logger')
+path2train_log = paths.concat(opt.path2save, 'train.log')
+path2test_log = paths.concat(opt.path2save, 'test.log')
+path2model = paths.concat(opt.path2save.."model.net")
+path2optim_state = paths.concat(opt.path2save.."optim.state")
+path2optim_method = paths.concat(opt.path2save.."optim.method")
+
+------------------------------------------------------------------------
 -- Seed
 
-if opt.load_seed == 'false' then
-    print('# ... saving seed in '..opt.path2seed)
+if opt.load_model == 'false' then
+    print('# ... saving seed in '..path2seed)
     seed = torch.seed()
-    seed_save = io.open(opt.path2seed, 'w')
+    seed_save = io.open(path2seed, 'w')
     seed_save:write(string.format('%.0f', seed)) -- scientific to full number
     seed_save:close()
 else
-    print('# ... loading seed in '..opt.path2seed)
-    for line in io.lines(opt.path2seed) do
+    print('# ... loading seed in '..path2seed)
+    for line in io.lines(path2seed) do
         seed = tonumber(line)
     end
 end
@@ -111,11 +122,20 @@ dofile('1_data.lua')
 dofile('2_model.lua')
 
 -----------------------------------------------------------------------
--- Logger
+-- Matrix Confusion
 
 confusion = optim.ConfusionMatrix(class_str)
-trainLogger = optim.Logger(paths.concat(opt.path2save, 'train.log'))
-testLogger  = optim.Logger(paths.concat(opt.path2save, 'test.log'))
+
+-----------------------------------------------------------------------
+-- Logger
+
+if true then
+    trainLogger = optim.Logger(path2train_log)
+    testLogger  = optim.Logger(path2test_log)
+else
+    trainLogger = torch.load(path2train_logger)
+    testLogger  = torch.load(path2test_logger)
+end
 
 -----------------------------------------------------------------------
 -- Optimizer
@@ -135,7 +155,37 @@ dofile('4_train.lua')
 dofile('5_test.lua')
 
 -----------------------------------------------------------------------
--- Main
+-- Saving
+
+function save(epoch)
+    if epoch % opt.save_every == 0 then
+        time['save_every'] = torch.Timer()
+        
+        print('# ... saving model to '..path2model)
+        os.execute('mkdir -p ' .. sys.dirname(path2model))
+        torch.save(path2model, model)
+        print(": tac = "..(time['save_every']:time().real).." sec")
+
+        print('# ... saving optimfunc.state to '..path2optim_state)
+        os.execute('mkdir -p ' .. sys.dirname(path2optim_state))
+        torch.save(path2optim_state, optimfunc.state)
+        print(": tac = "..(time['save_every']:time().real).." sec")
+
+        print('# ... saving optimfunc.method to '..path2optim_method)
+        os.execute('mkdir -p ' .. sys.dirname(path2optim_method))
+        torch.save(path2optim_method, optimfunc.method)
+        print(": tac = "..(time['save_every']:time().real).." sec")
+    
+        --print('# ... saving trainLogger and testLogger')
+        --torch.save(path2train_logger, trainLogger)
+        --torch.save(path2test_logger, testLogger)
+    end
+end
+
+-----------------------------------------------------------------------
+-- Run
+
+time = {}
 
 if opt.run == 'true' then
 
@@ -143,12 +193,18 @@ if opt.run == 'true' then
     _log['err'] = {}
 	
     for epoch = 1, opt.epoch do
+
+        print('\n#####################')
+        print('# Epoch n° '..epoch)
+
         if opt.train == 'true' then
            train(epoch)
         end
         if opt.test == 'true' then
             test(epoch)
         end
+
+        save(epoch)
     end
 
     -- Ploter.figure('learning_batch'..opt.batch_size..'.png', {
@@ -158,7 +214,7 @@ if opt.run == 'true' then
     --     '-'
     -- })
 
-    -- plot errors
+    --[[ plot errors ]]--
     if opt.plot == 'true' then
         if opt.train == 'true' then
             trainLogger:style{['% mean class accuracy (train set)'] = '-'}

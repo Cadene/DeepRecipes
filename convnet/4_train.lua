@@ -1,17 +1,12 @@
-local time = {}
-
 table_f = {}
 
 function train(epoch)
 
-    print('')
-    print('#####################')
-    print('# Epoch n° '..epoch)
+    print("\n# ... train model")
+    model:training()
 
     time['train'] = torch.Timer()
     
-    model:training()
-
     local time_mean = {}
     local limit = 0
 
@@ -20,7 +15,7 @@ function train(epoch)
     local nb_batch = 1
     local nb_batch_max = math.ceil(trainSet:size() / opt.batch_size)
 
-    local pc_max = 0
+    local pc_max = {0,0}
 
     for t = 1, trainSet:size(), opt.batch_size do
         time['batch'] = torch.Timer()
@@ -32,8 +27,9 @@ function train(epoch)
 
         local pc_done = math.floor(nb_batch / nb_batch_max * 100 + .5)
 
-        if(pc_done >= pc_max) then
+        if(pc_done >= pc_max[1]) then
             print(".:. Batch "..t.." to "..batch_to.." on "..trainSet:size().." images")
+            pc_max[1] = pc_max[1] + 5
         end
 
 	    -- time['inputs'] = torch.Timer()
@@ -117,11 +113,11 @@ function train(epoch)
             
         end
 
-        if pc_done > pc_max then
+        if pc_done > pc_max[2] then
             s = time['train']:time().real / batch_to * (trainSet:size() - batch_to)
             print(": "..pc_done.."% done",
                 string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60).." left")
-            pc_max = pc_max + 5
+            pc_max[2] = pc_max[2] + 5
             collectgarbage()
         end
 
@@ -130,40 +126,30 @@ function train(epoch)
 
     --[[ time taken ]]
     print(".:. End of Epoch n° "..epoch)
-    s = time['train']:time().real/trainSet:size()
-    print(": Real time to learn 1 sample = "
+    s = time['train']:time().real / nb_batch_max
+    print(": Real time to learn 1 batch = "
         ..string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60))
     s = time['train']:time().real
     print(": Real time to learn full batch = "
         ..string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60))
 
     --[[ confusion ]]
-    --time['confusion'] = torch.Timer()
-    print(confusion)
-    trainLogger:add{['% mean class accuracy (train set)'] = confusion.totalValid * 100}
+    -- print(confusion)
+    confusion:updateValids()
+    print("# Confusion Matrix")
+    print(": average row correct: "..(confusion.averageValid*100).."%")
+    print(": average rowUcol correct (VOC measure): "..(confusion.averageUnionValid*100).."%")
+    print(": > global correct: "..(confusion.totalValid*100).."%")
     confusion:zero()
+
+    --[[ trainLogger ]]
+    trainLogger:add{['% mean class accuracy (train set)'] = confusion.totalValid * 100}
+    
     --print("# Time to print confusion and log = "..(time['confusion']:time().real).." sec")
 
     --[[ plot decision region ]]
     if  opt.type ~= 'cuda' and opt.data_type ~= 'Recipe101' and epoch % opt.plot_every == 0 then
         Ploter.decision_region(model, trainSet:getData(), class, 'epoch_'..epoch..'.png')
-    end
-
-    --[[ save/log current net ]]
-    if epoch % opt.save_every == 0 then
-        time['save_every'] = torch.Timer()
-        local path2model = paths.concat(opt.path2model)
-        local path2optim = paths.concat(opt.path2optim)
-    
-        print('# ... saving model to '..path2model)
-        os.execute('mkdir -p ' .. sys.dirname(path2model))
-        torch.save(path2model, model)
-        print(": Time to save model = "..(time['save_every']:time().real).." sec")
-
-        print('# ... saving optimfunc.state to '..path2optim)
-        os.execute('mkdir -p ' .. sys.dirname(path2optim))
-        torch.save(path2optim, optimfunc.state)
-        print(": Time to save state = "..(time['save_every']:time().real).." sec")
     end
 
 end
