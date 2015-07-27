@@ -108,12 +108,12 @@ function train(epoch)
             return f, gradParameters -- f and df/dX
         end
 
-        if optimMethod == optim.asgd then
-            _,_,average = optimMethod(feval, parameters, optimState)
+        if optimfunc.method == optim.asgd then
+            _,_,average = optimMethod(feval, parameters, optimfunc.config, optimfunc.state)
         else
-            -- time['optimMethod'] = torch.Timer()
-            optimMethod(feval, parameters, optimState)
-            -- print("# Time to optimMethod = "..(time['optimMethod']:time().real).." sec")
+            _,_,_,state = optimfunc.method(feval, parameters, optimfunc.config, optimfunc.state)
+            optimfunc.state = state
+            
         end
 
         table.insert(time_mean, time['train']:time().real)
@@ -165,9 +165,9 @@ function train(epoch)
         print('# ... saving model to '..path2model)
         os.execute('mkdir -p ' .. sys.dirname(path2model))
         torch.save(path2model, model)
-        print('# ... saving optimMethod to '..path2optim)
+        print('# ... saving optimfunc.state to '..path2optim)
         os.execute('mkdir -p ' .. sys.dirname(path2optim))
-        torch.save(path2optim, optimMethod)
+        torch.save(path2optim, optimfunc.state)
 
         -- print("# Time to save model = "..(time['save_every']:time().real).." sec")
     end

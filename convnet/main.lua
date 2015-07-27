@@ -32,7 +32,8 @@ cmd:option('-path2seed',       './save/seed.save', 'path to seed used during the
 -- settings net loading
 cmd:option('-load_model',      'false',       'loading model or not')
 cmd:option('-path2model',      './save/model.net', 'path to model')
-cmd:option('-path2optim',      './save/optim.net', 'path to optimMethod')
+cmd:option('-load_optim',      'false',         'loading')
+cmd:option('-path2optim',      './save/optim.state', 'path to optimMethod')
 -- settings net building
 cmd:option('-type',            'float',     'type: float | cuda')
 cmd:option('-cudnn',           'false',     'false | true')

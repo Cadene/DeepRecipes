@@ -1,11 +1,7 @@
-if opt.load_model == 'true' then
-    
-    print('# ...reloading previously trained optimMethod')
-    optimMethod = torch.load(opt.path2optim)
-
-end
-
 print("# ... building optimizer")
+
+optimfunc = {}
+optimfunc.name = opt.optimizer
 
 if opt.optimizer == 'CG' then
     optimState = {
@@ -55,13 +51,13 @@ elseif opt.optimizer == 'ASGD' then
     end
 
 elseif opt.optimizer == 'ADAGRAD' then
-    optimState = {
-        learningRate = opt.learning_rate,
+    optimfunc.config = {
+        learningRate = opt.learning_rate
+    }
+    optimfunc.state = {
         paramVariance = nil
     }
-    if opt.load_model ~= 'true' then
-        optimMethod = optim.adagrad
-    end
+    optimfunc.method = require "adagrad"
 
 elseif opt.optimizer == 'RMSPROP' then
     optimState = {
@@ -79,7 +75,11 @@ else
 end
 
 print("# Optimizer")
-print(opt.optimizer)
+print(optimfunc)
 
-print("# OptimState")
-print(optimState)
+if opt.load_optim == 'true' then
+    
+    print('# ...reloading previously trained optimfunc.state')
+    optimfunc.state = torch.load(opt.path2optim)
+
+end

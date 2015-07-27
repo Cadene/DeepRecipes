@@ -11,6 +11,7 @@ download_weights.py
 *.so
 
 *.net
+*.state
 learn.sh
 
 # ignore all test images
