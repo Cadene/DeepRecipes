@@ -15,11 +15,12 @@ function train(epoch)
     local time_mean = {}
     local limit = 0
 
-    shuffle = torch.randperm(trainSet:size())
+    local shuffle = torch.randperm(trainSet:size())
 
-    nb_batch = 1
+    local nb_batch = 1
+    local nb_batch_max = math.ceil(trainSet:size() / opt.batch_size)
 
-    nb_batch_max = math.ceil(trainSet:size() / opt.batch_size)
+    local pc_max = 0
 
     for t = 1, trainSet:size(), opt.batch_size do
         time['batch'] = torch.Timer()
@@ -31,7 +32,7 @@ function train(epoch)
 
         local pc_done = math.floor(nb_batch / nb_batch_max * 100 + .5)
 
-        if(pc_done > limit) then
+        if(pc_done >= pc_max) then
             print(".:. Batch "..t.." to "..batch_to.." on "..trainSet:size().." images")
         end
 
@@ -116,19 +117,11 @@ function train(epoch)
             
         end
 
-        table.insert(time_mean, time['train']:time().real)
-
-        if(pc_done > limit) then
-            local mean = 0
-            for i = 1, #time_mean do
-                mean = mean + time_mean[i]
-            end
-            mean = mean / #time_mean
-            s = mean * (nb_batch_max - nb_batch)
-            print(":", pc_done, "% done", "\t",
-                string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60), "left")
-            limit = limit + 5
-            time_mean = {}
+        if pc_done > pc_max then
+            s = time['train']:time().real / batch_to * (trainSet:size() - batch_to)
+            print(": "..pc_done.."% done",
+                string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60).." left")
+            pc_max = pc_max + 5
             collectgarbage()
         end
 
@@ -158,18 +151,19 @@ function train(epoch)
 
     --[[ save/log current net ]]
     if epoch % opt.save_every == 0 then
-        -- time['save_every'] = torch.Timer()
-
+        time['save_every'] = torch.Timer()
         local path2model = paths.concat(opt.path2model)
         local path2optim = paths.concat(opt.path2optim)
+    
         print('# ... saving model to '..path2model)
         os.execute('mkdir -p ' .. sys.dirname(path2model))
         torch.save(path2model, model)
+        print(": Time to save model = "..(time['save_every']:time().real).." sec")
+
         print('# ... saving optimfunc.state to '..path2optim)
         os.execute('mkdir -p ' .. sys.dirname(path2optim))
         torch.save(path2optim, optimfunc.state)
-
-        -- print("# Time to save model = "..(time['save_every']:time().real).." sec")
+        print(": Time to save state = "..(time['save_every']:time().real).." sec")
     end
 
 end

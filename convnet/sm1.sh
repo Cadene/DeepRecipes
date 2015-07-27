@@ -5,12 +5,14 @@ th -i main.lua \
 \
     -pc_train 0.8 \
 \
-    -load_seed true \
+    -load_seed false \
     -path2seed ./sm1/seed.save \
 \
-    -load_model true \
+    -load_model false \
     -path2model ./sm1/model.net \
-    -path2optim ./sm1/optim.net \
+\
+    -load_optim false \
+    -path2optim ./sm1/optim.state \
 \
     -type float \
     -threads 8 \

@@ -7,10 +7,8 @@ function test(epoch)
     print('# Test n° '..epoch)
 
     time['test'] = torch.Timer()
-
+    local pc_max = 0
     model:evaluate()
-
-    local time_mean = {}
 
     for t = 1, testSet:size() do
 
@@ -22,24 +20,16 @@ function test(epoch)
         local pred = model:forward(input)
         confusion:add(pred, target:squeeze())
 
-        table.insert(time_mean, time['test']:time().real)
-
         local pc_done = math.floor(t / testSet:size() * 100 + .5)
-
-        if(pc_done % 10 == 0) then
+        if pc_done >= pc_max then
             -- print(time_mean)
-            local mean = 0
-            for i = 1, #time_mean do
-                mean = mean + time_mean[i]
-            end
-            mean = mean / #time_mean
-            s = mean * (testSet:size() - t)
-            print(": ", pc_done, "% done ", "\t", string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60), " left")
-        end
-
-        if t % 50 == 0 then
+            s = time['test']:time().real / t * (testSet:size() - t)
+            print(": "..pc_done.."% done ",
+                string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60).." left")
+            pc_max = pc_max + 5
             collectgarbage()
         end
+
     end
 
     --[[ time taken ]]
