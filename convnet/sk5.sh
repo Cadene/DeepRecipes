@@ -23,7 +23,7 @@ th -i main.lua \
     -plot_every 2000 \
     -save_every 1 \
 \
-    -run false \
+    -run true \
     -train true \
     -test true 
     
