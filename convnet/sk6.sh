@@ -5,7 +5,7 @@ th -i main.lua \
 \
     -pc_train 0.8 \
 \
-    -type float \
+    -type cuda \
     -threads 1 \
     -gpuid 6 \
     -model_type small \
