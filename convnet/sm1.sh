@@ -13,10 +13,11 @@ th -i main.lua \
     -dropout 0 \
 \
     -batch_size 128 \
-    -optimizer ADAGRAD \
-    -learning_rate 0.00001 \
+    -optimizer SGD \
+    -learning_rate 0 \
+    -momentum 0 \
 \
-    -load_model false \
+    -load_model true \
     -path2load ./sm1/ \
     -epoch 100 \
     -path2save ./sm1/ \

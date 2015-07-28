@@ -1,35 +1,34 @@
 th -i main.lua \
 \
     -data_type Recipe101 \
-    -path2dir /home/cadene/data/recipe_101_clean/ \
+    -path2dir /Users/remicadene/data/recipe_101_low/ \
 \
     -pc_train 0.8 \
 \
-    -load_seed false \
-    -path2seed ./sk7/seed.save \
-\
-    -load_model false \
-    -path2model ./sk7/cade.net \
-\
-    -type cuda \
-    -threads 8 \
-    -gpuid 7 \
+    -type float \
+    -threads 1 \
+    -gpuid 4 \
     -model_type small \
     -criterion NLL \
-    -dropout 0.5 \
+    -dropout 0 \
 \
-    -optimizer SGD \
-    -learning_rate 1e-2 \
-    -learning_rate_decay 0.033 \
-    -momentum 0.06 \
-    -weight_decay 1e-5 \
     -batch_size 128 \
+    -optimizer SGD \
+    -learning_rate 4e-2 \
+    -momentum 0.6 \
 \
-    -epoch 1000 \
+    -load_model true \
+    -path2load ./sk5/ \
+    -epoch 100 \
     -path2save ./sk7/ \
     -plot_every 2000 \
+    -plot false \
     -save_every 1 \
 \
     -run true \
     -train true \
-    -test true
+    -test true \
+    -save true 
+    
+    
+    

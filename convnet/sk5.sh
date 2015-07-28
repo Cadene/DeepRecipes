@@ -1,29 +1,34 @@
 th -i main.lua \
 \
     -data_type Recipe101 \
-    -path2dir /home/cadene/data/recipe_101_clean/ \
+    -path2dir /Users/remicadene/data/recipe_101_low/ \
 \
     -pc_train 0.8 \
 \
-    -load_model false \
-\
-    -type cuda \
+    -type float \
     -threads 8 \
-    -gpuid 5 \
+    -gpuid 1 \
     -model_type small \
     -criterion NLL \
-    -dropout 0.5 \
+    -dropout 0 \
 \
     -batch_size 128 \
-    -optimizer ADAGRAD \
-    -learning_rate 1e-2 \
+    -optimizer SGD \
+    -learning_rate 0 \
+    -momentum 0 \
 \
-    -epoch 1000 \
-    -path2save ./sk5/ \
+    -load_model true \
+    -path2load ./sm1/ \
+    -epoch 100 \
+    -path2save ./sm1/ \
     -plot_every 2000 \
+    -plot false \
     -save_every 1 \
 \
-    -run true \
+    -run false \
     -train true \
-    -test true 
+    -test true \
+    -save false 
+    
+    
     

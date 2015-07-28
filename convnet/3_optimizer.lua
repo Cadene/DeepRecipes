@@ -29,16 +29,19 @@ elseif opt.optimizer == 'SGD' then
     --   + a weight decay, to regularize the solution (L2 regularization)
     --   + a momentum term, to average steps over time
     --   + a learning rate decay, to let the algorithm converge more precisely
-    optimState = {
+    optimfunc.config = {
         maxIter = opt.max_iter,
         learningRate = opt.learning_rate,
         weightDecay = opt.weight_decay,
         momentum = opt.momentum,
         learningRateDecay = opt.learning_rate_decay
     }
-    if opt.load_model ~= 'true' then
-        optimMethod = optim.sgd
-    end
+    optimfunc.state = {
+        evalCounter = 0,
+        decayParameters = nil,
+        deltaParameters = nil
+    }
+    optimfunc.method = require "sgd"
 
 elseif opt.optimizer == 'ASGD' then
     optimState = {
