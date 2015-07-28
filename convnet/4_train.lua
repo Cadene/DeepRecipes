@@ -140,11 +140,9 @@ function train(epoch)
     print(": average row correct: "..(confusion.averageValid*100).."%")
     print(": average rowUcol correct (VOC measure): "..(confusion.averageUnionValid*100).."%")
     print(": > global correct: "..(confusion.totalValid*100).."%")
-    confusion:zero()
-
     --[[ trainLogger ]]
     trainLogger:add{['% mean class accuracy (train set)'] = confusion.totalValid * 100}
-    
+    confusion:zero()
     --print("# Time to print confusion and log = "..(time['confusion']:time().real).." sec")
 
     --[[ plot decision region ]]
