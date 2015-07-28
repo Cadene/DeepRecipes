@@ -79,8 +79,8 @@ end
 
 if opt.load_model == 'true' then
     print('# ...reloading previously trained optimfunc.state')
-    optimfunc.state  = torch.load(path2.load.optim_state)
-    optimfunc.method = torch.load(path2.load.optim_method)
+    --optimfunc.state  = torch.load(path2.load.optim_state)
+    --optimfunc.method = torch.load(path2.load.optim_method)
 end
 
 print("# Optimizer")
