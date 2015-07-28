@@ -5,25 +5,19 @@ th -i main.lua \
 \
     -pc_train 0.8 \
 \
-    -load_seed false \
-    -path2seed ./sk4/seed.save \
-\
     -load_model true \
-    -path2model ./sk4/cade.net \
+    -path2load ./sk5/ \
 \
     -type cuda \
     -threads 8 \
     -gpuid 4 \
-    -model_type overfeat_scratch \
+    -model_type small \
     -criterion NLL \
     -dropout 0.5 \
 \
-    -optimizer SGD \
-    -learning_rate 1e-2 \
-    -learning_rate_decay 0.033 \
-    -momentum 0.06 \
-    -weight_decay 1e-5 \
     -batch_size 128 \
+    -optimizer ADAGRAD \
+    -learning_rate 0 \
 \
     -epoch 1000 \
     -path2save ./sk4/ \
@@ -33,6 +27,5 @@ th -i main.lua \
     -run true \
     -train true \
     -test true \
-    
-    
+    -save true
     

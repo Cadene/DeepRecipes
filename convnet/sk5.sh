@@ -5,7 +5,8 @@ th -i main.lua \
 \
     -pc_train 0.8 \
 \
-    -load_model false \
+    -load_model true \
+    -path2load ./sk5/ \
 \
     -type cuda \
     -threads 8 \
@@ -23,7 +24,7 @@ th -i main.lua \
     -plot_every 2000 \
     -save_every 1 \
 \
-    -run true \
+    -run false \
     -train true \
     -test true 
     

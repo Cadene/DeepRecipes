@@ -141,7 +141,7 @@ confusion = optim.ConfusionMatrix(class_str)
 -- Logger
 
 trainLogger = optim.Logger(path2.save.train_log)
-testLogger  = optim.Logger(path2.save.train_log)
+testLogger  = optim.Logger(path2.save.test_log)
 -- else
 --     trainLogger = torch.load(path2.load.train_logger)
 --     testLogger  = torch.load(path2.load.train_logger)
