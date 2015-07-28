@@ -5,25 +5,18 @@ th -i main.lua \
 \
     -pc_train 0.8 \
 \
-    -load_seed true \
-    -path2seed ./sk1/seed.save \
-\
-    -load_model true \
-    -path2model ./sk1/model.net \
-\
-    -load_optim true \
-    -path2model ./sk1/optim.state \
+    -load_model false \
 \
     -type cuda \
     -threads 8 \
     -gpuid 1 \
     -model_type overfeat \
     -criterion NLL \
-    -dropout 0.5 \
+    -dropout 0.6 \
 \
     -batch_size 128 \
     -optimizer ADAGRAD \
-    -learning_rate 2e-2 \
+    -learning_rate 1e-2 \
 \
     -epoch 1000 \
     -path2save ./sk1/ \

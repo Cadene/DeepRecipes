@@ -5,11 +5,7 @@ th -i main.lua \
 \
     -pc_train 0.8 \
 \
-    -load_seed true \
-    -path2seed ./sk5/seed.save \
-\
-    -load_model true \
-    -path2model ./sk5/cade.net \
+    -load_model false \
 \
     -type cuda \
     -threads 8 \
@@ -20,14 +16,14 @@ th -i main.lua \
 \
     -batch_size 128 \
     -optimizer ADAGRAD \
-    -learning_rate 1e-1 \
+    -learning_rate 1e-2 \
 \
     -epoch 1000 \
     -path2save ./sk5/ \
     -plot_every 2000 \
     -save_every 1 \
 \
-    -run true \
+    -run false \
     -train true \
     -test true 
     
