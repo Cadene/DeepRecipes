@@ -1,16 +1,8 @@
 if opt.load_model == 'true' then
     print('# ...reloading previously trained model')
-    model = torch.load(opt.path2save..'model.net')
-    --collectgarbage()
+    model = torch.load(path2.load.model)
     parameters, gradParameters = model:getParameters()
     
-    -- model2 = torch.load(opt.path2model)
-    -- collectgarbage()
-    -- parameters2, gradParameters2 = model2:getParameters()
-
-    -- print(parameters[1])
-    -- print(parameters2[1])
-
     function compare_param(parameters, parameters2)
         for id = 1, #parameters:size() do
             if parameters[i] ~= parameters2[i] then

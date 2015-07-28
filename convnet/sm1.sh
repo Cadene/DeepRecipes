@@ -16,7 +16,8 @@ th -i main.lua \
     -optimizer ADAGRAD \
     -learning_rate 0.00001 \
 \
-    -load_model true \
+    -load_model false \
+    -path2load ./sm1/ \
     -epoch 100 \
     -path2save ./sm1/ \
     -plot_every 2000 \
@@ -26,6 +27,7 @@ th -i main.lua \
     -run false \
     -train true \
     -test true \
+    -save false 
     
     
     

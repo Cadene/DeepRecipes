@@ -45,7 +45,9 @@ function test(epoch)
     print(": average rowUcol correct (VOC measure): "..(confusion.averageUnionValid*100).."%")
     print(": > global correct: "..(confusion.totalValid*100).."%")
     --[[ trainLogger ]]
-    testLogger:add{['% mean class accuracy (test set)'] = confusion.totalValid * 100}
+    if opt.save == 'true' then
+        testLogger:add{['% mean class accuracy (test set)'] = confusion.totalValid * 100}
+    end
     confusion:zero()
     
     if opt.plot == 'true' then
