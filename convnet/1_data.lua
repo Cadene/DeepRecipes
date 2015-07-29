@@ -23,8 +23,6 @@ elseif opt.data_type == 'Recipe101' then
     loader:load()
     class_str = loader:class_str()
     trainSet, testSet = loader:make_train_test(opt.pc_train, seed)
-
-    print(testSet.path2img[1])
 else
     error(opt.data_type..' is not a valid type')
 end 

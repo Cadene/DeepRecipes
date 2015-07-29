@@ -110,6 +110,16 @@ function train(epoch)
         else
             _,_,_,state = optimfunc.method(feval, parameters, optimfunc.config, optimfunc.state)
             optimfunc.state = state
+
+            if old_param then
+                for i = 1, parameters:size(1) do
+                    if old_param[i] ~= parameters[i]
+                        print(old_param[i], parameters[i])
+                    end
+                end
+            end
+
+            local old_param = parameters:clone()
             
         end
 
