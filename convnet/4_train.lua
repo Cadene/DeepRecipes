@@ -113,7 +113,7 @@ function train(epoch)
 
             if old_param then
                 for i = 1, parameters:size(1) do
-                    if old_param[i] ~= parameters[i]
+                    if old_param[i] ~= parameters[i] then
                         print(old_param[i], parameters[i])
                     end
                 end
