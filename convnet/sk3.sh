@@ -6,19 +6,20 @@ th -i main.lua \
     -pc_train 0.8 \
 \
     -type cuda \
-    -threads 1 \
+    -threads 8 \
     -gpuid 3 \
-    -model_type small \
+    -model_type overfeat \
     -criterion NLL \
-    -dropout 0.6 \
+    -dropout 0.7 \
 \
     -batch_size 128 \
     -optimizer SGD \
-    -learning_rate 1e-1 \
-    -momentum 0.6 \
+    -learning_rate_decay 0 \
+    -learning_rate 0.003 \
+    -momentum 0 \
 \
-    -load_model true \
-    -path2load ./sk5/ \
+    -load_model false \
+    -path2load ./sk3/ \
     -epoch 100 \
     -path2save ./sk3/ \
     -plot_every 2000 \

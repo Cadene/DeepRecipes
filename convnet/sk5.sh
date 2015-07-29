@@ -8,20 +8,20 @@ th -i main.lua \
     -type cuda \
     -threads 8 \
     -gpuid 5 \
-    -model_type small \
+    -model_type overfeat_scratch \
     -criterion NLL \
-    -dropout 0.6 \
+    -dropout 0.7 \
 \
     -batch_size 128 \
-    -optimizer SGD \
+    -optimizer ADAGRAD \
     -learning_rate_decay 0 \
-    -learning_rate 0 \
+    -learning_rate 0.01 \
     -momentum 0 \
 \
-    -load_model true \
-    -path2load ./sk5-4/ \
+    -load_model false \
+    -path2load ./sk5/ \
     -epoch 100 \
-    -path2save ./sk5-5/ \
+    -path2save ./sk5/ \
     -plot_every 2000 \
     -plot false \
     -save_every 1 \

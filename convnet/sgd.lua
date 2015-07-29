@@ -77,8 +77,6 @@ return function (opfunc, x, config, state)
       x:add(-clr, dfdx)
    end
 
-   print(clr)
-
    -- for i = 1, x:size(1) do
    --    if x[i] ~= x2[i] then
    --       print(i, x[i], x2[i])
