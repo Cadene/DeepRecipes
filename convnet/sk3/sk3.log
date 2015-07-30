@@ -245,3 +245,1042 @@ nn.ClassNLLCriterion
 [0m.:. Batch 14081 to 14208 on 72328 images[0m	
 [0m: 21% done[0m	[0m01:02:06 left[0m	
 [0m.:. Batch 17665 to 17792 on 72328 images[0m	
+[0m: 26% done[0m	[0m00:57:43 left[0m	
+[0m.:. Batch 21249 to 21376 on 72328 images[0m	
+[0m: 31% done[0m	[0m00:53:38 left[0m	
+[0m.:. Batch 24961 to 25088 on 72328 images[0m	
+[0m: 36% done[0m	[0m00:49:33 left[0m	
+[0m.:. Batch 28545 to 28672 on 72328 images[0m	
+[0m: 41% done[0m	[0m00:45:26 left[0m	
+[0m.:. Batch 32129 to 32256 on 72328 images[0m	
+[0m: 46% done[0m	[0m00:41:37 left[0m	
+[0m.:. Batch 35841 to 35968 on 72328 images[0m	
+[0m: 51% done[0m	[0m00:37:43 left[0m	
+[0m.:. Batch 39425 to 39552 on 72328 images[0m	
+[0m: 56% done[0m	[0m00:33:43 left[0m	
+[0m.:. Batch 43009 to 43136 on 72328 images[0m	
+[0m: 61% done[0m	[0m00:29:54 left[0m	
+[0m.:. Batch 46721 to 46848 on 72328 images[0m	
+[0m: 66% done[0m	[0m00:26:08 left[0m	
+[0m.:. Batch 50305 to 50432 on 72328 images[0m	
+[0m: 71% done[0m	[0m00:22:13 left[0m	
+[0m.:. Batch 53889 to 54016 on 72328 images[0m	
+[0m: 76% done[0m	[0m00:18:25 left[0m	
+[0m.:. Batch 57473 to 57600 on 72328 images[0m	
+[0m: 81% done[0m	[0m00:14:38 left[0m	
+[0m.:. Batch 61185 to 61312 on 72328 images[0m	
+[0m: 86% done[0m	[0m00:10:52 left[0m	
+[0m.:. Batch 64769 to 64896 on 72328 images[0m	
+[0m: 91% done[0m	[0m00:06:58 left[0m	
+[0m.:. Batch 68353 to 68480 on 72328 images[0m	
+[0m: 96% done[0m	[0m00:03:13 left[0m	
+[0m.:. Batch 72065 to 72192 on 72328 images[0m	
+[0m.:. End of Epoch n° 3[0m	
+[0m: Real time to learn 1 batch = 00:00:08[0m	
+[0m: Real time to learn full batch = 01:15:55[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 1.564466028986%[0m	
+[0m: average rowUcol correct (VOC measure): 0.31702616759161%[0m	
+[0m: > global correct: 1.5996571175755%[0m	
+[0m
+# ... test model[0m	
+[0m: 0% done [0m	[0m00:15:23 left[0m	
+[0m: 5% done [0m	[0m00:06:58 left[0m	
+[0m: 10% done [0m	[0m00:06:48 left[0m	
+[0m: 15% done [0m	[0m00:06:29 left[0m	
+[0m: 20% done [0m	[0m00:06:08 left[0m	
+[0m: 25% done [0m	[0m00:05:45 left[0m	
+[0m: 30% done [0m	[0m00:05:23 left[0m	
+[0m: 35% done [0m	[0m00:05:00 left[0m	
+[0m: 40% done [0m	[0m00:04:37 left[0m	
+[0m: 45% done [0m	[0m00:04:13 left[0m	
+[0m: 50% done [0m	[0m00:03:51 left[0m	
+[0m: 55% done [0m	[0m00:03:29 left[0m	
+[0m: 60% done [0m	[0m00:03:06 left[0m	
+[0m: 65% done [0m	[0m00:02:43 left[0m	
+[0m: 70% done [0m	[0m00:02:20 left[0m	
+[0m: 75% done [0m	[0m00:01:57 left[0m	
+[0m: 80% done [0m	[0m00:01:34 left[0m	
+[0m: 85% done [0m	[0m00:01:11 left[0m	
+[0m: 90% done [0m	[0m00:00:48 left[0m	
+[0m: 95% done [0m	[0m00:00:25 left[0m	
+[0m: 100% done [0m	[0m00:00:02 left[0m	
+[0m: Time to test all samples = 00:07:54[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 1.570013565205%[0m	
+[0m: average rowUcol correct (VOC measure): 0.16106532697594%[0m	
+[0m: > global correct: 1.619210221953%[0m	
+[0m# ... saving model to ./sk3/model.net[0m	
+[0m: tac = 13.243279933929 sec[0m	
+[0m# ... saving optimfunc.state to ./sk3/optim.state[0m	
+[0m: tac = 13.311465978622 sec[0m	
+[0m# ... saving optimfunc.method to ./sk3/optim.method[0m	
+[0m: tac = 13.374814033508 sec[0m	
+[0m
+#####################[0m	
+[0m# Epoch n° 4[0m	
+[0m
+# ... train model[0m	
+[0m.:. Batch 1 to 128 on 72328 images[0m	
+[0m: 1% done[0m	[0m01:22:06 left[0m	
+[0m.:. Batch 3201 to 3328 on 72328 images[0m	
+[0m: 6% done[0m	[0m01:21:53 left[0m	
+[0m.:. Batch 6785 to 6912 on 72328 images[0m	
+[0m: 11% done[0m	[0m01:13:17 left[0m	
+[0m.:. Batch 10497 to 10624 on 72328 images[0m	
+[0m: 16% done[0m	[0m01:07:03 left[0m	
+[0m.:. Batch 14081 to 14208 on 72328 images[0m	
+[0m: 21% done[0m	[0m01:02:04 left[0m	
+[0m.:. Batch 17665 to 17792 on 72328 images[0m	
+[0m: 26% done[0m	[0m00:57:39 left[0m	
+[0m.:. Batch 21249 to 21376 on 72328 images[0m	
+[0m: 31% done[0m	[0m00:53:28 left[0m	
+[0m.:. Batch 24961 to 25088 on 72328 images[0m	
+[0m: 36% done[0m	[0m00:49:27 left[0m	
+[0m.:. Batch 28545 to 28672 on 72328 images[0m	
+[0m: 41% done[0m	[0m00:45:26 left[0m	
+[0m.:. Batch 32129 to 32256 on 72328 images[0m	
+[0m: 46% done[0m	[0m00:41:33 left[0m	
+[0m.:. Batch 35841 to 35968 on 72328 images[0m	
+[0m: 51% done[0m	[0m00:37:41 left[0m	
+[0m.:. Batch 39425 to 39552 on 72328 images[0m	
+[0m: 56% done[0m	[0m00:33:47 left[0m	
+[0m.:. Batch 43009 to 43136 on 72328 images[0m	
+[0m: 61% done[0m	[0m00:30:00 left[0m	
+[0m.:. Batch 46721 to 46848 on 72328 images[0m	
+[0m: 66% done[0m	[0m00:26:12 left[0m	
+[0m.:. Batch 50305 to 50432 on 72328 images[0m	
+[0m: 71% done[0m	[0m00:22:15 left[0m	
+[0m.:. Batch 53889 to 54016 on 72328 images[0m	
+[0m: 76% done[0m	[0m00:18:27 left[0m	
+[0m.:. Batch 57473 to 57600 on 72328 images[0m	
+[0m: 81% done[0m	[0m00:14:40 left[0m	
+[0m.:. Batch 61185 to 61312 on 72328 images[0m	
+[0m: 86% done[0m	[0m00:10:54 left[0m	
+[0m.:. Batch 64769 to 64896 on 72328 images[0m	
+[0m: 91% done[0m	[0m00:07:00 left[0m	
+[0m.:. Batch 68353 to 68480 on 72328 images[0m	
+[0m: 96% done[0m	[0m00:03:14 left[0m	
+[0m.:. Batch 72065 to 72192 on 72328 images[0m	
+[0m.:. End of Epoch n° 4[0m	
+[0m: Real time to learn 1 batch = 00:00:08[0m	
+[0m: Real time to learn full batch = 01:16:10[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 2.1201680802814%[0m	
+[0m: average rowUcol correct (VOC measure): 0.44390304742547%[0m	
+[0m: > global correct: 2.159606238248%[0m	
+[0m
+# ... test model[0m	
+[0m: 0% done [0m	[0m00:15:54 left[0m	
+[0m: 5% done [0m	[0m00:07:03 left[0m	
+[0m: 10% done [0m	[0m00:06:57 left[0m	
+[0m: 15% done [0m	[0m00:06:42 left[0m	
+[0m: 20% done [0m	[0m00:06:16 left[0m	
+[0m: 25% done [0m	[0m00:05:50 left[0m	
+[0m: 30% done [0m	[0m00:05:26 left[0m	
+[0m: 35% done [0m	[0m00:05:02 left[0m	
+[0m: 40% done [0m	[0m00:04:39 left[0m	
+[0m: 45% done [0m	[0m00:04:16 left[0m	
+[0m: 50% done [0m	[0m00:03:53 left[0m	
+[0m: 55% done [0m	[0m00:03:29 left[0m	
+[0m: 60% done [0m	[0m00:03:07 left[0m	
+[0m: 65% done [0m	[0m00:02:43 left[0m	
+[0m: 70% done [0m	[0m00:02:20 left[0m	
+[0m: 75% done [0m	[0m00:01:57 left[0m	
+[0m: 80% done [0m	[0m00:01:35 left[0m	
+[0m: 85% done [0m	[0m00:01:12 left[0m	
+[0m: 90% done [0m	[0m00:00:48 left[0m	
+[0m: 95% done [0m	[0m00:00:25 left[0m	
+[0m: 100% done [0m	[0m00:00:02 left[0m	
+[0m: Time to test all samples = 00:07:55[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 3.5395521619864%[0m	
+[0m: average rowUcol correct (VOC measure): 0.72776029960686%[0m	
+[0m: > global correct: 3.6184391694663%[0m	
+[0m# ... saving model to ./sk3/model.net[0m	
+[0m: tac = 21.415847063065 sec[0m	
+[0m# ... saving optimfunc.state to ./sk3/optim.state[0m	
+[0m: tac = 21.619245052338 sec[0m	
+[0m# ... saving optimfunc.method to ./sk3/optim.method[0m	
+[0m: tac = 21.815482854843 sec[0m	
+[0m
+#####################[0m	
+[0m# Epoch n° 5[0m	
+[0m
+# ... train model[0m	
+[0m.:. Batch 1 to 128 on 72328 images[0m	
+[0m: 1% done[0m	[0m02:20:08 left[0m	
+[0m.:. Batch 3201 to 3328 on 72328 images[0m	
+[0m: 6% done[0m	[0m01:37:34 left[0m	
+[0m.:. Batch 6785 to 6912 on 72328 images[0m	
+[0m: 11% done[0m	[0m01:24:06 left[0m	
+[0m.:. Batch 10497 to 10624 on 72328 images[0m	
+[0m: 16% done[0m	[0m01:14:32 left[0m	
+[0m.:. Batch 14081 to 14208 on 72328 images[0m	
+[0m: 21% done[0m	[0m01:07:30 left[0m	
+[0m.:. Batch 17665 to 17792 on 72328 images[0m	
+[0m: 26% done[0m	[0m01:01:53 left[0m	
+[0m.:. Batch 21249 to 21376 on 72328 images[0m	
+[0m: 31% done[0m	[0m00:56:56 left[0m	
+[0m.:. Batch 24961 to 25088 on 72328 images[0m	
+[0m: 36% done[0m	[0m00:52:11 left[0m	
+[0m.:. Batch 28545 to 28672 on 72328 images[0m	
+[0m: 41% done[0m	[0m00:47:38 left[0m	
+[0m.:. Batch 32129 to 32256 on 72328 images[0m	
+[0m: 46% done[0m	[0m00:43:17 left[0m	
+[0m.:. Batch 35841 to 35968 on 72328 images[0m	
+[0m: 51% done[0m	[0m00:39:05 left[0m	
+[0m.:. Batch 39425 to 39552 on 72328 images[0m	
+[0m: 56% done[0m	[0m00:34:52 left[0m	
+[0m.:. Batch 43009 to 43136 on 72328 images[0m	
+[0m: 61% done[0m	[0m00:30:51 left[0m	
+[0m.:. Batch 46721 to 46848 on 72328 images[0m	
+[0m: 66% done[0m	[0m00:26:51 left[0m	
+[0m.:. Batch 50305 to 50432 on 72328 images[0m	
+[0m: 71% done[0m	[0m00:22:46 left[0m	
+[0m.:. Batch 53889 to 54016 on 72328 images[0m	
+[0m: 76% done[0m	[0m00:18:52 left[0m	
+[0m.:. Batch 57473 to 57600 on 72328 images[0m	
+[0m: 81% done[0m	[0m00:15:14 left[0m	
+[0m.:. Batch 61185 to 61312 on 72328 images[0m	
+[0m: 86% done[0m	[0m00:11:31 left[0m	
+[0m.:. Batch 64769 to 64896 on 72328 images[0m	
+[0m: 91% done[0m	[0m00:07:23 left[0m	
+[0m.:. Batch 68353 to 68480 on 72328 images[0m	
+[0m: 96% done[0m	[0m00:03:24 left[0m	
+[0m.:. Batch 72065 to 72192 on 72328 images[0m	
+[0m.:. End of Epoch n° 5[0m	
+[0m: Real time to learn 1 batch = 00:00:08[0m	
+[0m: Real time to learn full batch = 01:19:57[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 3.1012955574678%[0m	
+[0m: average rowUcol correct (VOC measure): 0.78910996199189%[0m	
+[0m: > global correct: 3.1509235704015%[0m	
+[0m
+# ... test model[0m	
+[0m: 0% done [0m	[0m00:16:21 left[0m	
+[0m: 5% done [0m	[0m00:07:28 left[0m	
+[0m: 10% done [0m	[0m00:06:58 left[0m	
+[0m: 15% done [0m	[0m00:06:36 left[0m	
+[0m: 20% done [0m	[0m00:06:15 left[0m	
+[0m: 25% done [0m	[0m00:05:50 left[0m	
+[0m: 30% done [0m	[0m00:05:27 left[0m	
+[0m: 35% done [0m	[0m00:05:04 left[0m	
+[0m: 40% done [0m	[0m00:04:40 left[0m	
+[0m: 45% done [0m	[0m00:04:17 left[0m	
+[0m: 50% done [0m	[0m00:03:54 left[0m	
+[0m: 55% done [0m	[0m00:03:31 left[0m	
+[0m: 60% done [0m	[0m00:03:15 left[0m	
+[0m: 65% done [0m	[0m00:03:07 left[0m	
+[0m: 70% done [0m	[0m00:02:51 left[0m	
+[0m: 75% done [0m	[0m00:02:32 left[0m	
+[0m: 80% done [0m	[0m00:02:08 left[0m	
+[0m: 85% done [0m	[0m00:01:43 left[0m	
+[0m: 90% done [0m	[0m00:01:11 left[0m	
+[0m: 95% done [0m	[0m00:00:38 left[0m	
+[0m: 100% done [0m	[0m00:00:03 left[0m	
+[0m: Time to test all samples = 00:12:52[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 5.5801204009221%[0m	
+[0m: average rowUcol correct (VOC measure): 1.3267904254931%[0m	
+[0m: > global correct: 5.6507132235501%[0m	
+[0m# ... saving model to ./sk3/model.net[0m	
+[0m: tac = 302.62582302094 sec[0m	
+[0m# ... saving optimfunc.state to ./sk3/optim.state[0m	
+[0m: tac = 303.2124171257 sec[0m	
+[0m# ... saving optimfunc.method to ./sk3/optim.method[0m	
+[0m: tac = 303.28375196457 sec[0m	
+[0m
+#####################[0m	
+[0m# Epoch n° 6[0m	
+[0m
+# ... train model[0m	
+[0m.:. Batch 1 to 128 on 72328 images[0m	
+[0m: 1% done[0m	[0m03:09:19 left[0m	
+[0m.:. Batch 3201 to 3328 on 72328 images[0m	
+[0m: 6% done[0m	[0m03:11:57 left[0m	
+[0m.:. Batch 6785 to 6912 on 72328 images[0m	
+[0m: 11% done[0m	[0m02:16:44 left[0m	
+[0m.:. Batch 10497 to 10624 on 72328 images[0m	
+[0m: 16% done[0m	[0m01:49:50 left[0m	
+[0m.:. Batch 14081 to 14208 on 72328 images[0m	
+[0m: 21% done[0m	[0m01:32:12 left[0m	
+[0m.:. Batch 17665 to 17792 on 72328 images[0m	
+[0m: 26% done[0m	[0m01:20:31 left[0m	
+[0m.:. Batch 21249 to 21376 on 72328 images[0m	
+[0m: 31% done[0m	[0m01:11:20 left[0m	
+[0m.:. Batch 24961 to 25088 on 72328 images[0m	
+[0m: 36% done[0m	[0m01:03:50 left[0m	
+[0m.:. Batch 28545 to 28672 on 72328 images[0m	
+[0m: 41% done[0m	[0m00:57:06 left[0m	
+[0m.:. Batch 32129 to 32256 on 72328 images[0m	
+[0m: 46% done[0m	[0m00:51:02 left[0m	
+[0m.:. Batch 35841 to 35968 on 72328 images[0m	
+[0m: 51% done[0m	[0m00:45:32 left[0m	
+[0m.:. Batch 39425 to 39552 on 72328 images[0m	
+[0m: 56% done[0m	[0m00:40:05 left[0m	
+[0m.:. Batch 43009 to 43136 on 72328 images[0m	
+[0m: 61% done[0m	[0m00:35:06 left[0m	
+[0m.:. Batch 46721 to 46848 on 72328 images[0m	
+[0m: 66% done[0m	[0m00:30:19 left[0m	
+[0m.:. Batch 50305 to 50432 on 72328 images[0m	
+[0m: 71% done[0m	[0m00:25:32 left[0m	
+[0m.:. Batch 53889 to 54016 on 72328 images[0m	
+[0m: 76% done[0m	[0m00:21:00 left[0m	
+[0m.:. Batch 57473 to 57600 on 72328 images[0m	
+[0m: 81% done[0m	[0m00:16:36 left[0m	
+[0m.:. Batch 61185 to 61312 on 72328 images[0m	
+[0m: 86% done[0m	[0m00:12:16 left[0m	
+[0m.:. Batch 64769 to 64896 on 72328 images[0m	
+[0m: 91% done[0m	[0m00:07:49 left[0m	
+[0m.:. Batch 68353 to 68480 on 72328 images[0m	
+[0m: 96% done[0m	[0m00:03:35 left[0m	
+[0m.:. Batch 72065 to 72192 on 72328 images[0m	
+[0m.:. End of Epoch n° 6[0m	
+[0m: Real time to learn 1 batch = 00:00:08[0m	
+[0m: Real time to learn full batch = 01:24:11[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 4.0841092369381%[0m	
+[0m: average rowUcol correct (VOC measure): 1.2255465217617%[0m	
+[0m: > global correct: 4.1339453600265%[0m	
+[0m
+# ... test model[0m	
+[0m: 0% done [0m	[0m00:16:52 left[0m	
+[0m: 5% done [0m	[0m00:07:00 left[0m	
+[0m: 10% done [0m	[0m00:06:48 left[0m	
+[0m: 15% done [0m	[0m00:06:28 left[0m	
+[0m: 20% done [0m	[0m00:06:07 left[0m	
+[0m: 25% done [0m	[0m00:05:46 left[0m	
+[0m: 30% done [0m	[0m00:05:24 left[0m	
+[0m: 35% done [0m	[0m00:05:04 left[0m	
+[0m: 40% done [0m	[0m00:04:43 left[0m	
+[0m: 45% done [0m	[0m00:04:22 left[0m	
+[0m: 50% done [0m	[0m00:03:59 left[0m	
+[0m: 55% done [0m	[0m00:03:36 left[0m	
+[0m: 60% done [0m	[0m00:03:12 left[0m	
+[0m: 65% done [0m	[0m00:02:48 left[0m	
+[0m: 70% done [0m	[0m00:02:24 left[0m	
+[0m: 75% done [0m	[0m00:02:00 left[0m	
+[0m: 80% done [0m	[0m00:01:37 left[0m	
+[0m: 85% done [0m	[0m00:01:13 left[0m	
+[0m: 90% done [0m	[0m00:00:49 left[0m	
+[0m: 95% done [0m	[0m00:00:25 left[0m	
+[0m: 100% done [0m	[0m00:00:02 left[0m	
+[0m: Time to test all samples = 00:08:03[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 7.3026905062212%[0m	
+[0m: average rowUcol correct (VOC measure): 1.8840852313408%[0m	
+[0m: > global correct: 7.3690587652145%[0m	
+[0m# ... saving model to ./sk3/model.net[0m	
+[0m: tac = 12.571749925613 sec[0m	
+[0m# ... saving optimfunc.state to ./sk3/optim.state[0m	
+[0m: tac = 12.636940956116 sec[0m	
+[0m# ... saving optimfunc.method to ./sk3/optim.method[0m	
+[0m: tac = 12.693012952805 sec[0m	
+[0m
+#####################[0m	
+[0m# Epoch n° 7[0m	
+[0m
+# ... train model[0m	
+[0m.:. Batch 1 to 128 on 72328 images[0m	
+[0m: 1% done[0m	[0m01:21:45 left[0m	
+[0m.:. Batch 3201 to 3328 on 72328 images[0m	
+[0m: 6% done[0m	[0m01:17:58 left[0m	
+[0m.:. Batch 6785 to 6912 on 72328 images[0m	
+[0m: 11% done[0m	[0m01:13:02 left[0m	
+[0m.:. Batch 10497 to 10624 on 72328 images[0m	
+[0m: 16% done[0m	[0m01:08:12 left[0m	
+[0m.:. Batch 14081 to 14208 on 72328 images[0m	
+[0m: 21% done[0m	[0m01:03:08 left[0m	
+[0m.:. Batch 17665 to 17792 on 72328 images[0m	
+[0m: 26% done[0m	[0m00:58:35 left[0m	
+[0m.:. Batch 21249 to 21376 on 72328 images[0m	
+[0m: 31% done[0m	[0m00:54:20 left[0m	
+[0m.:. Batch 24961 to 25088 on 72328 images[0m	
+[0m: 36% done[0m	[0m00:50:13 left[0m	
+[0m.:. Batch 28545 to 28672 on 72328 images[0m	
+[0m: 41% done[0m	[0m00:45:55 left[0m	
+[0m.:. Batch 32129 to 32256 on 72328 images[0m	
+[0m: 46% done[0m	[0m00:41:57 left[0m	
+[0m.:. Batch 35841 to 35968 on 72328 images[0m	
+[0m: 51% done[0m	[0m00:38:00 left[0m	
+[0m.:. Batch 39425 to 39552 on 72328 images[0m	
+[0m: 56% done[0m	[0m00:33:58 left[0m	
+[0m.:. Batch 43009 to 43136 on 72328 images[0m	
+[0m: 61% done[0m	[0m00:30:07 left[0m	
+[0m.:. Batch 46721 to 46848 on 72328 images[0m	
+[0m: 66% done[0m	[0m00:26:15 left[0m	
+[0m.:. Batch 50305 to 50432 on 72328 images[0m	
+[0m: 71% done[0m	[0m00:22:19 left[0m	
+[0m.:. Batch 53889 to 54016 on 72328 images[0m	
+[0m: 76% done[0m	[0m00:18:30 left[0m	
+[0m.:. Batch 57473 to 57600 on 72328 images[0m	
+[0m: 81% done[0m	[0m00:14:43 left[0m	
+[0m.:. Batch 61185 to 61312 on 72328 images[0m	
+[0m: 86% done[0m	[0m00:10:55 left[0m	
+[0m.:. Batch 64769 to 64896 on 72328 images[0m	
+[0m: 91% done[0m	[0m00:07:01 left[0m	
+[0m.:. Batch 68353 to 68480 on 72328 images[0m	
+[0m: 96% done[0m	[0m00:03:14 left[0m	
+[0m.:. Batch 72065 to 72192 on 72328 images[0m	
+[0m.:. End of Epoch n° 7[0m	
+[0m: Real time to learn 1 batch = 00:00:08[0m	
+[0m: Real time to learn full batch = 01:16:15[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 5.6132757043844%[0m	
+[0m: average rowUcol correct (VOC measure): 1.9054068366554%[0m	
+[0m: > global correct: 5.6630903661099%[0m	
+[0m
+# ... test model[0m	
+[0m: 0% done [0m	[0m00:16:56 left[0m	
+[0m: 5% done [0m	[0m00:06:59 left[0m	
+[0m: 10% done [0m	[0m00:06:45 left[0m	
+[0m: 15% done [0m	[0m00:06:24 left[0m	
+[0m: 20% done [0m	[0m00:06:04 left[0m	
+[0m: 25% done [0m	[0m00:05:43 left[0m	
+[0m: 30% done [0m	[0m00:05:22 left[0m	
+[0m: 35% done [0m	[0m00:04:58 left[0m	
+[0m: 40% done [0m	[0m00:04:35 left[0m	
+[0m: 45% done [0m	[0m00:04:13 left[0m	
+[0m: 50% done [0m	[0m00:03:50 left[0m	
+[0m: 55% done [0m	[0m00:03:27 left[0m	
+[0m: 60% done [0m	[0m00:03:05 left[0m	
+[0m: 65% done [0m	[0m00:02:42 left[0m	
+[0m: 70% done [0m	[0m00:02:19 left[0m	
+[0m: 75% done [0m	[0m00:01:56 left[0m	
+[0m: 80% done [0m	[0m00:01:33 left[0m	
+[0m: 85% done [0m	[0m00:01:10 left[0m	
+[0m: 90% done [0m	[0m00:00:47 left[0m	
+[0m: 95% done [0m	[0m00:00:25 left[0m	
+[0m: 100% done [0m	[0m00:00:02 left[0m	
+[0m: Time to test all samples = 00:07:47[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 9.2067712138748%[0m	
+[0m: average rowUcol correct (VOC measure): 2.8566128772564%[0m	
+[0m: > global correct: 9.28016742854%[0m	
+[0m# ... saving model to ./sk3/model.net[0m	
+[0m: tac = 12.273254871368 sec[0m	
+[0m# ... saving optimfunc.state to ./sk3/optim.state[0m	
+[0m: tac = 12.322078943253 sec[0m	
+[0m# ... saving optimfunc.method to ./sk3/optim.method[0m	
+[0m: tac = 12.373657941818 sec[0m	
+[0m
+#####################[0m	
+[0m# Epoch n° 8[0m	
+[0m
+# ... train model[0m	
+[0m.:. Batch 1 to 128 on 72328 images[0m	
+[0m: 1% done[0m	[0m01:22:50 left[0m	
+[0m.:. Batch 3201 to 3328 on 72328 images[0m	
+[0m: 6% done[0m	[0m01:12:53 left[0m	
+[0m.:. Batch 6785 to 6912 on 72328 images[0m	
+[0m: 11% done[0m	[0m01:09:29 left[0m	
+[0m.:. Batch 10497 to 10624 on 72328 images[0m	
+[0m: 16% done[0m	[0m01:06:44 left[0m	
+[0m.:. Batch 14081 to 14208 on 72328 images[0m	
+[0m: 21% done[0m	[0m01:01:46 left[0m	
+[0m.:. Batch 17665 to 17792 on 72328 images[0m	
+[0m: 26% done[0m	[0m00:57:21 left[0m	
+[0m.:. Batch 21249 to 21376 on 72328 images[0m	
+[0m: 31% done[0m	[0m00:53:14 left[0m	
+[0m.:. Batch 24961 to 25088 on 72328 images[0m	
+[0m: 36% done[0m	[0m00:49:20 left[0m	
+[0m.:. Batch 28545 to 28672 on 72328 images[0m	
+[0m: 41% done[0m	[0m00:45:21 left[0m	
+[0m.:. Batch 32129 to 32256 on 72328 images[0m	
+[0m: 46% done[0m	[0m00:41:26 left[0m	
+[0m.:. Batch 35841 to 35968 on 72328 images[0m	
+[0m: 51% done[0m	[0m00:37:33 left[0m	
+[0m.:. Batch 39425 to 39552 on 72328 images[0m	
+[0m: 56% done[0m	[0m00:33:38 left[0m	
+[0m.:. Batch 43009 to 43136 on 72328 images[0m	
+[0m: 61% done[0m	[0m00:29:50 left[0m	
+[0m.:. Batch 46721 to 46848 on 72328 images[0m	
+[0m: 66% done[0m	[0m00:26:06 left[0m	
+[0m.:. Batch 50305 to 50432 on 72328 images[0m	
+[0m: 71% done[0m	[0m00:22:11 left[0m	
+[0m.:. Batch 53889 to 54016 on 72328 images[0m	
+[0m: 76% done[0m	[0m00:18:23 left[0m	
+[0m.:. Batch 57473 to 57600 on 72328 images[0m	
+[0m: 81% done[0m	[0m00:14:39 left[0m	
+[0m.:. Batch 61185 to 61312 on 72328 images[0m	
+[0m: 86% done[0m	[0m00:10:53 left[0m	
+[0m.:. Batch 64769 to 64896 on 72328 images[0m	
+[0m: 91% done[0m	[0m00:06:59 left[0m	
+[0m.:. Batch 68353 to 68480 on 72328 images[0m	
+[0m: 96% done[0m	[0m00:03:13 left[0m	
+[0m.:. Batch 72065 to 72192 on 72328 images[0m	
+[0m.:. End of Epoch n° 8[0m	
+[0m: Real time to learn 1 batch = 00:00:08[0m	
+[0m: Real time to learn full batch = 01:15:55[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 7.2875802544646%[0m	
+[0m: average rowUcol correct (VOC measure): 2.8905506702232%[0m	
+[0m: > global correct: 7.3304944143347%[0m	
+[0m
+# ... test model[0m	
+[0m: 0% done [0m	[0m00:16:48 left[0m	
+[0m: 5% done [0m	[0m00:07:08 left[0m	
+[0m: 10% done [0m	[0m00:06:55 left[0m	
+[0m: 15% done [0m	[0m00:06:42 left[0m	
+[0m: 20% done [0m	[0m00:06:15 left[0m	
+[0m: 25% done [0m	[0m00:05:51 left[0m	
+[0m: 30% done [0m	[0m00:05:26 left[0m	
+[0m: 35% done [0m	[0m00:05:02 left[0m	
+[0m: 40% done [0m	[0m00:04:39 left[0m	
+[0m: 45% done [0m	[0m00:04:16 left[0m	
+[0m: 50% done [0m	[0m00:03:53 left[0m	
+[0m: 55% done [0m	[0m00:03:30 left[0m	
+[0m: 60% done [0m	[0m00:03:07 left[0m	
+[0m: 65% done [0m	[0m00:02:43 left[0m	
+[0m: 70% done [0m	[0m00:02:20 left[0m	
+[0m: 75% done [0m	[0m00:01:57 left[0m	
+[0m: 80% done [0m	[0m00:01:34 left[0m	
+[0m: 85% done [0m	[0m00:01:11 left[0m	
+[0m: 90% done [0m	[0m00:00:48 left[0m	
+[0m: 95% done [0m	[0m00:00:25 left[0m	
+[0m: 100% done [0m	[0m00:00:02 left[0m	
+[0m: Time to test all samples = 00:07:50[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 12.077162822358%[0m	
+[0m: average rowUcol correct (VOC measure): 4.3287495851959%[0m	
+[0m: > global correct: 12.133061629124%[0m	
+[0m# ... saving model to ./sk3/model.net[0m	
+[0m: tac = 12.163360118866 sec[0m	
+[0m# ... saving optimfunc.state to ./sk3/optim.state[0m	
+[0m: tac = 12.217197179794 sec[0m	
+[0m# ... saving optimfunc.method to ./sk3/optim.method[0m	
+[0m: tac = 12.272325992584 sec[0m	
+[0m
+#####################[0m	
+[0m# Epoch n° 9[0m	
+[0m
+# ... train model[0m	
+[0m.:. Batch 1 to 128 on 72328 images[0m	
+[0m: 1% done[0m	[0m01:20:12 left[0m	
+[0m.:. Batch 3201 to 3328 on 72328 images[0m	
+[0m: 6% done[0m	[0m01:11:15 left[0m	
+[0m.:. Batch 6785 to 6912 on 72328 images[0m	
+[0m: 11% done[0m	[0m01:07:19 left[0m	
+[0m.:. Batch 10497 to 10624 on 72328 images[0m	
+[0m: 16% done[0m	[0m01:06:00 left[0m	
+[0m.:. Batch 14081 to 14208 on 72328 images[0m	
+[0m: 21% done[0m	[0m01:01:44 left[0m	
+[0m.:. Batch 17665 to 17792 on 72328 images[0m	
+[0m: 26% done[0m	[0m00:57:27 left[0m	
+[0m.:. Batch 21249 to 21376 on 72328 images[0m	
+[0m: 31% done[0m	[0m00:53:16 left[0m	
+[0m.:. Batch 24961 to 25088 on 72328 images[0m	
+[0m: 36% done[0m	[0m00:49:20 left[0m	
+[0m.:. Batch 28545 to 28672 on 72328 images[0m	
+[0m: 41% done[0m	[0m00:45:16 left[0m	
+[0m.:. Batch 32129 to 32256 on 72328 images[0m	
+[0m: 46% done[0m	[0m00:41:25 left[0m	
+[0m.:. Batch 35841 to 35968 on 72328 images[0m	
+[0m: 51% done[0m	[0m00:37:36 left[0m	
+[0m.:. Batch 39425 to 39552 on 72328 images[0m	
+[0m: 56% done[0m	[0m00:33:37 left[0m	
+[0m.:. Batch 43009 to 43136 on 72328 images[0m	
+[0m: 61% done[0m	[0m00:29:51 left[0m	
+[0m.:. Batch 46721 to 46848 on 72328 images[0m	
+[0m: 66% done[0m	[0m00:26:03 left[0m	
+[0m.:. Batch 50305 to 50432 on 72328 images[0m	
+[0m: 71% done[0m	[0m00:22:08 left[0m	
+[0m.:. Batch 53889 to 54016 on 72328 images[0m	
+[0m: 76% done[0m	[0m00:18:22 left[0m	
+[0m.:. Batch 57473 to 57600 on 72328 images[0m	
+[0m: 81% done[0m	[0m00:14:35 left[0m	
+[0m.:. Batch 61185 to 61312 on 72328 images[0m	
+[0m: 86% done[0m	[0m00:10:50 left[0m	
+[0m.:. Batch 64769 to 64896 on 72328 images[0m	
+[0m: 91% done[0m	[0m00:06:58 left[0m	
+[0m.:. Batch 68353 to 68480 on 72328 images[0m	
+[0m: 96% done[0m	[0m00:03:13 left[0m	
+[0m.:. Batch 72065 to 72192 on 72328 images[0m	
+[0m.:. End of Epoch n° 9[0m	
+[0m: Real time to learn 1 batch = 00:00:08[0m	
+[0m: Real time to learn full batch = 01:15:47[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 9.6557634099995%[0m	
+[0m: average rowUcol correct (VOC measure): 4.3285686832779%[0m	
+[0m: > global correct: 9.7099325295874%[0m	
+[0m
+# ... test model[0m	
+[0m: 0% done [0m	[0m00:16:47 left[0m	
+[0m: 5% done [0m	[0m00:06:55 left[0m	
+[0m: 10% done [0m	[0m00:06:43 left[0m	
+[0m: 15% done [0m	[0m00:06:24 left[0m	
+[0m: 20% done [0m	[0m00:06:03 left[0m	
+[0m: 25% done [0m	[0m00:05:41 left[0m	
+[0m: 30% done [0m	[0m00:05:19 left[0m	
+[0m: 35% done [0m	[0m00:04:56 left[0m	
+[0m: 40% done [0m	[0m00:04:34 left[0m	
+[0m: 45% done [0m	[0m00:04:11 left[0m	
+[0m: 50% done [0m	[0m00:03:48 left[0m	
+[0m: 55% done [0m	[0m00:03:26 left[0m	
+[0m: 60% done [0m	[0m00:03:03 left[0m	
+[0m: 65% done [0m	[0m00:02:40 left[0m	
+[0m: 70% done [0m	[0m00:02:18 left[0m	
+[0m: 75% done [0m	[0m00:01:55 left[0m	
+[0m: 80% done [0m	[0m00:01:33 left[0m	
+[0m: 85% done [0m	[0m00:01:10 left[0m	
+[0m: 90% done [0m	[0m00:00:47 left[0m	
+[0m: 95% done [0m	[0m00:00:25 left[0m	
+[0m: 100% done [0m	[0m00:00:02 left[0m	
+[0m: Time to test all samples = 00:07:46[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 14.045159254537%[0m	
+[0m: average rowUcol correct (VOC measure): 5.8258690124396%[0m	
+[0m: > global correct: 14.093737952305%[0m	
+[0m# ... saving model to ./sk3/model.net[0m	
+[0m: tac = 12.271370887756 sec[0m	
+[0m# ... saving optimfunc.state to ./sk3/optim.state[0m	
+[0m: tac = 12.335100889206 sec[0m	
+[0m# ... saving optimfunc.method to ./sk3/optim.method[0m	
+[0m: tac = 12.38777089119 sec[0m	
+[0m
+#####################[0m	
+[0m# Epoch n° 10[0m	
+[0m
+# ... train model[0m	
+[0m.:. Batch 1 to 128 on 72328 images[0m	
+[0m: 1% done[0m	[0m01:23:27 left[0m	
+[0m.:. Batch 3201 to 3328 on 72328 images[0m	
+[0m: 6% done[0m	[0m01:13:14 left[0m	
+[0m.:. Batch 6785 to 6912 on 72328 images[0m	
+[0m: 11% done[0m	[0m01:08:29 left[0m	
+[0m.:. Batch 10497 to 10624 on 72328 images[0m	
+[0m: 16% done[0m	[0m01:06:59 left[0m	
+[0m.:. Batch 14081 to 14208 on 72328 images[0m	
+[0m: 21% done[0m	[0m01:02:04 left[0m	
+[0m.:. Batch 17665 to 17792 on 72328 images[0m	
+[0m: 26% done[0m	[0m00:57:43 left[0m	
+[0m.:. Batch 21249 to 21376 on 72328 images[0m	
+[0m: 31% done[0m	[0m00:53:50 left[0m	
+[0m.:. Batch 24961 to 25088 on 72328 images[0m	
+[0m: 36% done[0m	[0m00:49:47 left[0m	
+[0m.:. Batch 28545 to 28672 on 72328 images[0m	
+[0m: 41% done[0m	[0m00:45:40 left[0m	
+[0m.:. Batch 32129 to 32256 on 72328 images[0m	
+[0m: 46% done[0m	[0m00:41:42 left[0m	
+[0m.:. Batch 35841 to 35968 on 72328 images[0m	
+[0m: 51% done[0m	[0m00:37:50 left[0m	
+[0m.:. Batch 39425 to 39552 on 72328 images[0m	
+[0m: 56% done[0m	[0m00:33:49 left[0m	
+[0m.:. Batch 43009 to 43136 on 72328 images[0m	
+[0m: 61% done[0m	[0m00:29:57 left[0m	
+[0m.:. Batch 46721 to 46848 on 72328 images[0m	
+[0m: 66% done[0m	[0m00:26:08 left[0m	
+[0m.:. Batch 50305 to 50432 on 72328 images[0m	
+[0m: 71% done[0m	[0m00:22:14 left[0m	
+[0m.:. Batch 53889 to 54016 on 72328 images[0m	
+[0m: 76% done[0m	[0m00:18:26 left[0m	
+[0m.:. Batch 57473 to 57600 on 72328 images[0m	
+[0m: 81% done[0m	[0m00:14:41 left[0m	
+[0m.:. Batch 61185 to 61312 on 72328 images[0m	
+[0m: 86% done[0m	[0m00:10:54 left[0m	
+[0m.:. Batch 64769 to 64896 on 72328 images[0m	
+[0m: 91% done[0m	[0m00:07:00 left[0m	
+[0m.:. Batch 68353 to 68480 on 72328 images[0m	
+[0m: 96% done[0m	[0m00:03:14 left[0m	
+[0m.:. Batch 72065 to 72192 on 72328 images[0m	
+[0m.:. End of Epoch n° 10[0m	
+[0m: Real time to learn 1 batch = 00:00:08[0m	
+[0m: Real time to learn full batch = 01:16:15[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 12.142978846741%[0m	
+[0m: average rowUcol correct (VOC measure): 5.8016557831981%[0m	
+[0m: > global correct: 12.208273421082%[0m	
+[0m
+# ... test model[0m	
+[0m: 0% done [0m	[0m00:16:50 left[0m	
+[0m: 5% done [0m	[0m00:06:57 left[0m	
+[0m: 10% done [0m	[0m00:06:44 left[0m	
+[0m: 15% done [0m	[0m00:06:25 left[0m	
+[0m: 20% done [0m	[0m00:06:03 left[0m	
+[0m: 25% done [0m	[0m00:05:42 left[0m	
+[0m: 30% done [0m	[0m00:05:20 left[0m	
+[0m: 35% done [0m	[0m00:04:57 left[0m	
+[0m: 40% done [0m	[0m00:04:35 left[0m	
+[0m: 45% done [0m	[0m00:04:12 left[0m	
+[0m: 50% done [0m	[0m00:03:50 left[0m	
+[0m: 55% done [0m	[0m00:03:27 left[0m	
+[0m: 60% done [0m	[0m00:03:04 left[0m	
+[0m: 65% done [0m	[0m00:02:42 left[0m	
+[0m: 70% done [0m	[0m00:02:19 left[0m	
+[0m: 75% done [0m	[0m00:01:56 left[0m	
+[0m: 80% done [0m	[0m00:01:33 left[0m	
+[0m: 85% done [0m	[0m00:01:10 left[0m	
+[0m: 90% done [0m	[0m00:00:49 left[0m	
+[0m: 95% done [0m	[0m00:00:25 left[0m	
+[0m: 100% done [0m	[0m00:00:02 left[0m	
+[0m: Time to test all samples = 00:07:46[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 17.577885991276%[0m	
+[0m: average rowUcol correct (VOC measure): 7.8642831972367%[0m	
+[0m: > global correct: 17.651594426392%[0m	
+[0m# ... saving model to ./sk3/model.net[0m	
+[0m: tac = 12.342256069183 sec[0m	
+[0m# ... saving optimfunc.state to ./sk3/optim.state[0m	
+[0m: tac = 12.391573905945 sec[0m	
+[0m# ... saving optimfunc.method to ./sk3/optim.method[0m	
+[0m: tac = 12.444175004959 sec[0m	
+[0m
+#####################[0m	
+[0m# Epoch n° 11[0m	
+[0m
+# ... train model[0m	
+[0m.:. Batch 1 to 128 on 72328 images[0m	
+[0m: 1% done[0m	[0m01:22:28 left[0m	
+[0m.:. Batch 3201 to 3328 on 72328 images[0m	
+[0m: 6% done[0m	[0m01:11:40 left[0m	
+[0m.:. Batch 6785 to 6912 on 72328 images[0m	
+[0m: 11% done[0m	[0m01:09:22 left[0m	
+[0m.:. Batch 10497 to 10624 on 72328 images[0m	
+[0m: 16% done[0m	[0m01:06:56 left[0m	
+[0m.:. Batch 14081 to 14208 on 72328 images[0m	
+[0m: 21% done[0m	[0m01:01:50 left[0m	
+[0m.:. Batch 17665 to 17792 on 72328 images[0m	
+[0m: 26% done[0m	[0m00:57:44 left[0m	
+[0m.:. Batch 21249 to 21376 on 72328 images[0m	
+[0m: 31% done[0m	[0m00:53:30 left[0m	
+[0m.:. Batch 24961 to 25088 on 72328 images[0m	
+[0m: 36% done[0m	[0m00:49:33 left[0m	
+[0m.:. Batch 28545 to 28672 on 72328 images[0m	
+[0m: 41% done[0m	[0m00:45:28 left[0m	
+[0m.:. Batch 32129 to 32256 on 72328 images[0m	
+[0m: 46% done[0m	[0m00:41:34 left[0m	
+[0m.:. Batch 35841 to 35968 on 72328 images[0m	
+[0m: 51% done[0m	[0m00:37:41 left[0m	
+[0m.:. Batch 39425 to 39552 on 72328 images[0m	
+[0m: 56% done[0m	[0m00:33:41 left[0m	
+[0m.:. Batch 43009 to 43136 on 72328 images[0m	
+[0m: 61% done[0m	[0m00:30:22 left[0m	
+[0m.:. Batch 46721 to 46848 on 72328 images[0m	
+[0m: 66% done[0m	[0m00:26:30 left[0m	
+[0m.:. Batch 50305 to 50432 on 72328 images[0m	
+[0m: 71% done[0m	[0m00:22:29 left[0m	
+[0m.:. Batch 53889 to 54016 on 72328 images[0m	
+[0m: 76% done[0m	[0m00:18:39 left[0m	
+[0m.:. Batch 57473 to 57600 on 72328 images[0m	
+[0m: 81% done[0m	[0m00:14:49 left[0m	
+[0m.:. Batch 61185 to 61312 on 72328 images[0m	
+[0m: 86% done[0m	[0m00:11:01 left[0m	
+[0m.:. Batch 64769 to 64896 on 72328 images[0m	
+[0m: 91% done[0m	[0m00:07:04 left[0m	
+[0m.:. Batch 68353 to 68480 on 72328 images[0m	
+[0m: 96% done[0m	[0m00:03:16 left[0m	
+[0m.:. Batch 72065 to 72192 on 72328 images[0m	
+[0m.:. End of Epoch n° 11[0m	
+[0m: Real time to learn 1 batch = 00:00:08[0m	
+[0m: Real time to learn full batch = 01:16:39[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 14.337569752957%[0m	
+[0m: average rowUcol correct (VOC measure): 7.1179285723864%[0m	
+[0m: > global correct: 14.398296648601%[0m	
+[0m
+# ... test model[0m	
+[0m: 0% done [0m	[0m00:16:45 left[0m	
+[0m: 5% done [0m	[0m00:07:00 left[0m	
+[0m: 10% done [0m	[0m00:06:43 left[0m	
+[0m: 15% done [0m	[0m00:06:24 left[0m	
+[0m: 20% done [0m	[0m00:06:03 left[0m	
+[0m: 25% done [0m	[0m00:05:43 left[0m	
+[0m: 30% done [0m	[0m00:05:19 left[0m	
+[0m: 35% done [0m	[0m00:04:58 left[0m	
+[0m: 40% done [0m	[0m00:04:37 left[0m	
+[0m: 45% done [0m	[0m00:04:15 left[0m	
+[0m: 50% done [0m	[0m00:03:52 left[0m	
+[0m: 55% done [0m	[0m00:03:30 left[0m	
+[0m: 60% done [0m	[0m00:03:08 left[0m	
+[0m: 65% done [0m	[0m00:02:44 left[0m	
+[0m: 70% done [0m	[0m00:02:21 left[0m	
+[0m: 75% done [0m	[0m00:01:58 left[0m	
+[0m: 80% done [0m	[0m00:01:34 left[0m	
+[0m: 85% done [0m	[0m00:01:11 left[0m	
+[0m: 90% done [0m	[0m00:00:49 left[0m	
+[0m: 95% done [0m	[0m00:00:25 left[0m	
+[0m: 100% done [0m	[0m00:00:02 left[0m	
+[0m: Time to test all samples = 00:07:51[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 19.707254057123%[0m	
+[0m: average rowUcol correct (VOC measure): 9.4687301513398%[0m	
+[0m: > global correct: 19.738943658093%[0m	
+[0m# ... saving model to ./sk3/model.net[0m	
+[0m: tac = 12.127336978912 sec[0m	
+[0m# ... saving optimfunc.state to ./sk3/optim.state[0m	
+[0m: tac = 12.168226957321 sec[0m	
+[0m# ... saving optimfunc.method to ./sk3/optim.method[0m	
+[0m: tac = 12.213073015213 sec[0m	
+[0m
+#####################[0m	
+[0m# Epoch n° 12[0m	
+[0m
+# ... train model[0m	
+[0m.:. Batch 1 to 128 on 72328 images[0m	
+[0m: 1% done[0m	[0m01:22:22 left[0m	
+[0m.:. Batch 3201 to 3328 on 72328 images[0m	
+[0m: 6% done[0m	[0m01:14:14 left[0m	
+[0m.:. Batch 6785 to 6912 on 72328 images[0m	
+[0m: 11% done[0m	[0m01:09:49 left[0m	
+[0m.:. Batch 10497 to 10624 on 72328 images[0m	
+[0m: 16% done[0m	[0m01:07:26 left[0m	
+[0m.:. Batch 14081 to 14208 on 72328 images[0m	
+[0m: 21% done[0m	[0m01:02:39 left[0m	
+[0m.:. Batch 17665 to 17792 on 72328 images[0m	
+[0m: 26% done[0m	[0m00:58:13 left[0m	
+[0m.:. Batch 21249 to 21376 on 72328 images[0m	
+[0m: 31% done[0m	[0m00:53:56 left[0m	
+[0m.:. Batch 24961 to 25088 on 72328 images[0m	
+[0m: 36% done[0m	[0m00:50:00 left[0m	
+[0m.:. Batch 28545 to 28672 on 72328 images[0m	
+[0m: 41% done[0m	[0m00:45:51 left[0m	
+[0m.:. Batch 32129 to 32256 on 72328 images[0m	
+[0m: 46% done[0m	[0m00:41:52 left[0m	
+[0m.:. Batch 35841 to 35968 on 72328 images[0m	
+[0m: 51% done[0m	[0m00:37:58 left[0m	
+[0m.:. Batch 39425 to 39552 on 72328 images[0m	
+[0m: 56% done[0m	[0m00:33:55 left[0m	
+[0m.:. Batch 43009 to 43136 on 72328 images[0m	
+[0m: 61% done[0m	[0m00:30:07 left[0m	
+[0m.:. Batch 46721 to 46848 on 72328 images[0m	
+[0m: 66% done[0m	[0m00:26:16 left[0m	
+[0m.:. Batch 50305 to 50432 on 72328 images[0m	
+[0m: 71% done[0m	[0m00:22:18 left[0m	
+[0m.:. Batch 53889 to 54016 on 72328 images[0m	
+[0m: 76% done[0m	[0m00:18:31 left[0m	
+[0m.:. Batch 57473 to 57600 on 72328 images[0m	
+[0m: 81% done[0m	[0m00:14:43 left[0m	
+[0m.:. Batch 61185 to 61312 on 72328 images[0m	
+[0m: 86% done[0m	[0m00:10:55 left[0m	
+[0m.:. Batch 64769 to 64896 on 72328 images[0m	
+[0m: 91% done[0m	[0m00:07:01 left[0m	
+[0m.:. Batch 68353 to 68480 on 72328 images[0m	
+[0m: 96% done[0m	[0m00:03:14 left[0m	
+[0m.:. Batch 72065 to 72192 on 72328 images[0m	
+[0m.:. End of Epoch n° 12[0m	
+[0m: Real time to learn 1 batch = 00:00:08[0m	
+[0m: Real time to learn full batch = 01:16:14[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 16.481134630186%[0m	
+[0m: average rowUcol correct (VOC measure): 8.4257984598453%[0m	
+[0m: > global correct: 16.542694392213%[0m	
+[0m
+# ... test model[0m	
+[0m: 0% done [0m	[0m00:16:59 left[0m	
+[0m: 5% done [0m	[0m00:07:07 left[0m	
+[0m: 10% done [0m	[0m00:07:00 left[0m	
+[0m: 15% done [0m	[0m00:06:36 left[0m	
+[0m: 20% done [0m	[0m00:06:13 left[0m	
+[0m: 25% done [0m	[0m00:05:49 left[0m	
+[0m: 30% done [0m	[0m00:05:24 left[0m	
+[0m: 35% done [0m	[0m00:05:01 left[0m	
+[0m: 40% done [0m	[0m00:04:39 left[0m	
+[0m: 45% done [0m	[0m00:04:16 left[0m	
+[0m: 50% done [0m	[0m00:03:53 left[0m	
+[0m: 55% done [0m	[0m00:03:30 left[0m	
+[0m: 60% done [0m	[0m00:03:07 left[0m	
+[0m: 65% done [0m	[0m00:02:44 left[0m	
+[0m: 70% done [0m	[0m00:02:21 left[0m	
+[0m: 75% done [0m	[0m00:01:57 left[0m	
+[0m: 80% done [0m	[0m00:01:34 left[0m	
+[0m: 85% done [0m	[0m00:01:11 left[0m	
+[0m: 90% done [0m	[0m00:00:49 left[0m	
+[0m: 95% done [0m	[0m00:00:25 left[0m	
+[0m: 100% done [0m	[0m00:00:02 left[0m	
+[0m: Time to test all samples = 00:07:52[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 19.321118756244%[0m	
+[0m: average rowUcol correct (VOC measure): 9.5141234494156%[0m	
+[0m: > global correct: 19.353417414771%[0m	
+[0m# ... saving model to ./sk3/model.net[0m	
+[0m: tac = 12.272053956985 sec[0m	
+[0m# ... saving optimfunc.state to ./sk3/optim.state[0m	
+[0m: tac = 12.319029092789 sec[0m	
+[0m# ... saving optimfunc.method to ./sk3/optim.method[0m	
+[0m: tac = 12.368022918701 sec[0m	
+[0m
+#####################[0m	
+[0m# Epoch n° 13[0m	
+[0m
+# ... train model[0m	
+[0m.:. Batch 1 to 128 on 72328 images[0m	
+[0m: 1% done[0m	[0m01:22:30 left[0m	
+[0m.:. Batch 3201 to 3328 on 72328 images[0m	
+[0m: 6% done[0m	[0m01:13:36 left[0m	
+[0m.:. Batch 6785 to 6912 on 72328 images[0m	
+[0m: 11% done[0m	[0m01:09:37 left[0m	
+[0m.:. Batch 10497 to 10624 on 72328 images[0m	
+[0m: 16% done[0m	[0m01:07:23 left[0m	
+[0m.:. Batch 14081 to 14208 on 72328 images[0m	
+[0m: 21% done[0m	[0m01:02:19 left[0m	
+[0m.:. Batch 17665 to 17792 on 72328 images[0m	
+[0m: 26% done[0m	[0m00:57:49 left[0m	
+[0m.:. Batch 21249 to 21376 on 72328 images[0m	
+[0m: 31% done[0m	[0m00:53:44 left[0m	
+[0m.:. Batch 24961 to 25088 on 72328 images[0m	
+[0m: 36% done[0m	[0m00:49:38 left[0m	
+[0m.:. Batch 28545 to 28672 on 72328 images[0m	
+[0m: 41% done[0m	[0m00:45:32 left[0m	
+[0m.:. Batch 32129 to 32256 on 72328 images[0m	
+[0m: 46% done[0m	[0m00:41:38 left[0m	
+[0m.:. Batch 35841 to 35968 on 72328 images[0m	
+[0m: 51% done[0m	[0m00:37:47 left[0m	
+[0m.:. Batch 39425 to 39552 on 72328 images[0m	
+[0m: 56% done[0m	[0m00:33:49 left[0m	
+[0m.:. Batch 43009 to 43136 on 72328 images[0m	
+[0m: 61% done[0m	[0m00:29:58 left[0m	
+[0m.:. Batch 46721 to 46848 on 72328 images[0m	
+[0m: 66% done[0m	[0m00:26:09 left[0m	
+[0m.:. Batch 50305 to 50432 on 72328 images[0m	
+[0m: 71% done[0m	[0m00:22:12 left[0m	
+[0m.:. Batch 53889 to 54016 on 72328 images[0m	
+[0m: 76% done[0m	[0m00:18:24 left[0m	
+[0m.:. Batch 57473 to 57600 on 72328 images[0m	
+[0m: 81% done[0m	[0m00:14:38 left[0m	
+[0m.:. Batch 61185 to 61312 on 72328 images[0m	
+[0m: 86% done[0m	[0m00:10:52 left[0m	
+[0m.:. Batch 64769 to 64896 on 72328 images[0m	
+[0m: 91% done[0m	[0m00:06:58 left[0m	
+[0m.:. Batch 68353 to 68480 on 72328 images[0m	
+[0m: 96% done[0m	[0m00:03:13 left[0m	
+[0m.:. Batch 72065 to 72192 on 72328 images[0m	
+[0m.:. End of Epoch n° 13[0m	
+[0m: Real time to learn 1 batch = 00:00:08[0m	
+[0m: Real time to learn full batch = 01:15:55[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 17.991761426156%[0m	
+[0m: average rowUcol correct (VOC measure): 9.3885428419724%[0m	
+[0m: > global correct: 18.052483132397%[0m	
+[0m
+# ... test model[0m	
+[0m: 0% done [0m	[0m00:16:29 left[0m	
+[0m: 5% done [0m	[0m00:07:12 left[0m	
+[0m: 10% done [0m	[0m00:07:01 left[0m	
+[0m: 15% done [0m	[0m00:06:45 left[0m	
+[0m: 20% done [0m	[0m00:06:17 left[0m	
+[0m: 25% done [0m	[0m00:05:54 left[0m	
+[0m: 30% done [0m	[0m00:05:29 left[0m	
+[0m: 35% done [0m	[0m00:05:05 left[0m	
+[0m: 40% done [0m	[0m00:04:41 left[0m	
+[0m: 45% done [0m	[0m00:04:17 left[0m	
+[0m: 50% done [0m	[0m00:03:53 left[0m	
+[0m: 55% done [0m	[0m00:03:30 left[0m	
+[0m: 60% done [0m	[0m00:03:06 left[0m	
+[0m: 65% done [0m	[0m00:02:43 left[0m	
+[0m: 70% done [0m	[0m00:02:20 left[0m	
+[0m: 75% done [0m	[0m00:01:57 left[0m	
+[0m: 80% done [0m	[0m00:01:34 left[0m	
+[0m: 85% done [0m	[0m00:01:11 left[0m	
+[0m: 90% done [0m	[0m00:00:49 left[0m	
+[0m: 95% done [0m	[0m00:00:25 left[0m	
+[0m: 100% done [0m	[0m00:00:02 left[0m	
+[0m: Time to test all samples = 00:07:51[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 20.525227979489%[0m	
+[0m: average rowUcol correct (VOC measure): 10.25337578987%[0m	
+[0m: > global correct: 20.592608911164%[0m	
+[0m# ... saving model to ./sk3/model.net[0m	
+[0m: tac = 12.30715918541 sec[0m	
+[0m# ... saving optimfunc.state to ./sk3/optim.state[0m	
+[0m: tac = 12.352566003799 sec[0m	
+[0m# ... saving optimfunc.method to ./sk3/optim.method[0m	
+[0m: tac = 12.398983001709 sec[0m	
+[0m
+#####################[0m	
+[0m# Epoch n° 14[0m	
+[0m
+# ... train model[0m	
+[0m.:. Batch 1 to 128 on 72328 images[0m	
+[0m: 1% done[0m	[0m01:21:19 left[0m	
+[0m.:. Batch 3201 to 3328 on 72328 images[0m	
+[0m: 6% done[0m	[0m01:12:59 left[0m	
+[0m.:. Batch 6785 to 6912 on 72328 images[0m	
+[0m: 11% done[0m	[0m01:08:43 left[0m	
+[0m.:. Batch 10497 to 10624 on 72328 images[0m	
+[0m: 16% done[0m	[0m01:07:26 left[0m	
+[0m.:. Batch 14081 to 14208 on 72328 images[0m	
+[0m: 21% done[0m	[0m01:02:28 left[0m	
+[0m.:. Batch 17665 to 17792 on 72328 images[0m	
+[0m: 26% done[0m	[0m00:57:54 left[0m	
+[0m.:. Batch 21249 to 21376 on 72328 images[0m	
+[0m: 31% done[0m	[0m00:53:41 left[0m	
+[0m.:. Batch 24961 to 25088 on 72328 images[0m	
+[0m: 36% done[0m	[0m00:49:34 left[0m	
+[0m.:. Batch 28545 to 28672 on 72328 images[0m	
+[0m: 41% done[0m	[0m00:45:38 left[0m	
+[0m.:. Batch 32129 to 32256 on 72328 images[0m	
+[0m: 46% done[0m	[0m00:41:40 left[0m	
+[0m.:. Batch 35841 to 35968 on 72328 images[0m	
+[0m: 51% done[0m	[0m00:37:45 left[0m	
+[0m.:. Batch 39425 to 39552 on 72328 images[0m	
+[0m: 56% done[0m	[0m00:33:45 left[0m	
+[0m.:. Batch 43009 to 43136 on 72328 images[0m	
+[0m: 61% done[0m	[0m00:29:55 left[0m	
+[0m.:. Batch 46721 to 46848 on 72328 images[0m	
+[0m: 66% done[0m	[0m00:26:07 left[0m	
+[0m.:. Batch 50305 to 50432 on 72328 images[0m	
+[0m: 71% done[0m	[0m00:22:11 left[0m	
+[0m.:. Batch 53889 to 54016 on 72328 images[0m	
+[0m: 76% done[0m	[0m00:18:23 left[0m	
+[0m.:. Batch 57473 to 57600 on 72328 images[0m	
+[0m: 81% done[0m	[0m00:14:36 left[0m	
+[0m.:. Batch 61185 to 61312 on 72328 images[0m	
+[0m: 86% done[0m	[0m00:10:51 left[0m	
+[0m.:. Batch 64769 to 64896 on 72328 images[0m	
+[0m: 91% done[0m	[0m00:06:58 left[0m	
+[0m.:. Batch 68353 to 68480 on 72328 images[0m	
+[0m: 96% done[0m	[0m00:03:13 left[0m	
+[0m.:. Batch 72065 to 72192 on 72328 images[0m	
+[0m.:. End of Epoch n° 14[0m	
+[0m: Real time to learn 1 batch = 00:00:08[0m	
+[0m: Real time to learn full batch = 01:15:46[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 19.673134969308%[0m	
+[0m: average rowUcol correct (VOC measure): 10.446937745529%[0m	
+[0m: > global correct: 19.72818272315%[0m	
+[0m
+# ... test model[0m	
+[0m: 0% done [0m	[0m00:26:12 left[0m	
+[0m: 5% done [0m	[0m00:07:01 left[0m	
+[0m: 10% done [0m	[0m00:06:44 left[0m	
+[0m: 15% done [0m	[0m00:06:28 left[0m	
+[0m: 20% done [0m	[0m00:06:06 left[0m	
+[0m: 25% done [0m	[0m00:05:42 left[0m	
+[0m: 30% done [0m	[0m00:05:20 left[0m	
+[0m: 35% done [0m	[0m00:04:57 left[0m	
+[0m: 40% done [0m	[0m00:04:34 left[0m	
+[0m: 45% done [0m	[0m00:04:12 left[0m	
+[0m: 50% done [0m	[0m00:03:49 left[0m	
+[0m: 55% done [0m	[0m00:03:27 left[0m	
+[0m: 60% done [0m	[0m00:03:04 left[0m	
+[0m: 65% done [0m	[0m00:02:41 left[0m	
+[0m: 70% done [0m	[0m00:02:19 left[0m	
+[0m: 75% done [0m	[0m00:01:56 left[0m	
+[0m: 80% done [0m	[0m00:01:33 left[0m	
+[0m: 85% done [0m	[0m00:01:11 left[0m	
+[0m: 90% done [0m	[0m00:00:49 left[0m	
+[0m: 95% done [0m	[0m00:00:25 left[0m	
+[0m: 100% done [0m	[0m00:00:02 left[0m	
+[0m: Time to test all samples = 00:07:48[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 21.209427219179%[0m	
+[0m: average rowUcol correct (VOC measure): 10.760517932456%[0m	
+[0m: > global correct: 21.253511042573%[0m	
+[0m# ... saving model to ./sk3/model.net[0m	
+[0m: tac = 12.057415008545 sec[0m	
+[0m# ... saving optimfunc.state to ./sk3/optim.state[0m	
+[0m: tac = 12.119929790497 sec[0m	
+[0m# ... saving optimfunc.method to ./sk3/optim.method[0m	
+[0m: tac = 12.16455578804 sec[0m	
+[0m
+#####################[0m	
+[0m# Epoch n° 15[0m	
+[0m
+# ... train model[0m	
+[0m.:. Batch 1 to 128 on 72328 images[0m	
+[0m: 1% done[0m	[0m01:22:15 left[0m	
+[0m.:. Batch 3201 to 3328 on 72328 images[0m	
+[0m: 6% done[0m	[0m01:13:50 left[0m	
+[0m.:. Batch 6785 to 6912 on 72328 images[0m	
+[0m: 11% done[0m	[0m01:08:47 left[0m	
