@@ -15,13 +15,13 @@ th -i main.lua \
     -batch_size 128 \
     -optimizer SGD \
     -learning_rate_decay 0 \
-    -learning_rate 0.003 \
+    -learning_rate 0.006 \
     -momentum 0 \
 \
-    -load_model false \
+    -load_model true \
     -path2load ./sk3/ \
     -epoch 100 \
-    -path2save ./sk3/ \
+    -path2save ./sk3-1/ \
     -plot_every 2000 \
     -plot false \
     -save_every 1 \

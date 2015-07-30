@@ -10,13 +10,13 @@ th -i main.lua \
     -gpuid 4 \
     -model_type overfeat_scratch \
     -criterion NLL \
-    -dropout 0.7 \
+    -dropout 0.9 \
 \
     -batch_size 128 \
     -optimizer SGD \
     -learning_rate_decay 0 \
-    -learning_rate 0.01 \
-    -momentum 0 \
+    -learning_rate 0.004 \
+    -momentum 0.6 \
 \
     -load_model false \
     -path2load ./sk4/ \

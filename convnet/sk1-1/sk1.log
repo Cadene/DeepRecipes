@@ -1,0 +1,75 @@
+[0m# ... lunching using pid = 32153[0m	
+[0m# ... loading seed in ./sk1/seed.save[0m	
+[0m# ... switching to CUDA[0m	
+[0m# ... loading Dataset[0m	
+[0m# ...reloading previously trained model[0m	
+[0m# Model[0m	
+nn.Sequential {
+  [input -> (1) -> (2) -> (3) -> (4) -> (5) -> (6) -> (7) -> (8) -> (9) -> (10) -> (11) -> (12) -> (13) -> (14) -> (15) -> (16) -> (17) -> (18) -> output]
+  (1): nn.SpatialConvolutionMM(in: 3, out: 16, kW: 3, kH: 3, padding: 1)
+  (2): nn.ReLU
+  (3): nn.SpatialMaxPooling(kW: 2, kH: 2, dW: 2, dH: 2)
+  (4): nn.SpatialConvolutionMM(in: 16, out: 32, kW: 3, kH: 3, padding: 1)
+  (5): nn.ReLU
+  (6): nn.SpatialMaxPooling(kW: 2, kH: 2, dW: 2, dH: 2)
+  (7): nn.SpatialConvolutionMM(in: 32, out: 32, kW: 3, kH: 3, padding: 1)
+  (8): nn.ReLU
+  (9): nn.SpatialMaxPooling(kW: 3, kH: 3, dW: 3, dH: 3)
+  (10): nn.Reshape(10368)
+  (11): nn.Linear(10368 -> 2048)
+  (12): nn.ReLU
+  (13): nn.Dropout(0.600000)
+  (14): nn.Linear(2048 -> 1024)
+  (15): nn.ReLU
+  (16): nn.Dropout(0.600000)
+  (17): nn.Linear(1024 -> 101)
+  (18): nn.LogSoftMax
+}
+[0mNumber of parameters 23451749[0m	
+[0m# Criterion[0m	
+nn.ClassNLLCriterion
+[0m# ... building optimizer[0m	
+[0m# ...reloading previously trained optimfunc.state[0m	
+[0m# Optimizer[0m	
+{
+  name : [1;30m"[0m[0;32mSGD[0m[1;30m"[0m
+  method : [0;35mfunction: 0x4004e888[0m
+  config : 
+    {
+      learningRateDecay : [0;36m0[0m
+      learningRate : [0;36m0.01[0m
+      weightDecay : [0;36m1e-05[0m
+      momentum : [0;36m0[0m
+    }
+  state : 
+    {
+      evalCounter : [0;36m0[0m
+    }
+}
+[0m
+#####################[0m	
+[0m# Epoch n° 1[0m	
+[0m
+# ... train model[0m	
+[0m.:. Batch 1 to 128 on 72328 images[0m	
+[0m: 1% done[0m	[0m00:16:24 left[0m	
+[0m.:. Batch 3201 to 3328 on 72328 images[0m	
+[0m: 6% done[0m	[0m00:15:08 left[0m	
+[0m.:. Batch 6785 to 6912 on 72328 images[0m	
+[0m: 11% done[0m	[0m00:14:21 left[0m	
+[0m.:. Batch 10497 to 10624 on 72328 images[0m	
+[0m: 16% done[0m	[0m00:13:19 left[0m	
+[0m.:. Batch 14081 to 14208 on 72328 images[0m	
+[0m: 21% done[0m	[0m00:12:25 left[0m	
+[0m.:. Batch 17665 to 17792 on 72328 images[0m	
+[0m: 26% done[0m	[0m00:11:38 left[0m	
+[0m.:. Batch 21249 to 21376 on 72328 images[0m	
+[0m: 31% done[0m	[0m00:10:52 left[0m	
+[0m.:. Batch 24961 to 25088 on 72328 images[0m	
+[0m: 36% done[0m	[0m00:10:06 left[0m	
+[0m.:. Batch 28545 to 28672 on 72328 images[0m	
+[0m: 41% done[0m	[0m00:09:16 left[0m	
+[0m.:. Batch 32129 to 32256 on 72328 images[0m	
+[0m: 46% done[0m	[0m00:08:28 left[0m	
+[0m.:. Batch 35841 to 35968 on 72328 images[0m	
+[0m: 51% done[0m	[0m00:07:41 left[0m	
