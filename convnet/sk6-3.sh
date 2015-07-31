@@ -7,7 +7,7 @@ th -i main.lua \
 \
     -type cuda \
     -threads 8 \
-    -gpuid 6 \
+    -gpuid 7 \
     -model_type overfeat \
     -criterion NLL \
     -dropout 0.9 \
@@ -21,7 +21,7 @@ th -i main.lua \
     -load_model true \
     -path2load ./sk6-1/ \
     -epoch 100 \
-    -path2save ./sk6-2/ \
+    -path2save ./sk6-3/ \
     -plot_every 2000 \
     -plot false \
     -save_every 1 \
