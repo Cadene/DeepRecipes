@@ -190,6 +190,8 @@ function save(epoch)
         --print('# ... saving trainLogger and testLogger')
         --torch.save(path2train_logger, trainLogger)
         --torch.save(path2test_logger, testLogger)
+
+	torch.save(path2save..'trainSet.save',trainSet)
     end
 end
 
@@ -203,6 +205,8 @@ if opt.run == 'true' then
     _log = {}
     _log['err'] = {}
 	
+    test(0)
+
     for epoch = 1, opt.epoch do
 
         print('\n#####################')
