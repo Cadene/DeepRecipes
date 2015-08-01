@@ -252,26 +252,26 @@ else
 
         model = nn.Sequential()
 
-        model:add(nn.SpatialConvolutionMM(3, 16, 3, 3, 1, 1, 1, 1))
+        model:add(nn.SpatialConvolutionMM(3, 4, 3, 3, 1, 1, 1, 1))
         model:add(nn.ReLU())
         model:add(nn.SpatialMaxPooling(2, 2, 2, 2))
 
-        model:add(nn.SpatialConvolutionMM(16, 32, 3, 3, 1, 1, 1, 1))
+        model:add(nn.SpatialConvolutionMM(4, 8, 3, 3, 1, 1, 1, 1))
         model:add(nn.ReLU())
         model:add(nn.SpatialMaxPooling(2, 2, 2, 2))
 
-        model:add(nn.SpatialConvolutionMM(32, 32, 3, 3, 1, 1, 1, 1))
+        model:add(nn.SpatialConvolutionMM(8, 8, 3, 3, 1, 1, 1, 1))
         model:add(nn.ReLU())
-        model:add(nn.SpatialMaxPooling(3, 3, 3, 3))
+        model:add(nn.SpatialMaxPooling(2, 2, 2, 2))
 
-        model:add(nn.Reshape(10368))
-        model:add(nn.Linear(10368,2048))
+        model:add(nn.Reshape(5832))
+        model:add(nn.Linear(5832,1024))
         model:add(nn.ReLU())
         if opt.dropout ~= 0 then
             model:add( nn.Dropout(opt.dropout) )
         end
 
-        model:add(nn.Linear(2048,1024))
+        model:add(nn.Linear(1024,1024))
         model:add(nn.ReLU())
         if opt.dropout ~= 0 then
             model:add( nn.Dropout(opt.dropout) )
