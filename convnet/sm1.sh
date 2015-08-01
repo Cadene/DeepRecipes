@@ -10,14 +10,15 @@ th -i main.lua \
     -gpuid 1 \
     -model_type small \
     -criterion NLL \
-    -dropout 0 \
+    -dropout 0.5 \
 \
     -batch_size 128 \
     -optimizer SGD \
-    -learning_rate 0 \
-    -momentum 0 \
+    -learning_rate 0.001 \
+    -momentum 0.6 \
+    -learning_rate_decay 0 \
 \
-    -load_model true \
+    -load_model false \
     -path2load ./sm1/ \
     -epoch 100 \
     -path2save ./sm1/ \
@@ -25,10 +26,10 @@ th -i main.lua \
     -plot false \
     -save_every 1 \
 \
-    -run false \
+    -run true \
     -train true \
     -test true \
-    -save false 
+    -save true 
     
     
     

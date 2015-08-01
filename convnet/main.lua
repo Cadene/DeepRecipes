@@ -35,6 +35,7 @@ cmd:option('-type',            'float',     'type: float | cuda')
 cmd:option('-cudnn',           'false',     'false | true')
 cmd:option('-model_type',      'standard',  'model_type: standard | overfeat | cadnet')
 cmd:option('-threads',         1,           'number of threads')
+cmd:option('-seed',            1337,        'seed')
 cmd:option('-gpuid',           1,           'gpu id')
 cmd:option('-H',               100,         'number of hidden layers')
 cmd:option('-criterion',       'NLL',       'criterion: NLL - negative log likelihood')
@@ -93,22 +94,21 @@ path2.save.optim_method = opt.path2save..'optim.method'
 ------------------------------------------------------------------------
 -- Seed
 
-if opt.load_model == 'false' then
-    print('# ... saving seed in '..path2.save.seed)
-    seed = torch.seed()
-    seed_save = io.open(path2.save.seed, 'w')
-    seed_save:write(string.format('%.0f', seed)) -- scientific to full number
-    seed_save:close()
-else
-    print('# ... loading seed in '..path2.load.seed)
-    for line in io.lines(path2.load.seed) do
-        seed = tonumber(line)
-    end
-end
-torch.manualSeed(seed)
+-- if opt.load_model == 'false' then
+--     print('# ... saving seed in '..path2.save.seed)
+--     seed = torch.seed()
+--     seed_save = io.open(path2.save.seed, 'w')
+--     seed_save:write(string.format('%.0f', seed)) -- scientific to full number
+--     seed_save:close()
+-- else
+--     print('# ... loading seed in '..path2.load.seed)
+--     for line in io.lines(path2.load.seed) do
+--         seed = tonumber(line)
+--     end
+-- end
 
 ------------------------------------------------------------------------
--- Cuda
+-- Cuda & Seed
 
 torch.setdefaulttensortype('torch.FloatTensor')
 if opt.type == 'cuda' then
@@ -121,6 +121,11 @@ if opt.type == 'cuda' then
     cutorch.setDevice(opt.gpuid)
 end
 torch.setnumthreads(opt.threads)
+
+torch.manualSeed(opt.seed)
+if opt.type == 'cuda' then
+    cutorch.manualSeed(opt.seed, opt.gpuid)
+end
 
 ------------------------------------------------------------------------
 -- Dataset
@@ -191,7 +196,7 @@ function save(epoch)
         --torch.save(path2train_logger, trainLogger)
         --torch.save(path2test_logger, testLogger)
 
-	torch.save(path2save..'trainSet.save',trainSet)
+	    --torch.save(path2save..'trainSet.save',trainSet)
     end
 end
 
