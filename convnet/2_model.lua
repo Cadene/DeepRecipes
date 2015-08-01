@@ -23,9 +23,7 @@ else
 
         model:add( nn.Linear(opt.D, opt.H) )
         model:add( nn.ReLU() )
-        if opt.dropout ~= 0 then
-            model:add( nn.Dropout(opt.dropout) )
-        end
+        model:add( nn.Dropout(opt.dropout) )
         model:add( nn.Linear(opt.H, opt.K) )
         model:add( nn.LogSoftMax() )
 
@@ -69,14 +67,10 @@ else
         model:add(SpatialMaxPooling(3, 3, 3, 3))
         model:add(SpatialConvolutionMM(1024, 4096, 5, 5, 1, 1))
         model:add(nn.Threshold(0, 1e-6))
-        if opt.dropout ~= 0 then
-            model:add( nn.Dropout(opt.dropout) )
-        end
+        model:add( nn.Dropout(opt.dropout) )
         model:add(SpatialConvolutionMM(4096, 4096, 1, 1, 1, 1))
         model:add(nn.Threshold(0, 1e-6))
-        if opt.dropout ~= 0 then
-            model:add( nn.Dropout(opt.dropout) )
-        end
+        model:add( nn.Dropout(opt.dropout) )
         model:add(SpatialConvolutionMM(4096, #class_str, 1, 1, 1, 1))
         model:add(nn.View(#class_str))
         model:add(nn.LogSoftMax())
@@ -127,14 +121,10 @@ else
         model:add(nn.SpatialMaxPooling(3, 3, 3, 3))
         model:add(nn.SpatialConvolutionMM(1024, 4096, 5, 5, 1, 1))
         model:add(nn.Threshold(0, 1e-6))
-        if opt.dropout ~= 0 then
-            model:add( nn.Dropout(opt.dropout) )
-        end
+        model:add( nn.Dropout(opt.dropout) )
         model:add(nn.SpatialConvolutionMM(4096, 4096, 1, 1, 1, 1))
         model:add(nn.Threshold(0, 1e-6))
-        if opt.dropout ~= 0 then
-            model:add( nn.Dropout(opt.dropout) )
-        end
+        model:add( nn.Dropout(opt.dropout) )
         model:add(nn.SpatialConvolutionMM(4096, #class_str, 1, 1, 1, 1))
         model:add(nn.View(#class_str))
         model:add(nn.LogSoftMax())
@@ -162,14 +152,10 @@ else
         model:add(nn.SpatialMaxPooling(3, 3, 3, 3))
         model:add(nn.SpatialConvolutionMM(1024, 4096, 5, 5, 1, 1))
         model:add(nn.Threshold(0, 1e-6))
-        if opt.dropout ~= 0 then
-            model:add( nn.Dropout(opt.dropout) )
-        end
+        model:add( nn.Dropout(opt.dropout) )
         model:add(nn.SpatialConvolutionMM(4096, 4096, 1, 1, 1, 1))
         model:add(nn.Threshold(0, 1e-6))
-        if opt.dropout ~= 0 then
-            model:add( nn.Dropout(opt.dropout) )
-        end
+        model:add( nn.Dropout(opt.dropout) )
         model:add(nn.SpatialConvolutionMM(4096, #class_str, 1, 1, 1, 1))
         model:add(nn.View(#class_str))
         model:add(nn.LogSoftMax())
@@ -197,15 +183,11 @@ else
         model:add(nn.Reshape(10368))
         model:add(nn.Linear(10368,2048))
         model:add(nn.ReLU())
-        if opt.dropout ~= 0 then
-            model:add( nn.Dropout(opt.dropout) )
-        end
+        model:add( nn.Dropout(opt.dropout) )
 
         model:add(nn.Linear(2048,1024))
         model:add(nn.ReLU())
-        if opt.dropout ~= 0 then
-            model:add( nn.Dropout(opt.dropout) )
-        end
+        model:add( nn.Dropout(opt.dropout) )
         model:add(nn.Linear(1024,#class_str))
         model:add(nn.LogSoftMax())
 
@@ -232,15 +214,11 @@ else
         model:add(nn.Reshape(10368))
         model:add(nn.Linear(10368,2048))
         model:add(nn.ReLU())
-        if opt.dropout ~= 0 then
-            model:add( nn.Dropout(opt.dropout) )
-        end
+        model:add( nn.Dropout(opt.dropout) )
 
         model:add(nn.Linear(2048,1024))
         model:add(nn.ReLU())
-        if opt.dropout ~= 0 then
-            model:add( nn.Dropout(opt.dropout) )
-        end
+        model:add( nn.Dropout(opt.dropout) )
         model:add(nn.Linear(1024,#class_str))
         model:add(nn.LogSoftMax())
 
@@ -267,15 +245,11 @@ else
         model:add(nn.Reshape(5832))
         model:add(nn.Linear(5832,1024))
         model:add(nn.ReLU())
-        if opt.dropout ~= 0 then
-            model:add( nn.Dropout(opt.dropout) )
-        end
+        model:add( nn.Dropout(opt.dropout) )
 
         model:add(nn.Linear(1024,1024))
         model:add(nn.ReLU())
-        if opt.dropout ~= 0 then
-            model:add( nn.Dropout(opt.dropout) )
-        end
+        model:add( nn.Dropout(opt.dropout) )
         model:add(nn.Linear(1024,#class_str))
         model:add(nn.LogSoftMax())
 
@@ -318,15 +292,11 @@ else
         model:add(nn.Reshape(25088)) -- (224/2^5)^2 * 512
         model:add(nn.Linear(25088,4096))
         model:add(nn.ReLU())
-        if opt.dropout ~= 0 then
-            model:add( nn.Dropout(opt.dropout) )
-        end
+        model:add( nn.Dropout(opt.dropout) )
         -- 10
         model:add(nn.Linear(4096,4096))
         model:add(nn.ReLU())
-        if opt.dropout ~= 0 then
-            model:add( nn.Dropout(opt.dropout) )
-        end
+        model:add( nn.Dropout(opt.dropout) )
         -- 11
         model:add(nn.Linear(4096,#class_str))
         model:add(nn.LogSoftMax())
@@ -380,15 +350,11 @@ else
         model:add(nn.Reshape(25088)) -- (224/2^5)^2 * 512
         model:add(nn.Linear(25088,4096))
         model:add(nn.ReLU())
-        if opt.dropout ~= 0 then
-            model:add( nn.Dropout(opt.dropout) )
-        end
+        model:add( nn.Dropout(opt.dropout) )
         -- 10
         model:add(nn.Linear(4096,4096))
         model:add(nn.ReLU())
-        if opt.dropout ~= 0 then
-            model:add( nn.Dropout(opt.dropout) )
-        end
+        model:add( nn.Dropout(opt.dropout) )
         -- 11
         model:add(nn.Linear(4096,#class_str))
         model:add(nn.LogSoftMax())
