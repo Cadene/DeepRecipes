@@ -1,0 +1,108 @@
+[0m# ... lunching using pid = 30872[0m	
+[0m# ... switching to CUDA[0m	
+[0m# ... loading Dataset[0m	
+[0m# ... building model[0m	
+[0m# Model[0m	
+nn.Sequential {
+  [input -> (1) -> (2) -> (3) -> (4) -> (5) -> (6) -> (7) -> (8) -> (9) -> (10) -> (11) -> (12) -> (13) -> (14) -> (15) -> (16) -> (17) -> (18) -> (19) -> (20) -> (21) -> (22) -> (23) -> (24) -> output]
+  (1): cudnn.SpatialConvolution(in: 3, out: 8, kW: 3, kH: 3)
+  (2): cudnn.ReLU
+  (3): cudnn.SpatialConvolution(in: 8, out: 8, kW: 3, kH: 3)
+  (4): cudnn.ReLU
+  (5): cudnn.SpatialMaxPooling
+  (6): cudnn.SpatialConvolution(in: 8, out: 16, kW: 3, kH: 3)
+  (7): cudnn.ReLU
+  (8): cudnn.SpatialConvolution(in: 16, out: 16, kW: 3, kH: 3)
+  (9): cudnn.ReLU
+  (10): cudnn.SpatialMaxPooling
+  (11): cudnn.SpatialConvolution(in: 16, out: 32, kW: 3, kH: 3)
+  (12): cudnn.ReLU
+  (13): cudnn.SpatialConvolution(in: 32, out: 32, kW: 3, kH: 3)
+  (14): cudnn.ReLU
+  (15): cudnn.SpatialMaxPooling
+  (16): nn.Reshape(10368)
+  (17): nn.Linear(10368 -> 2048)
+  (18): cudnn.ReLU
+  (19): nn.Dropout(0.700000)
+  (20): nn.Linear(2048 -> 1024)
+  (21): cudnn.ReLU
+  (22): nn.Dropout(0.700000)
+  (23): nn.Linear(1024 -> 101)
+  (24): nn.LogSoftMax
+}
+[0mNumber of parameters 23455597[0m	
+[0m# Criterion[0m	
+nn.ClassNLLCriterion
+[0m# ... building optimizer[0m	
+[0m# Optimizer[0m	
+{
+  name : [1;30m"[0m[0;32mADAGRAD[0m[1;30m"[0m
+  method : [0;35mfunction: 0x41834538[0m
+  config : 
+    {
+      learningRate : [0;36m0.35[0m
+    }
+  state : {...}
+}
+[0m
+# ... test model[0m	
+[0m: 0% done [0m	[0m00:06:43 left[0m	
+[0m: 5% done [0m	[0m00:01:56 left[0m	
+[0m: 10% done [0m	[0m00:02:00 left[0m	
+[0m: 15% done [0m	[0m00:01:55 left[0m	
+[0m: 20% done [0m	[0m00:01:49 left[0m	
+[0m: 25% done [0m	[0m00:01:41 left[0m	
+[0m: 30% done [0m	[0m00:01:35 left[0m	
+[0m: 35% done [0m	[0m00:01:28 left[0m	
+[0m: 40% done [0m	[0m00:01:21 left[0m	
+[0m: 45% done [0m	[0m00:01:14 left[0m	
+[0m: 50% done [0m	[0m00:01:08 left[0m	
+[0m: 55% done [0m	[0m00:01:01 left[0m	
+[0m: 60% done [0m	[0m00:00:54 left[0m	
+[0m: 65% done [0m	[0m00:00:48 left[0m	
+[0m: 70% done [0m	[0m00:00:41 left[0m	
+[0m: 75% done [0m	[0m00:00:34 left[0m	
+[0m: 80% done [0m	[0m00:00:28 left[0m	
+[0m: 85% done [0m	[0m00:00:21 left[0m	
+[0m: 90% done [0m	[0m00:00:14 left[0m	
+[0m: 95% done [0m	[0m00:00:07 left[0m	
+[0m: 100% done [0m	[0m00:00:00 left[0m	
+[0m: Time to test all samples = 00:02:16[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 0.99009900990099%[0m	
+[0m: average rowUcol correct (VOC measure): 0.010142557433631%[0m	
+[0m: > global correct: 1.0243983036845%[0m	
+[0m
+#####################[0m	
+[0m# Epoch n° 1[0m	
+[0m
+# ... train model[0m	
+[0m.:. Batch 1 to 128 on 72328 images[0m	
+[0m: 1% done[0m	[0m01:38:01 left[0m	
+[0m.:. Batch 3201 to 3328 on 72328 images[0m	
+[0m: 6% done[0m	[0m01:33:11 left[0m	
+[0m.:. Batch 6785 to 6912 on 72328 images[0m	
+[0m: 11% done[0m	[0m01:28:01 left[0m	
+[0m.:. Batch 10497 to 10624 on 72328 images[0m	
+[0m: 16% done[0m	[0m01:23:17 left[0m	
+[0m.:. Batch 14081 to 14208 on 72328 images[0m	
+[0m: 21% done[0m	[0m01:18:28 left[0m	
+[0m.:. Batch 17665 to 17792 on 72328 images[0m	
+[0m: 26% done[0m	[0m01:13:26 left[0m	
+[0m.:. Batch 21249 to 21376 on 72328 images[0m	
+[0m: 31% done[0m	[0m01:08:26 left[0m	
+[0m.:. Batch 24961 to 25088 on 72328 images[0m	
+[0m: 36% done[0m	[0m01:03:30 left[0m	
+[0m.:. Batch 28545 to 28672 on 72328 images[0m	
+[0m: 41% done[0m	[0m00:58:28 left[0m	
+[0m.:. Batch 32129 to 32256 on 72328 images[0m	
+[0m: 46% done[0m	[0m00:53:32 left[0m	
+[0m.:. Batch 35841 to 35968 on 72328 images[0m	
+[0m: 51% done[0m	[0m00:48:37 left[0m	
+[0m.:. Batch 39425 to 39552 on 72328 images[0m	
+[0m: 56% done[0m	[0m00:43:33 left[0m	
+[0m.:. Batch 43009 to 43136 on 72328 images[0m	
+[0m: 61% done[0m	[0m00:38:40 left[0m	
+[0m.:. Batch 46721 to 46848 on 72328 images[0m	
+[0m: 66% done[0m	[0m00:33:48 left[0m	
+[0m.:. Batch 50305 to 50432 on 72328 images[0m	
