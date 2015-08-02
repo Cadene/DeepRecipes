@@ -15,13 +15,13 @@ th -i main.lua \
     -batch_size 128 \
     -optimizer SGD \
     -learning_rate_decay 0 \
-    -learning_rate 0.02 \
-    -momentum 0.6 \
+    -learning_rate 0.04 \
+    -momentum 0.9 \
 \
-    -load_model false \
+    -load_model true \
     -path2load ./overfeat/ \
     -epoch 100 \
-    -path2save ./overfeat/ \
+    -path2save ./overfeat-1/ \
     -plot_every 2000 \
     -plot false \
     -save_every 1 \
