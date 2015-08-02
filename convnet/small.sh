@@ -10,16 +10,18 @@ th -i main.lua \
     -gpuid 5 \
     -model_type small \
     -criterion NLL \
-    -dropout 0.7 \
+    -dropout 0.1 \
 \
     -batch_size 128 \
-    -optimizer ADAGRAD \
-    -learning_rate 0.35 \
+    -optimizer SGD \
+    -learning_rate_decay 0 \
+    -learning_rate 0.03 \
+    -momentum 0.9 \
 \
-    -load_model true \
+    -load_model false \
     -path2load ./small/ \
     -epoch 100 \
-    -path2save ./small-1/ \
+    -path2save ./small/ \
     -plot_every 2000 \
     -plot false \
     -save_every 1 \
