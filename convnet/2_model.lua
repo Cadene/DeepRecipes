@@ -160,6 +160,43 @@ else
         model:add(nn.View(#class_str))
         model:add(nn.LogSoftMax())
 
+    elseif opt.model_type == 'medium' then
+
+        --[[
+            Input size 221*221*3
+        ]]--
+
+        model = nn.Sequential()
+
+        model:add(nn.SpatialConvolutionMM(3, 8, 3, 3, 1, 1, 1, 1))
+        model:add(nn.ReLU())
+        model:add(nn.SpatialConvolutionMM(8, 8, 3, 3, 1, 1, 1, 1))
+        model:add(nn.ReLU())
+        model:add(nn.SpatialMaxPooling(2, 2, 2, 2))
+
+        model:add(nn.SpatialConvolutionMM(8, 16, 3, 3, 1, 1, 1, 1))
+        model:add(nn.ReLU())
+        model:add(nn.SpatialConvolutionMM(16, 16, 3, 3, 1, 1, 1, 1))
+        model:add(nn.ReLU())
+        model:add(nn.SpatialMaxPooling(2, 2, 2, 2))
+
+        model:add(nn.SpatialConvolutionMM(32, 32, 3, 3, 1, 1, 1, 1))
+        model:add(nn.ReLU())
+        model:add(nn.SpatialConvolutionMM(32, 32, 3, 3, 1, 1, 1, 1))
+        model:add(nn.ReLU())
+        model:add(nn.SpatialMaxPooling(3, 3, 3, 3))
+
+        model:add(nn.Reshape(10368))
+        model:add(nn.Linear(10368,2048))
+        model:add(nn.ReLU())
+        model:add( nn.Dropout(opt.dropout) )
+
+        model:add(nn.Linear(2048,1024))
+        model:add(nn.ReLU())
+        model:add( nn.Dropout(opt.dropout) )
+        model:add(nn.Linear(1024,#class_str))
+        model:add(nn.LogSoftMax())
+
     elseif opt.model_type == 'small' then
 
         --[[
@@ -177,37 +214,6 @@ else
         model:add(nn.SpatialMaxPooling(2, 2, 2, 2))
 
         model:add(nn.SpatialConvolutionMM(32, 32, 3, 3, 1, 1, 1, 1))
-        model:add(nn.ReLU())
-        model:add(nn.SpatialMaxPooling(3, 3, 3, 3))
-
-        model:add(nn.Reshape(10368))
-        model:add(nn.Linear(10368,2048))
-        model:add(nn.ReLU())
-        model:add( nn.Dropout(opt.dropout) )
-
-        model:add(nn.Linear(2048,1024))
-        model:add(nn.ReLU())
-        model:add( nn.Dropout(opt.dropout) )
-        model:add(nn.Linear(1024,#class_str))
-        model:add(nn.LogSoftMax())
-
-    elseif opt.model_type == 'small_nMM' then
-
-        --[[
-            Input size 221*221*3
-        ]]--
-
-        model = nn.Sequential()
-
-        model:add(nn.SpatialConvolution(3, 16, 3, 3, 1, 1, 1, 1))
-        model:add(nn.ReLU())
-        model:add(nn.SpatialMaxPooling(2, 2, 2, 2))
-
-        model:add(nn.SpatialConvolution(16, 32, 3, 3, 1, 1, 1, 1))
-        model:add(nn.ReLU())
-        model:add(nn.SpatialMaxPooling(2, 2, 2, 2))
-
-        model:add(nn.SpatialConvolution(32, 32, 3, 3, 1, 1, 1, 1))
         model:add(nn.ReLU())
         model:add(nn.SpatialMaxPooling(3, 3, 3, 3))
 
