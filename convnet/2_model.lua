@@ -180,7 +180,7 @@ else
         model:add(nn.ReLU())
         model:add(nn.SpatialMaxPooling(2, 2, 2, 2))
 
-        model:add(nn.SpatialConvolutionMM(32, 32, 3, 3, 1, 1, 1, 1))
+        model:add(nn.SpatialConvolutionMM(16, 32, 3, 3, 1, 1, 1, 1))
         model:add(nn.ReLU())
         model:add(nn.SpatialConvolutionMM(32, 32, 3, 3, 1, 1, 1, 1))
         model:add(nn.ReLU())
