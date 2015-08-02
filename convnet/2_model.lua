@@ -160,6 +160,41 @@ else
         model:add(nn.View(#class_str))
         model:add(nn.LogSoftMax())
 
+    elseif opt.model_type == 'medium_cudnn' then
+
+        require 'cudnn'
+
+        model = nn.Sequential()
+
+        model:add(cudnn.SpatialConvolution(3, 8, 3, 3, 1, 1, 1, 1))
+        model:add(cudnn.ReLU(true))
+        model:add(cudnn.SpatialConvolution(8, 8, 3, 3, 1, 1, 1, 1))
+        model:add(cudnn.ReLU(true))
+        model:add(cudnn.SpatialMaxPooling(2, 2, 2, 2))
+
+        model:add(cudnn.SpatialConvolution(8, 16, 3, 3, 1, 1, 1, 1))
+        model:add(cudnn.ReLU(true))
+        model:add(cudnn.SpatialConvolution(16, 16, 3, 3, 1, 1, 1, 1))
+        model:add(cudnn.ReLU(true))
+        model:add(cudnn.SpatialMaxPooling(2, 2, 2, 2))
+
+        model:add(cudnn.SpatialConvolution(16, 32, 3, 3, 1, 1, 1, 1))
+        model:add(cudnn.ReLU(true))
+        model:add(cudnn.SpatialConvolution(32, 32, 3, 3, 1, 1, 1, 1))
+        model:add(cudnn.ReLU(true))
+        model:add(cudnn.SpatialMaxPooling(3, 3, 3, 3))
+
+        model:add(nn.Reshape(10368))
+        model:add(nn.Linear(10368,2048))
+        model:add(cudnn.ReLU(true))
+        model:add( nn.Dropout(opt.dropout) )
+
+        model:add(nn.Linear(2048,1024))
+        model:add(cudnn.ReLU(true))
+        model:add( nn.Dropout(opt.dropout) )
+        model:add(nn.Linear(1024,#class_str))
+        model:add(nn.LogSoftMax())
+
     elseif opt.model_type == 'medium' then
 
         --[[
