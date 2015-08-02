@@ -8,20 +8,18 @@ th -i main.lua \
     -type cuda \
     -threads 8 \
     -gpuid 3 \
-    -model_type overfeat \
+    -model_type verydeep_A \
     -criterion NLL \
-    -dropout 0.7 \
+    -dropout 0.9 \
 \
     -batch_size 128 \
-    -optimizer SGD \
-    -learning_rate_decay 0 \
-    -learning_rate 0.006 \
-    -momentum 0 \
+    -optimizer ADAGRAD \
+    -learning_rate 0.1 \
 \
-    -load_model true \
-    -path2load ./sk3/ \
+    -load_model false \
+    -path2load ./verydeep_A/ \
     -epoch 100 \
-    -path2save ./sk3-1/ \
+    -path2save ./verydeep_A/ \
     -plot_every 2000 \
     -plot false \
     -save_every 1 \

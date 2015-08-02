@@ -263,7 +263,7 @@ else
         -- not tested
         model = nn.Sequential()
         -- 1
-        model:add(nn.SpatialConvolutionMM(3, 64, 3, 3, 1, 1, 1, 1))
+        model:add(nn.SpatialConvolutionMM(3, 64, 3, 3, 1, 1, 3, 3))
         model:add(nn.ReLU())
         model:add(nn.SpatialMaxPooling(2, 2, 2, 2))
         -- 2
