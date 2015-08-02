@@ -7,8 +7,8 @@ th -i main.lua \
 \
     -type cuda \
     -threads 8 \
-    -gpuid 4 \
-    -model_type medium \
+    -gpuid 5 \
+    -model_type small \
     -criterion NLL \
     -dropout 0.7 \
 \
@@ -17,9 +17,9 @@ th -i main.lua \
     -learning_rate 0.1 \
 \
     -load_model false \
-    -path2load ./medium/ \
+    -path2load ./small/ \
     -epoch 100 \
-    -path2save ./medium/ \
+    -path2save ./small/ \
     -plot_every 2000 \
     -plot false \
     -save_every 1 \

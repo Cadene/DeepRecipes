@@ -1,0 +1,57 @@
+[0m# ... lunching using pid = 19471[0m	
+[0m# ... switching to CUDA[0m	
+[0m# ... loading Dataset[0m	
+[0m# ... building model[0m	
+[0m# Model[0m	
+nn.Sequential {
+  [input -> (1) -> (2) -> (3) -> (4) -> (5) -> (6) -> (7) -> (8) -> (9) -> (10) -> (11) -> (12) -> (13) -> (14) -> (15) -> (16) -> (17) -> (18) -> (19) -> (20) -> (21) -> (22) -> (23) -> (24) -> output]
+  (1): nn.SpatialConvolutionMM(in: 3, out: 8, kW: 3, kH: 3, padding: 1)
+  (2): nn.ReLU
+  (3): nn.SpatialConvolutionMM(in: 8, out: 8, kW: 3, kH: 3, padding: 1)
+  (4): nn.ReLU
+  (5): nn.SpatialMaxPooling(kW: 2, kH: 2, dW: 2, dH: 2)
+  (6): nn.SpatialConvolutionMM(in: 8, out: 16, kW: 3, kH: 3, padding: 1)
+  (7): nn.ReLU
+  (8): nn.SpatialConvolutionMM(in: 16, out: 16, kW: 3, kH: 3, padding: 1)
+  (9): nn.ReLU
+  (10): nn.SpatialMaxPooling(kW: 2, kH: 2, dW: 2, dH: 2)
+  (11): nn.SpatialConvolutionMM(in: 32, out: 32, kW: 3, kH: 3, padding: 1)
+  (12): nn.ReLU
+  (13): nn.SpatialConvolutionMM(in: 32, out: 32, kW: 3, kH: 3, padding: 1)
+  (14): nn.ReLU
+  (15): nn.SpatialMaxPooling(kW: 3, kH: 3, dW: 3, dH: 3)
+  (16): nn.Reshape(10368)
+  (17): nn.Linear(10368 -> 2048)
+  (18): nn.ReLU
+  (19): nn.Dropout(0.700000)
+  (20): nn.Linear(2048 -> 1024)
+  (21): nn.ReLU
+  (22): nn.Dropout(0.700000)
+  (23): nn.Linear(1024 -> 101)
+  (24): nn.LogSoftMax
+}
+[0mNumber of parameters 23460205[0m	
+[0m# Criterion[0m	
+nn.ClassNLLCriterion
+[0m# ... building optimizer[0m	
+[0m# Optimizer[0m	
+{
+  name : [1;30m"[0m[0;32mADAGRAD[0m[1;30m"[0m
+  method : [0;35mfunction: 0x407df7e8[0m
+  config : 
+    {
+      learningRate : [0;36m0.1[0m
+    }
+  state : {...}
+}
+[0m
+# ... test model[0m	
+/home/cadene/torch/install/bin/luajit: /home/cadene/torch/install/share/lua/5.1/nn/Sequential.lua:29: bad argument #1 to 'updateOutput' (input channels and nInputPlane dont match)
+stack traceback:
+	[C]: in function 'updateOutput'
+	/home/cadene/torch/install/share/lua/5.1/nn/Sequential.lua:29: in function 'forward'
+	5_test.lua:19: in function 'test'
+	main.lua:213: in main chunk
+	[C]: in function 'dofile'
+	...dene/torch/install/lib/luarocks/rocks/trepl/scm-1/bin/th:131: in main chunk
+	[C]: at 0x00405d30
