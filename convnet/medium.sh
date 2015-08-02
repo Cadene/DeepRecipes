@@ -13,13 +13,15 @@ th -i main.lua \
     -dropout 0.7 \
 \
     -batch_size 128 \
-    -optimizer ADAGRAD \
-    -learning_rate 0.35 \
+    -optimizer SGD \
+    -learning_rate_decay 0 \
+    -learning_rate 0.03 \
+    -momentum 0.9 \
 \
-    -load_model true \
+    -load_model false \
     -path2load ./medium/ \
     -epoch 100 \
-    -path2save ./medium-1/ \
+    -path2save ./medium/ \
     -plot_every 2000 \
     -plot false \
     -save_every 1 \

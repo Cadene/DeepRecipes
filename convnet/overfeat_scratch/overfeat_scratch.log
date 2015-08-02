@@ -410,3 +410,24 @@ nn.ClassNLLCriterion
 [0m: 75% done [0m	[0m00:01:52 left[0m	
 [0m: 80% done [0m	[0m00:01:30 left[0m	
 [0m: 85% done [0m	[0m00:01:08 left[0m	
+[0m: 90% done [0m	[0m00:00:46 left[0m	
+[0m: 95% done [0m	[0m00:00:24 left[0m	
+[0m: 100% done [0m	[0m00:00:02 left[0m	
+[0m: Time to test all samples = 00:07:24[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 2.4825875993154%[0m	
+[0m: average rowUcol correct (VOC measure): 0.37075874031438%[0m	
+[0m: > global correct: 2.4618604394999%[0m	
+[0m# ... saving model to ./overfeat_scratch/model.net[0m	
+[0m: tac = 12.364778995514 sec[0m	
+[0m# ... saving optimfunc.state to ./overfeat_scratch/optim.state[0m	
+[0m: tac = 23.456657171249 sec[0m	
+[0m# ... saving optimfunc.method to ./overfeat_scratch/optim.method[0m	
+[0m: tac = 23.499402046204 sec[0m	
+[0m
+#####################[0m	
+[0m# Epoch n° 5[0m	
+[0m
+# ... train model[0m	
+[0m.:. Batch 1 to 128 on 72328 images[0m	
+[0m: 1% done[0m	[0m01:15:48 left[0m	
