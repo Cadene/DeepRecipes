@@ -18,7 +18,7 @@ th -i main.lua \
     -learning_rate 0.01 \
     -momentum 0 \
 \
-    -load_model true \
+    -load_model false \
     -path2load ./sk1/ \
     -epoch 100 \
     -path2save ./sk1-1/ \
@@ -26,7 +26,7 @@ th -i main.lua \
     -plot false \
     -save_every 1 \
 \
-    -run true \
+    -run false \
     -train true \
     -test true \
     -save true 

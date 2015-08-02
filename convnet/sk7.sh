@@ -14,7 +14,7 @@ th -i main.lua \
 \
     -batch_size 128 \
     -optimizer SGD \
-    -learning_rate 0.01 \
+    -learning_rate 0.3 \
     -momentum 0.6 \
     -learning_rate_decay 0 \
 \
