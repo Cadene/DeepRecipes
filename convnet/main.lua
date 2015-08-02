@@ -182,21 +182,6 @@ function save(epoch)
         torch.save(path2.save.model, model)
         print(": tac = "..(time['save_every']:time().real).." sec")
 
-        print('# ... saving optimfunc.state to '..path2.save.optim_state)
-        os.execute('mkdir -p ' .. sys.dirname(path2.save.optim_state))
-        torch.save(path2.save.optim_state, optimfunc.state)
-        print(": tac = "..(time['save_every']:time().real).." sec")
-
-        print('# ... saving optimfunc.method to '..path2.save.optim_method)
-        os.execute('mkdir -p ' .. sys.dirname(path2.save.optim_method))
-        torch.save(path2.save.optim_method, optimfunc.method)
-        print(": tac = "..(time['save_every']:time().real).." sec")
-    
-        --print('# ... saving trainLogger and testLogger')
-        --torch.save(path2train_logger, trainLogger)
-        --torch.save(path2test_logger, testLogger)
-
-	    --torch.save(path2save..'trainSet.save',trainSet)
     end
 end
 
