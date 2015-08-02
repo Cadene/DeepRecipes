@@ -18,8 +18,9 @@ function train(epoch)
     local pc_max = {0,0}
 
     for t = 1, trainSet:size(), opt.batch_size do
+        
         time['batch'] = torch.Timer()
-        -- xlua.progress(t-1, trainSet:size())
+
         local batch_to = t+opt.batch_size-1
         if batch_to > trainSet:size() then
             batch_to = trainSet:size()
@@ -32,7 +33,6 @@ function train(epoch)
             pc_max[1] = pc_max[1] + 5
         end
 
-	    -- time['inputs'] = torch.Timer()
         local inputs = {}
         local targets = {}
         for i = t, math.min(t+opt.batch_size-1, trainSet:size()) do
@@ -43,7 +43,6 @@ function train(epoch)
             table.insert(inputs, input)
             table.insert(targets, target)
         end
-	    -- print("# Time to load inputs = "..(time['inputs']:time().real/opt.batch_size).." sec")
 
         local feval = function(x)
             if x ~= parameters then -- optim
@@ -52,76 +51,27 @@ function train(epoch)
             
             model:zeroGradParameters()
 
-            -- time['model_f'] = torch.Timer()
-            -- time['criterion_f'] = torch.Timer()
-            -- time['criterion_b'] = torch.Timer()
-            -- time['model_b'] = torch.Timer()
-            -- time['confusion_add'] = torch.Timer()
-
             local f = 0
             for i = 1, #inputs do
-                --time['model_f']:resume()
                 local output = model:forward(inputs[i])
-                --time['model_f']:stop()
-                --time['criterion_f']:resume()
                 local err = criterion:forward(output, targets[i])
-                --time['criterion_f']:stop()
                 f = f + err
-                --time['criterion_b']:resume()
                	local df_do = criterion:backward(output, targets[i])
-                --time['criterion_b']:stop()
-                --time['model_b']:resume()
                 gradInput = model:backward(inputs[i], df_do)
-                --time['model_b']:stop()
-                --time['confusion_add']:resume()
                 confusion:add(output, targets[i]:squeeze())
-                --time['confusion_add']:stop()
             end
 
-            -- print("# Time to model_f = "..(time['model_f']:time().real/#inputs).." sec")
-            -- print("# Time to criterion_f = "..(time['criterion_f']:time().real/#inputs).." sec")
-            -- print("# Time to criterion_b = "..(time['criterion_b']:time().real/#inputs).." sec")
-            -- print("# Time to model_b = "..(time['model_b']:time().real/#inputs).." sec")
-            -- print("# Time to confusion_add = "..(time['confusion_add']:time().real/#inputs).." sec")
-
-            -- time['gradParam_div'] = torch.Timer()
             gradParameters:div(#inputs)
             f = f / #inputs
-            -- print("# Time to gradParam_div = "..(time['gradParam_div']:time().real).." sec")
-
-            -- training curve
-            -- if _log['err'][epoch] then
-            --     _log['err'][epoch] = _log['err'][epoch] + f
-            -- else
-            --     _log['err'][epoch] = f
-            -- end
-
-            --print('loss total: ', f)
-            --print('sum gradParameters: ', torch.sum(gradParameters))
-            --print('sum gradInput: ', torch.sum(gradInput))
 
             collectgarbage()
 
             return f, gradParameters -- f and df/dX
         end
 
-        if optimfunc.method == optim.asgd then
-            _,_,average = optimMethod(feval, parameters, optimfunc.config, optimfunc.state)
-        else
-            _,_,_,state = optimfunc.method(feval, parameters, optimfunc.config, optimfunc.state)
-            optimfunc.state = state
+       
+        _,_,_,state = optimfunc.method(feval, parameters, optimfunc.config, optimfunc.state)
 
-            if old_param then
-                for i = 1, parameters:size(1) do
-                    if old_param[i] ~= parameters[i] then
-                        print(old_param[i], parameters[i])
-                    end
-                end
-            end
-
-            local old_param = parameters:clone()
-            
-        end
 
         if pc_done > pc_max[2] then
             s = time['train']:time().real / batch_to * (trainSet:size() - batch_to)
@@ -155,7 +105,6 @@ function train(epoch)
         trainLogger:add{['% mean class accuracy (train set)'] = confusion.totalValid * 100}
     end
     confusion:zero()
-    --print("# Time to print confusion and log = "..(time['confusion']:time().real).." sec")
 
     --[[ plot decision region ]]
     if  opt.type ~= 'cuda' and opt.data_type ~= 'Recipe101' and epoch % opt.plot_every == 0 then
