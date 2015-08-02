@@ -14,12 +14,12 @@ th -i main.lua \
 \
     -batch_size 128 \
     -optimizer ADAGRAD \
-    -learning_rate 0.1 \
+    -learning_rate 0.35 \
 \
-    -load_model false \
+    -load_model true \
     -path2load ./medium/ \
     -epoch 100 \
-    -path2save ./medium/ \
+    -path2save ./medium-1/ \
     -plot_every 2000 \
     -plot false \
     -save_every 1 \

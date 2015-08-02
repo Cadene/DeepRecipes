@@ -10,11 +10,11 @@ th -i main.lua \
     -gpuid 2 \
     -model_type overfeat_scratch \
     -criterion NLL \
-    -dropout 0.9 \
+    -dropout 0.7 \
 \
     -batch_size 128 \
     -optimizer ADAGRAD \
-    -learning_rate 0.1 \
+    -learning_rate 0.03 \
 \
     -load_model false \
     -path2load ./overfeat_scratch/ \
