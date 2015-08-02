@@ -726,3 +726,5 @@ nn.ClassNLLCriterion
 [0m: 66% done[0m	[0m00:25:40 left[0m	
 [0m.:. Batch 50305 to 50432 on 72328 images[0m	
 [0m: 71% done[0m	[0m00:21:49 left[0m	
+[0m.:. Batch 53889 to 54016 on 72328 images[0m	
+[0m: 76% done[0m	[0m00:18:06 left[0m	
