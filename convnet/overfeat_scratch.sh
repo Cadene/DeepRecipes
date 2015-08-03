@@ -14,12 +14,12 @@ th -i main.lua \
 \
     -batch_size 128 \
     -optimizer ADAGRAD \
-    -learning_rate 0.03 \
+    -learning_rate 0.05 \
 \
-    -load_model false \
+    -load_model true \
     -path2load ./overfeat_scratch/ \
     -epoch 100 \
-    -path2save ./overfeat_scratch/ \
+    -path2save ./overfeat_scratch-1/ \
     -plot_every 2000 \
     -plot false \
     -save_every 1 \
