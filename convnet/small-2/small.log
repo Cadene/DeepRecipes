@@ -1,59 +1,10 @@
-[0m# ... lunching using pid = 27978[0m	
+[0m# ... lunching using pid = 16128[0m	
 [0m# ... switching to CUDA[0m	
 [0m# ... loading Dataset[0m	
-[0m# ...reloading previously trained model[0m	
-[0m# Model[0m	
-nn.Sequential {
-  [input -> (1) -> (2) -> (3) -> (4) -> (5) -> (6) -> (7) -> (8) -> (9) -> (10) -> (11) -> (12) -> (13) -> (14) -> (15) -> (16) -> (17) -> (18) -> output]
-  (1): nn.SpatialConvolutionMM(in: 3, out: 16, kW: 3, kH: 3, padding: 1)
-  (2): nn.ReLU
-  (3): nn.SpatialMaxPooling(kW: 2, kH: 2, dW: 2, dH: 2)
-  (4): nn.SpatialConvolutionMM(in: 16, out: 32, kW: 3, kH: 3, padding: 1)
-  (5): nn.ReLU
-  (6): nn.SpatialMaxPooling(kW: 2, kH: 2, dW: 2, dH: 2)
-  (7): nn.SpatialConvolutionMM(in: 32, out: 32, kW: 3, kH: 3, padding: 1)
-  (8): nn.ReLU
-  (9): nn.SpatialMaxPooling(kW: 3, kH: 3, dW: 3, dH: 3)
-  (10): nn.Reshape(10368)
-  (11): nn.Linear(10368 -> 2048)
-  (12): nn.ReLU
-  (13): nn.Dropout(0.900000)
-  (14): nn.Linear(2048 -> 1024)
-  (15): nn.ReLU
-  (16): nn.Dropout(0.900000)
-  (17): nn.Linear(1024 -> 101)
-  (18): nn.LogSoftMax
-}
-[0mNumber of parameters 23451749[0m	
-[0m# Criterion[0m	
-nn.ClassNLLCriterion
-[0m# ... building optimizer[0m	
-[0m# ...reloading previously trained optimfunc.state[0m	
-[0m# Optimizer[0m	
-{
-  name : [1;30m"[0m[0;32mSGD[0m[1;30m"[0m
-  method : [0;35mfunction: 0x40d79b78[0m
-  config : 
-    {
-      learningRateDecay : [0;36m0[0m
-      learningRate : [0;36m0.02[0m
-      weightDecay : [0;36m0.001[0m
-      momentum : [0;36m0.6[0m
-    }
-  state : 
-    {
-      evalCounter : [0;36m0[0m
-    }
-}
-[0m 
-  ______             __   [1;30m|  Torch7                                        [0m 
- /_  __/__  ________/ /   [1;30m|  [0m[0;35mScientific computing for Lua.[0m 
-  / / / _ \/ __/ __/ _ \  [1;30m|  Type ? for help                               [0m 
- /_/  \___/_/  \__/_//_/  [1;30m|  [0m[0;34mhttps://github.com/torch        [0m 
-                          [1;30m|  [0m[0;34mhttp://torch.ch                 [0m 
-[0m	
-th> Do you really want to exit ([y]/n)? /home/cadene/torch/install/bin/luajit: /home/cadene/torch/install/share/lua/5.1/trepl/init.lua:567: attempt to index local 'line' (a nil value)
+/home/cadene/torch/install/bin/luajit: 2_model.lua:403: 'then' expected near '='
 stack traceback:
-	/home/cadene/torch/install/share/lua/5.1/trepl/init.lua:567: in function 'repl'
-	...dene/torch/install/lib/luarocks/rocks/trepl/scm-1/bin/th:185: in main chunk
+	[C]: in function 'dofile'
+	main.lua:138: in main chunk
+	[C]: in function 'dofile'
+	...dene/torch/install/lib/luarocks/rocks/trepl/scm-1/bin/th:131: in main chunk
 	[C]: at 0x00405d30

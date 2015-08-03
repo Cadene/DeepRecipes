@@ -7,22 +7,22 @@ th -i main.lua \
 \
     -type cuda \
     -threads 8 \
-    -gpuid 5 \
+    -gpuid 6 \
     -model_type small \
     -criterion NLL \
-    -dropout 0.9 \
+    -dropout 0.4 \
 \
     -batch_size 128 \
     -optimizer SGD \
     -learning_rate_decay 0 \
     -learning_rate 0.02 \
-    -momentum 0.6 \
+    -momentum 0.9 \
     -weight_decay 1e-3 \
 \
-    -load_model true \
-    -path2load ./small-2/ \
+    -load_model false \
+    -path2load ./batch_norm/ \
     -epoch 100 \
-    -path2save ./small-2/ \
+    -path2save ./batch_norm/ \
     -plot_every 2000 \
     -plot false \
     -save_every 1 \
