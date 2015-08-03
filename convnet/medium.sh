@@ -10,13 +10,13 @@ th -i main.lua \
     -gpuid 4 \
     -model_type medium \
     -criterion NLL \
-    -dropout 0.7 \
+    -dropout 0.5 \
 \
     -batch_size 128 \
     -optimizer SGD \
     -learning_rate_decay 0 \
-    -learning_rate 0.03 \
-    -momentum 0.9 \
+    -learning_rate 0.01 \
+    -momentum 0.6 \
 \
     -load_model false \
     -path2load ./medium/ \
