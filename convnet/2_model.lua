@@ -400,7 +400,7 @@ else
         model:add(nn.Linear(4096,#class_str))
         model:add(nn.LogSoftMax())
 
-    elseif opt.model_type = 'batch_norm' then
+    elseif opt.model_type == 'batch_norm' then
 
     	model = nn.Sequential()
 
