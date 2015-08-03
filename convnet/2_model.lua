@@ -400,6 +400,43 @@ else
         model:add(nn.Linear(4096,#class_str))
         model:add(nn.LogSoftMax())
 
+    elseif opt.model_type = 'batch_norm' then
+
+    	model = nn.Sequential()
+
+    	local function ConvBNReLU(nInputPlane, nOutputPlane)
+			model:add(nn.SpatialConvolution(nInputPlane, nOutputPlane, 3,3, 1,1, 1,1))
+			model:add(nn.SpatialBatchNormalization(nOutputPlane,1e-3))
+			model:add(nn.ReLU(true))
+			return model
+		end
+
+		ConvBNReLU(3,64):add(nn.Dropout(0.3))
+		ConvBNReLU(64,64)
+		model:add(MaxPooling(2,2,2,2):ceil())
+		ConvBNReLU(64,128):add(nn.Dropout(0.4))
+		ConvBNReLU(128,128)
+		model:add(MaxPooling(2,2,2,2):ceil())
+		ConvBNReLU(128,256):add(nn.Dropout(0.4))
+		ConvBNReLU(256,256):add(nn.Dropout(0.4))
+		ConvBNReLU(256,256)
+		model:add(MaxPooling(2,2,2,2):ceil())
+		ConvBNReLU(256,512):add(nn.Dropout(0.4))
+		ConvBNReLU(512,512):add(nn.Dropout(0.4))
+		ConvBNReLU(512,512)
+		model:add(MaxPooling(2,2,2,2):ceil())
+		ConvBNReLU(512,512):add(nn.Dropout(0.4))
+		ConvBNReLU(512,512):add(nn.Dropout(0.4))
+		ConvBNReLU(512,512)
+		model:add(MaxPooling(3,3,3,3):ceil())
+		model:add(nn.Reshape(8192))
+		model:add(nn.Dropout(0.5))
+		model:add(nn.Linear(8192,2048))
+		model:add(nn.BatchNormalization(2048))
+		model:add(nn.ReLU(true))
+		model:add(nn.Dropout(0.5))
+		model:add(nn.Linear(2048,#class_str))
+
     else
         error(opt.model_type..' is not a valid type')
     end
