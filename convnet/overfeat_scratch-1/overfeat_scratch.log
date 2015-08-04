@@ -1690,3 +1690,8 @@ nn.ClassNLLCriterion
 [0m.:. Batch 50305 to 50432 on 72328 images[0m	
 [0m: 71% done[0m	[0m00:21:55 left[0m	
 [0m.:. Batch 53889 to 54016 on 72328 images[0m	
+[0m: 76% done[0m	[0m00:18:16 left[0m	
+[0m.:. Batch 57473 to 57600 on 72328 images[0m	
+[0m: 81% done[0m	[0m00:14:32 left[0m	
+[0m.:. Batch 61185 to 61312 on 72328 images[0m	
+Killed

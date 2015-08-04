@@ -7,8 +7,8 @@ th -i main.lua \
 \
     -type cuda \
     -threads 8 \
-    -gpuid 2 \
-    -model_type batch_norm \
+    -gpuid 3 \
+    -model_type batch_norm2 \
     -criterion NLL \
     -dropout 0.4 \
 \
@@ -20,9 +20,9 @@ th -i main.lua \
     -weight_decay 1e-3 \
 \
     -load_model false \
-    -path2load ./batch_norm/ \
+    -path2load ./batch_norm2/ \
     -epoch 100 \
-    -path2save ./batch_norm/ \
+    -path2save ./batch_norm2/ \
     -plot_every 2000 \
     -plot false \
     -save_every 1 \
