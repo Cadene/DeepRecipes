@@ -1,11 +1,10 @@
-[0m# ... lunching using pid = 8819[0m	
+[0m# ... lunching using pid = 8969[0m	
 [0m# ... switching to CUDA[0m	
 [0m# ... loading Dataset[0m	
 [0m# ... building model[0m	
-/home/cadene/torch/install/bin/luajit: 2_model.lua:441: batch_norm2 is not a valid type
+/home/cadene/torch/install/bin/luajit: 2_model.lua:453: attempt to call method 'ceil' (a nil value)
 stack traceback:
-	[C]: in function 'error'
-	2_model.lua:441: in main chunk
+	2_model.lua:453: in main chunk
 	[C]: in function 'dofile'
 	main.lua:138: in main chunk
 	[C]: in function 'dofile'

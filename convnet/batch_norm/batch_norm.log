@@ -1,8 +1,8 @@
-[0m# ... lunching using pid = 8769[0m	
+[0m# ... lunching using pid = 8920[0m	
 [0m# ... switching to CUDA[0m	
 [0m# ... loading Dataset[0m	
 [0m# ... building model[0m	
-/home/cadene/torch/install/bin/luajit: 2_model.lua:416: attempt to call global 'MaxPooling' (a nil value)
+/home/cadene/torch/install/bin/luajit: 2_model.lua:416: attempt to call method 'ceil' (a nil value)
 stack traceback:
 	2_model.lua:416: in main chunk
 	[C]: in function 'dofile'
