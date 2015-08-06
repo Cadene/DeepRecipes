@@ -62,3 +62,39 @@ nn.ClassNLLCriterion
 [0m: 10% done [0m	[0m00:11:42 left[0m	
 [0m: 15% done [0m	[0m00:11:36 left[0m	
 [0m: 20% done [0m	[0m00:13:30 left[0m	
+[0m: 25% done [0m	[0m00:15:29 left[0m	
+[0m: 30% done [0m	[0m00:13:52 left[0m	
+[0m: 35% done [0m	[0m00:12:24 left[0m	
+[0m: 40% done [0m	[0m00:11:09 left[0m	
+[0m: 45% done [0m	[0m00:10:01 left[0m	
+[0m: 50% done [0m	[0m00:08:59 left[0m	
+[0m: 55% done [0m	[0m00:07:57 left[0m	
+[0m: 60% done [0m	[0m00:06:59 left[0m	
+[0m: 65% done [0m	[0m00:06:18 left[0m	
+[0m: 70% done [0m	[0m00:05:22 left[0m	
+[0m: 75% done [0m	[0m00:04:25 left[0m	
+[0m: 80% done [0m	[0m00:03:31 left[0m	
+[0m: 85% done [0m	[0m00:03:02 left[0m	
+[0m: 90% done [0m	[0m00:02:18 left[0m	
+[0m: 95% done [0m	[0m00:01:20 left[0m	
+[0m: 100% done [0m	[0m00:00:07 left[0m	
+[0m: Time to test all samples = 00:24:31[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 36.466971836468%[0m	
+[0m: average rowUcol correct (VOC measure): 22.991807312511%[0m	
+[0m: > global correct: 36.443245029465%[0m	
+[0m
+#####################[0m	
+[0m# Epoch n° 1[0m	
+[0m
+# ... train model[0m	
+[0m.:. Batch 1 to 128 on 72328 images[0m	
+[0m: 1% done[0m	[0m01:43:44 left[0m	
+[0m.:. Batch 3201 to 3328 on 72328 images[0m	
+[0m: 6% done[0m	[0m01:58:33 left[0m	
+[0m.:. Batch 6785 to 6912 on 72328 images[0m	
+[0m: 11% done[0m	[0m01:45:43 left[0m	
+[0m.:. Batch 10497 to 10624 on 72328 images[0m	
+[0m: 16% done[0m	[0m01:46:05 left[0m	
+[0m.:. Batch 14081 to 14208 on 72328 images[0m	
+[0m: 21% done[0m	[0m01:40:02 left[0m	
