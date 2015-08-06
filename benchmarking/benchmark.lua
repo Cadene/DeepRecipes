@@ -8,6 +8,7 @@ cmd:text()
 cmd:text('Benchmark Overfeat')
 cmd:text()
 cmd:text('Options:')
+cmd:option('-iter', 10, '')
 cmd:option('-x', 221, 'dim1')
 cmd:option('-y', 221, 'dim2')
 cmd:option('-z', 3, 'dim3')
@@ -18,6 +19,7 @@ cmd:option('-cudnn', 'false', 'cuDNN require cuda')
 cmd:option('-relu_cudnn', 'false', 'different implementation?')
 cmd:option('-4d_tensor', 'false', '')
 cmd:option('-batch_size', 128, '')
+
 
 opt = cmd:parse(arg)
 
@@ -99,35 +101,64 @@ if opt.cuda then
     input = input:cuda()
 end
 
--- local a = torch.Timer()
--- local output = model:forward(input)
--- print('FORWARD free run time:', a:time().real)
-
--- cutorch_sync()
--- a:reset()
--- output = model:forward(input)
--- cutorch_sync()
--- print('FORWARD sync time:', a:time().real)
-
--- cutorch_sync()
--- a:reset()
--- model:backward(input, output)
--- print('BACKWARD free run time:', a:time().real)
-
--- cutorch_sync()
--- a:reset()
--- model:backward(input, output)
--- cutorch_sync()
--- print('BACKWARD sync time:', a:time().real)
-
-cutorch_sync()
 local a = torch.Timer()
-local output = model:forward(input)
-print('FORWARD free run time:', a:time().real / opt.batch_size)
+local time
+local tf_time = 0
+local tb_time = 0
+
+-- dry-run
+
+local tmd, tmf, tmbi, tmbg
+
+model:zeroGradParameters()
+sys.tic()
+local output = model:updateOutput(input)
+local gradInput = model:updateGradInput(input, output)
+model:accGradParameters(input, output)
 cutorch_sync()
-a:reset()
-model:backward(input, output)
+tmd = sys.toc()/opt.batch_size
+print(':dry-run():', tmd*1000)
+print()
+
+-- benchmark
+
+collectgarbage()
+sys.tic()
+for t = 1, opt.iter do
+    output = model:updateOutput(input)
+end
 cutorch_sync()
-print('BACKWARD sync time:', a:time().real / opt.batch_size)
+tmf = sys.toc()/opt.iter/opt.batch_size
+print(':updateOutput():', tmf*1000)
+
+collectgarbage()
+sys.tic()
+for t = 1,opt.iter do
+    model:updateGradInput(input, output)
+end
+cutorch_sync()
+tmbi = sys.toc()/opt.iter/opt.batch_size
+print(':updateGradInput():', tmbi*1000)
+
+collectgarbage()
+sys.tic()
+local ok = 1
+for t = 1,opt.iter do
+    ok = pcall(function() model:accGradParameters(input, output) end)
+end
+cutorch_sync()
+tmbg = sys.toc()/opt.iter/opt.batch_size
+if not ok then
+    print(':accGradParameters():', 'FAILED!')
+else
+    print(':accGradParameters():', tmbg*1000)
+end
+print(':Forward:', (tmf)*1000)
+print(':Backward:', (tmbi+tmbg)*1000)
+print(':TOTAL:', (tmf+tmbi+tmbg)*1000)
+print()
+
+
+
 
 
