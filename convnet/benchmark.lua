@@ -1,93 +1,133 @@
-require 'cutorch'
+require 'torch'
 require 'nn'
-require 'cunn'
-require 'cudnn'
--- require 'ccn2'
+require 'image'
 
-cutorch.setDevice(7)
 
-fSize = {3, 96, 128, 128, 384}
-inputSize = {3, 64, 64}
-batchSize = 10
+cmd = torch.CmdLine()
+cmd:text()
+cmd:text('Benchmark Overfeat')
+cmd:text()
+cmd:text('Options:')
+cmd:option('-x', 221, 'dim1')
+cmd:option('-y', 221, 'dim2')
+cmd:option('-z', 3, 'dim3')
+cmd:option('-relu_inplace', 'true', 'true use less memory')
+cmd:option('-cuda', 'false', 'CUDA')
+cmd:option('-sync', 'false', 'sync require cuda')
+cmd:option('-cudnn', 'false', 'cuDNN require cuda')
+cmd:option('-relu_cudnn', 'false', 'different implementation?')
+cmd:option('-4d_tensor', 'false', '')
+cmd:option('-batch_size', 128, '')
 
---nettype = 'cudnn'
-nettype = 'MM'
+opt = cmd:parse(arg)
 
-if nettype == 'cudnn' then
-  model = nn.Sequential()
-  model:add(cudnn.SpatialConvolution(fSize[1], fSize[2], 9, 9))
-  model:add(cudnn.ReLU())
-  model:add(cudnn.SpatialMaxPooling(2,2,2,2))
-  model:add(cudnn.SpatialConvolution(fSize[2], fSize[3], 5, 5))
-  model:add(cudnn.ReLU())
-  model:add(cudnn.SpatialMaxPooling(2,2,2,2))
-  model:add(cudnn.SpatialConvolution(fSize[3], fSize[4], 4, 4))
-  model:add(cudnn.ReLU())
-  model:add(cudnn.SpatialConvolution(fSize[4], fSize[5], 3, 3))
-  model:add(cudnn.ReLU())
-  model:add(cudnn.SpatialMaxPooling(2,2,2,2))
-  model:add(cudnn.SpatialConvolution(fSize[5], fSize[5], 3, 3))
-  model:add(nn.Reshape(fSize[5]))
-  --model:add(nn.Linear(fSize[5],1))
-elseif nettype == 'ccn2' then
-  model = nn.Sequential()
-  model:add(nn.Transpose({1,4},{1,3},{1,2}))
-  model:add(ccn2.SpatialConvolution(fSize[1], fSize[2], 9))
-  model:add(nn.ReLU())
-  model:add(ccn2.SpatialMaxPooling(2,2))
-  model:add(ccn2.SpatialConvolution(fSize[2], fSize[3], 5))
-  model:add(nn.ReLU())
-  model:add(ccn2.SpatialMaxPooling(2,2))
-  model:add(ccn2.SpatialConvolution(fSize[3], fSize[4], 5))
-  model:add(nn.ReLU())
-  model:add(ccn2.SpatialConvolution(fSize[4], fSize[5], 3))
-  model:add(nn.ReLU())
-  model:add(ccn2.SpatialMaxPooling(2,2))
-  model:add(ccn2.SpatialConvolution(fSize[5], fSize[5], 3))
-elseif nettype == 'MM' then
-  model = nn.Sequential()
-  model:add(nn.SpatialConvolutionMM(fSize[1], fSize[2], 9, 9))
-  model:add(nn.ReLU())
-  model:add(nn.SpatialMaxPooling(2,2,2,2))
-  model:add(nn.SpatialConvolutionMM(fSize[2], fSize[3], 5, 5))
-  model:add(nn.ReLU())
-  model:add(nn.SpatialMaxPooling(2,2,2,2))
-  model:add(nn.SpatialConvolutionMM(fSize[3], fSize[4], 4, 4))
-  model:add(nn.ReLU())
-  model:add(nn.SpatialConvolutionMM(fSize[4], fSize[5], 3, 3))
-  model:add(nn.ReLU())
-  model:add(nn.SpatialMaxPooling(2,2,2,2))
-  model:add(nn.SpatialConvolutionMM(fSize[5], fSize[5], 3, 3))
-  model:add(nn.Reshape(fSize[5]))
+for k, v in pairs(opt) do
+    if v == 'true' then
+        opt[k] = true
+    elseif v == 'false' then
+        opt[k] = false
+    end
 end
 
-model = model:cuda()
+if opt.cuda then
+    require 'cunn'
+    require 'cutorch'
+    cutorch.setDevice(8)
+end
 
-input = torch.rand(batchSize, inputSize[1], inputSize[2], inputSize[3]):cuda()
+local SpatialConvolution = nn.SpatialConvolution
+local SpatialConvolutionMM = nn.SpatialConvolutionMM
+local SpatialMaxPooling = nn.SpatialMaxPooling
+local ReLU = nn.ReLU
 
--- first run
-print(model:forward(input):size())
-output = model:forward(input)
-print(output:size())
-cutorch.synchronize()
+if opt.cudnn then
+    require 'cudnn'
+    SpatialConvolution = cudnn.SpatialConvolution
+    SpatialConvolutionMM = cudnn.SpatialConvolution
+    SpatialMaxPooling = cudnn.SpatialMaxPooling
+    if opt.relu_cudnn then
+        ReLU = cudnn.ReLU
+    end
+end
 
-a = torch.Timer()
-output = model:forward(input)
-print('FORWARD free run time:', a:time().real)
+torch.setdefaulttensortype('torch.FloatTensor')
+torch.setnumthreads(8)
 
-cutorch.synchronize()
-a:reset()
-output = model:forward(input)
-cutorch.synchronize()
-print('FORWARD sync time:', a:time().real)
+local function cutorch_sync()
+    if opt.sync then
+        cutorch.synchronize()
+    end
+end
 
-cutorch.synchronize()
+
+local model = nn.Sequential()
+
+model:add(SpatialConvolution(3, 96, 7, 7, 2, 2))
+model:add(ReLU(opt.relu_inplace))
+model:add(SpatialMaxPooling(3, 3, 3, 3))
+model:add(SpatialConvolutionMM(96, 256, 7, 7, 1, 1))
+model:add(ReLU(opt.relu_inplace))
+model:add(SpatialMaxPooling(2, 2, 2, 2))
+model:add(SpatialConvolutionMM(256, 512, 3, 3, 1, 1, 1, 1))
+model:add(ReLU(opt.relu_inplace))
+model:add(SpatialConvolutionMM(512, 512, 3, 3, 1, 1, 1, 1))
+model:add(ReLU(opt.relu_inplace))
+model:add(SpatialConvolutionMM(512, 1024, 3, 3, 1, 1, 1, 1))
+model:add(ReLU(opt.relu_inplace))
+model:add(SpatialConvolutionMM(1024, 1024, 3, 3, 1, 1, 1, 1))
+model:add(ReLU(opt.relu_inplace))
+model:add(SpatialMaxPooling(3, 3, 3, 3))
+model:add(SpatialConvolutionMM(1024, 4096, 5, 5, 1, 1))
+model:add(ReLU(opt.relu_inplace))
+model:add(SpatialConvolutionMM(4096, 4096, 1, 1, 1, 1))
+model:add(ReLU(opt.relu_inplace))
+model:add(SpatialConvolutionMM(4096, 1000, 1, 1, 1, 1))
+model:add(nn.View(1000))
+model:add(nn.SoftMax())
+print(model)
+
+local input
+if opt['4d_tensor'] then
+    input = torch.Tensor(opt.batch_size, opt.z, opt.x, opt.y)
+else
+    opt.batch_size = 1
+    input = torch.Tensor(opt.z, opt.x, opt.y)
+end
+
+if opt.cuda then
+    model:cuda()
+    input = input:cuda()
+end
+
+-- local a = torch.Timer()
+-- local output = model:forward(input)
+-- print('FORWARD free run time:', a:time().real)
+
+-- cutorch_sync()
+-- a:reset()
+-- output = model:forward(input)
+-- cutorch_sync()
+-- print('FORWARD sync time:', a:time().real)
+
+-- cutorch_sync()
+-- a:reset()
+-- model:backward(input, output)
+-- print('BACKWARD free run time:', a:time().real)
+
+-- cutorch_sync()
+-- a:reset()
+-- model:backward(input, output)
+-- cutorch_sync()
+-- print('BACKWARD sync time:', a:time().real)
+
+cutorch_sync()
+local a = torch.Timer()
+local output = model:forward(input)
+print('FORWARD free run time:', a:time().real / opt.batch_size)
+cutorch_sync()
 a:reset()
 model:backward(input, output)
-print('BACKWARD free run time:', a:time().real)
+cutorch_sync()
+print('BACKWARD sync time:', a:time().real / opt.batch_size)
 
-cutorch.synchronize()
-a:reset()
-model:backward(input, output)
-cutorch.synchronize()
-print('BACKWARD sync time:', a:time().real)
+
