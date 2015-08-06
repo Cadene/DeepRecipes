@@ -7,6 +7,10 @@ local x = 221
 local y = 221
 local Z = 3
 
+local SpatialConvolution = nn.SpatialConvolution
+local SpatialConvolutionMM = nn.SpatialConvolutionMM
+local SpatialMaxPooling = nn.SpatialMaxPooling
+
 if cuda then
    require 'cunn'
    require 'cudnn'
@@ -53,23 +57,23 @@ if cuda then
 end
 
 a = torch.Timer()
-output = model:forward(input)
+output = net:forward(input)
 print('FORWARD free run time:', a:time().real)
 
 --cutorch.synchronize()
 a:reset()
-output = model:forward(input)
+output = net:forward(input)
 --cutorch.synchronize()
 print('FORWARD sync time:', a:time().real)
 
 --cutorch.synchronize()
 a:reset()
-model:backward(input, output)
+net:backward(input, output)
 print('BACKWARD free run time:', a:time().real)
 
 --cutorch.synchronize()
 a:reset()
-model:backward(input, output)
+net:backward(input, output)
 --cutorch.synchronize()
 print('BACKWARD sync time:', a:time().real)
 
