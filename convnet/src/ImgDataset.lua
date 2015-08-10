@@ -1,6 +1,6 @@
 require 'torch'
 require 'image'
-require 'Dataset'
+require 'src/Dataset'
 
 local ImgDataset = torch.class('ImgDataset', 'Dataset')
 

@@ -1,24 +1,21 @@
 require 'torch'
-require 'ImgDataset'
 require 'image'
 require 'string'
+require 'src/ImgDataset'
 
 local ImgLoader = torch.class('ImgLoader')
 
-function ImgLoader:__init(path2dir, path2save, path2log, path2esc)
-    self.path2dir  = path2dir or '../data/recipe_101/'
-    self.path2save = path2save or '../data/recipe_101_clean/' 
-    self.path2log  = path2log or '../data/'
-    self.path2esc  = path2esc or {'.', '..', '.DS_Store', '._.DS_Store'}
+function ImgLoader:__init(path2esc)
+    self.path2esc = path2esc or {'.', '..', '.DS_Store', '._.DS_Store'}
     self.path2img = {}
 end
 
-function ImgLoader:load()
+function ImgLoader:load(path2dir)
     --[[ Load all the images ]]--
-    for _, dir_class in pairs(paths.dir(self.path2dir)) do
+    for _, dir_class in pairs(paths.dir(path2dir)) do
 	if not ImgLoader.__is_in(dir_class, self.path2esc) then
             self.path2img[dir_class] = {}
-            for _, path_img in pairs(paths.dir(self.path2dir..dir_class)) do
+            for _, path_img in pairs(paths.dir(path2dir..dir_class)) do
                 if not ImgLoader.__is_in(path_img, self.path2esc) then
                    table.insert(self.path2img[dir_class], path_img)
                 end
@@ -35,8 +32,8 @@ function ImgLoader:class_str()
     return class_str
 end
 
-function ImgLoader:loadCsv(path2csv)
-    function ParseCSVLine (line,sep) 
+function ImgLoader:load_csv(path2csv)
+    function parse_line (line, sep) 
         local res = {}
         local pos = 1
         sep = sep or ','
@@ -77,7 +74,7 @@ function ImgLoader:loadCsv(path2csv)
     end
 
     for line in io.lines(path2csv) do
-        col = ParseCSVLine(line, ';')
+        col = parse_csv_line(line, ';')
         class_name = col[1]
         img_name = col[2]
         if not self.path2img[class_name] then
@@ -118,16 +115,16 @@ function ImgLoader:make_train_test(pc_train, seed)
     return trainSet, testSet
 end
 
-function ImgLoader:preprocess()
+function ImgLoader:preprocess(path2log)
     --[[ Once loaded, convert or remove the images using path2img
          making success.log, error.log (bad format, grey, or other),
          convert.log (if convert needed) ]]--
     local path2img, last_img
     --os.execute('mkdir -p '..sys.dirname(self.path2save))
     
-    local log_success = io.open(self.path2log..'success.log', 'w')
-    local log_error   = io.open(self.path2log..'error.log', 'w')
-    local log_convert   = io.open(self.path2log..'convert.log', 'w')
+    local log_success = io.open(path2log..'success.log', 'w')
+    local log_error   = io.open(path2log..'error.log', 'w')
+    local log_convert   = io.open(path2log..'convert.log', 'w')
     
     function load_img(path2img)
 		img = image.load(path2img)
@@ -180,9 +177,8 @@ function ImgLoader:preprocess()
     log_convert:close()
 end
 
-function ImgLoader:process(func, ...)
+function ImgLoader:process(path2save, func, ...)
     --[[ Make a new database using func to process images ]]--
-    local path2img, path2save
     func = func or ImgDataset.__prepare_img
     -- create all directory
     for class_name, path2class in pairs(self.path2img) do
@@ -194,7 +190,7 @@ function ImgLoader:process(func, ...)
         path2save = self.path2save..class_name
  
         for img_id, img_name in pairs(path2class) do
-            path2img = self.path2dir..class_name..'/'..img_name
+            local path2img = self.path2dir..class_name..'/'..img_name
             img = func(path2img, ...)
             image.save(path2save..'/'..img_name, img)
         end
@@ -202,7 +198,6 @@ function ImgLoader:process(func, ...)
 end
 
 function ImgLoader:make_clean_dir()
-    
     for class_name, path2class in pairs(loader.path2img) do
         for img_id, img_name in pairs(path2class) do
             path2img = self.path2dir..class_name..'/'..img_name

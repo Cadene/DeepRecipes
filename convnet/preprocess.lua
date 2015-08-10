@@ -1,7 +1,7 @@
 require 'torch'
 
-require 'ImgLoader'
-require 'ImgDataset'
+require 'src/ImgLoader'
+require 'src/ImgDataset'
 
 --[[ create success.log ]]
 
