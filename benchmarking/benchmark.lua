@@ -12,13 +12,15 @@ cmd:option('-iter', 10, '')
 cmd:option('-x', 221, 'dim1')
 cmd:option('-y', 221, 'dim2')
 cmd:option('-z', 3, 'dim3')
-cmd:option('-relu_inplace', 'true', 'true use less memory')
+cmd:option('-relu_inplace', 'true', 'true use less memory?')
+cmd:option('-convMM', 'true', '')
 cmd:option('-cuda', 'false', 'CUDA')
 cmd:option('-sync', 'false', 'sync require cuda')
 cmd:option('-cudnn', 'false', 'cuDNN require cuda')
-cmd:option('-relu_cudnn', 'false', 'different implementation?')
+cmd:option('-relu_cudnn', 'false', 'different implementation? require cudnn')
+cmd:option('-ccn2', 'false', 'ccn2 require cuda')
 cmd:option('-4d_tensor', 'false', '')
-cmd:option('-batch_size', 128, '')
+cmd:option('-batch_size', 1, '')
 
 
 opt = cmd:parse(arg)
@@ -37,8 +39,12 @@ if opt.cuda then
     cutorch.setDevice(8)
 end
 
-local SpatialConvolution = nn.SpatialConvolution
-local SpatialConvolutionMM = nn.SpatialConvolutionMM
+local SpatialConvolution
+if opt.convMM then
+    SpatialConvolution = nn.SpatialConvolutionMM
+else
+    SpatialConvolution = nn.SpatialConvolution
+end
 local SpatialMaxPooling = nn.SpatialMaxPooling
 local ReLU = nn.ReLU
 
@@ -49,6 +55,18 @@ if opt.cudnn then
     SpatialMaxPooling = cudnn.SpatialMaxPooling
     if opt.relu_cudnn then
         ReLU = cudnn.ReLU
+    end
+end
+
+if opt.ccn2 then
+    require 'ccn2'
+    SpatialConvolution = function (...)
+        local arg = {...}
+        return ccn2.SpatialConvolution(arg[1], arg[2], arg[3], arg[5], arg[7])
+    end
+    SpatialMaxPooling = function (...)
+        local arg = {...}
+        return ccn2.SpatialMaxPooling(arg[1], arg[3])
     end
 end
 
@@ -64,28 +82,28 @@ end
 
 local model = nn.Sequential()
 
-model:add(SpatialConvolution(3, 96, 7, 7, 2, 2))
+model:add(SpatialConvolution(3, 96, 7, 7, 2, 2, 0, 0))
 model:add(ReLU(opt.relu_inplace))
 model:add(SpatialMaxPooling(3, 3, 3, 3))
-model:add(SpatialConvolutionMM(96, 256, 7, 7, 1, 1))
+model:add(SpatialConvolution(96, 256, 7, 7, 1, 1, 0, 0))
 model:add(ReLU(opt.relu_inplace))
 model:add(SpatialMaxPooling(2, 2, 2, 2))
-model:add(SpatialConvolutionMM(256, 512, 3, 3, 1, 1, 1, 1))
+model:add(SpatialConvolution(256, 512, 3, 3, 1, 1, 1, 1))
 model:add(ReLU(opt.relu_inplace))
-model:add(SpatialConvolutionMM(512, 512, 3, 3, 1, 1, 1, 1))
+model:add(SpatialConvolution(512, 512, 3, 3, 1, 1, 1, 1))
 model:add(ReLU(opt.relu_inplace))
-model:add(SpatialConvolutionMM(512, 1024, 3, 3, 1, 1, 1, 1))
+model:add(SpatialConvolution(512, 1024, 3, 3, 1, 1, 1, 1))
 model:add(ReLU(opt.relu_inplace))
-model:add(SpatialConvolutionMM(1024, 1024, 3, 3, 1, 1, 1, 1))
+model:add(SpatialConvolution(1024, 1024, 3, 3, 1, 1, 1, 1))
 model:add(ReLU(opt.relu_inplace))
 model:add(SpatialMaxPooling(3, 3, 3, 3))
-model:add(SpatialConvolutionMM(1024, 4096, 5, 5, 1, 1))
+model:add(SpatialConvolution(1024, 4096, 5, 5, 1, 1, 0, 0))
 model:add(ReLU(opt.relu_inplace))
-model:add(SpatialConvolutionMM(4096, 4096, 1, 1, 1, 1))
+model:add(SpatialConvolution(4096, 4096, 1, 1, 1, 1, 0, 0))
 model:add(ReLU(opt.relu_inplace))
-model:add(SpatialConvolutionMM(4096, 1000, 1, 1, 1, 1))
+model:add(SpatialConvolution(4096, 1000, 1, 1, 1, 1, 0, 0))
 model:add(nn.View(1000))
-model:add(nn.SoftMax())
+-- model:add(nn.SoftMax())
 print(model)
 
 local input
