@@ -7,7 +7,7 @@ th -i main.lua \
 \
     -type cuda \
     -threads 8 \
-    -gpuid 1 \
+    -gpuid 7 \
     -model_type overfeat \
     -criterion NLL \
     -dropout 0.9 \
@@ -15,13 +15,13 @@ th -i main.lua \
     -batch_size 128 \
     -optimizer SGD \
     -learning_rate_decay 0 \
-    -learning_rate 0.04 \
-    -momentum 0.9 \
+    -learning_rate 0.008 \
+    -momentum 0.6 \
 \
     -load_model true \
-    -path2load ./overfeat/ \
+    -path2load ./overfeat3/ \
     -epoch 100 \
-    -path2save ./overfeat-1/ \
+    -path2save ./overfeat4/ \
     -plot_every 2000 \
     -plot false \
     -save_every 1 \
