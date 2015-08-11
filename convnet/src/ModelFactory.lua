@@ -6,9 +6,22 @@ local lf = LayerFactory
 local ModelFactory = torch.class('ModelFactory')
 
 function ModelFactory.generate(opt, ...)
-    local model_type = opt.model_type:lower()
-    local method_name = 'generate_'..model_type
-    return ModelFactory[method_name](opt, ...)
+    local model
+    if opt.load_model then
+        model = ModelFactory.load(opt)
+    else
+        local type_model = opt.type_model:lower()
+        local method_name = 'generate_'..type_model
+        model = ModelFactory[method_name](opt, ...)
+    end
+    print(model)
+    return model
+end
+
+function ModelFactory.load(opt)
+    print("# ... loading model from "..opt.path2load_model)
+    local model = torch.load(opt.path2load_model)
+    return Model(model)
 end
 
 function ModelFactory.generate_standard(opt, nb_class)
@@ -18,6 +31,7 @@ function ModelFactory.generate_standard(opt, nb_class)
     model:add(lf.ReLU(opt))
     model:add(nn.Dropout(opt.dropout))
     model:add(nn.Linear(opt.H, nb_class))
+    model:add(nn.LogSoftMax())
     return Model(model)
 end
 
@@ -48,6 +62,7 @@ function ModelFactory.generate_overfeat(opt, nb_class)
     model:add(nn.Dropout(opt.dropout))
     model:add(lf.SpatialConvolutionMM(opt, 4096, nb_class, 1, 1, 1, 1))
     model:add(nn.View(nb_class))
+    model:add(nn.LogSoftMax())
 
     if opt.model_pretrain then
         local m = model.modules
@@ -103,6 +118,7 @@ function ModelFactory.generate_medium(opt, nb_class)
     model:add(nn.ReLU(true))
     model:add(nn.Dropout(opt.dropout))
     model:add(nn.Linear(1024,nb_class))
+    model:add(nn.LogSoftMax())
     return Model(model)
 end
 
@@ -125,6 +141,7 @@ function ModelFactory.generate_small(opt, nb_class)
     model:add(nn.ReLU(true))
     model:add(nn.Dropout(opt.dropout))
     model:add(nn.Linear(1024, nb_class))
+    model:add(nn.LogSoftMax())
     return Model(model)
 end
 

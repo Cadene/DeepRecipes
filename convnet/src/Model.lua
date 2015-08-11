@@ -22,7 +22,7 @@ function Model:train(database, criterion, optimizer, opt, epoch)
     --[[
         :Arg: opt.batch_size
     ]]
-    if not opt.model_train then
+    if not opt.train_model then
         do return end
     end
 
@@ -122,7 +122,7 @@ end
 function Model:test(database, criterion, optimizer, opt, epoch)
     --[[
     ]]
-    if not opt.model_test then
+    if not opt.test_model then
         do return end
     end
 
@@ -178,11 +178,10 @@ end
 function Model:save(opt, epoch)
     --[[
     ]]
-    if not opt.model_save then
+    if not opt.save_model then
         do return end
     end
     epoch = epoch or 0
-    local path2model = opt.path2save..'model.save'
-    print('# ... saving model to '..path2model)
-    torch.save(path2model, model)
+    print('# ... saving model to '..opt.path2save_model)
+    torch.save(opt.path2save_model, self.m)
 end

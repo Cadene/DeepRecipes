@@ -4,6 +4,7 @@ require 'src/DatabaseFactory'
 require 'src/ModelFactory'
 require 'src/CriterionFactory'
 require 'src/OptimizerFactory'
+require 'src/OptManager'
 
 ------------------------------------------------------------------------
 -- Command line arguments
@@ -14,27 +15,24 @@ cmd:text('CadNet')
 cmd:text()
 cmd:text('Options:')
 -- settings dataset building
-cmd:option('-data_type',       'Spiral',    'data_type: Spiral | Gauss | Recipe101')
+cmd:option('-type_data',       'Spiral',    'data_type: Spiral | Gauss | Recipe101')
 cmd:option('-K',               3,           'number of class')
 cmd:option('-N',               500,         'number of points per class')
 cmd:option('-D',               2,           'number of dimensionality')
 cmd:option('-pc_train',        0.8,         'pourcentage for the training set')
-cmd:option('-path2dir',        '../data/recipe_101/recipe_101_clean', 'path2img')
--- settings net loading
-cmd:option('-model_load',      'false',     'loading model or not')
-cmd:option('-path2load',       './save/',   'path2load model')
+cmd:option('-path2load_data',        '../data/recipe_101/recipe_101_clean', 'path2img')
 -- settings net building
 cmd:option('-cuda',            'false',     '')
 cmd:option('-cudnn',           'false',     '')
-cmd:option('-model_type',      'standard',  'model_type: standard | overfeat | medium')
+cmd:option('-type_model',      'standard',  'model_type: standard | overfeat | medium')
 cmd:option('-threads',         1,           'number of threads')
 cmd:option('-seed',            1337,        'seed')
 cmd:option('-gpuid',           1,           'gpu id')
 cmd:option('-H',               100,         'number of hidden layers')
-cmd:option('-criterion_type',  'NLL',       'criterion: NLL - negative log likelihood')
+cmd:option('-type_criterion',  'NLL',       'criterion: NLL - negative log likelihood')
 cmd:option('-dropout',         0.5,         'do dropout with x probability')
 -- settings optimizer
-cmd:option('-optimizer_type',       'SGD',       'CG | LBFGS | SGD | ASGD | ADAGRAD')
+cmd:option('-type_optimizer',       'SGD',       'CG | LBFGS | SGD | ASGD | ADAGRAD')
 cmd:option('-learning_rate',   5e-2,        'learning rate at t=0')
 cmd:option('-learning_rate_decay', 0.033,   'learning rate decay')
 cmd:option('-momentum',        0.6,         'momentum')
@@ -48,13 +46,15 @@ cmd:option('-plot_every',      10,          'plot things')
 cmd:option('-path2save',       './save/',   'path to the saving dir')
 cmd:option('-plot',            'true',      'plot')
 -- cmd:option('-print_layers_op', false,       'Output the values from each layers')
-cmd:option('-model_train',	   'true',	    '')
-cmd:option('-model_test',	   'false',     '')
-cmd:option('-model_save',      'true',      '')
+cmd:option('-train_model',	   'true',	    '')
+cmd:option('-test_model',	   'false',     '')
+cmd:option('-save_model',      'true',      '')
+-- settings net loading
+cmd:option('-load_model',      'false',     'loading model or not')
+cmd:option('-path2load',       './save/',   'path2load model')
 cmd:text()
-local opt = cmd:parse(arg or {})
-Tools.convert_str2bool(opt)
-print(opt)
+local om = OptManager()
+local opt = om:parse(cmd, arg)
 
 ------------------------------------------------------------------------
 -- Global Effects
@@ -63,41 +63,22 @@ Tools.display_pid()
 
 torch.setdefaulttensortype('torch.FloatTensor')
 torch.manualSeed(opt.seed)
-
-if opt.cuda then
-    print('# ... switching to CUDA')
-    require 'cutorch'
-    require 'cunn'
-    if opt.cudnn then
-        require 'cudnn'
-    end
-    if opt.ccn2 then
-        require 'ccn2'
-    end
-    cutorch.setDevice(opt.gpuid)
-    cutorch.manualSeed(opt.seed, opt.gpuid)
-end
 torch.setnumthreads(opt.threads)
+
+Tools.manage_gpu_lib(opt)
 
 ------------------------------------------------------------------------
 -- Initialisation
 
 local database = DatabaseFactory.generate(opt)
-print(database)
+local model = ModelFactory.generate(opt)
+local criterion = CriterionFactory.generate(opt)
+local optimizer = OptimizerFactory.generate(opt)
 
-local model, criterion 
-model = ModelFactory.generate(opt)
-model, criterion = CriterionFactory.generate(opt, model)
-print(model)
-print('\nCriterion :\ntype: '..criterion:__tostring())
 if opt.cuda then
     model:cuda()
     criterion:cuda()
 end
-
-local optimizer = OptimizerFactory.generate(opt)
-print(optimizer)
-print('type : '..opt.optimizer_type)
 
 ------------------------------------------------------------------------
 -- Running

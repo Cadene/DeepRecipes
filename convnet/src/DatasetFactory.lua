@@ -3,20 +3,20 @@ require 'src/Dataset'
 
 local DatasetFactory = torch.class('DatasetFactory')
 
--- function DatasetFactory.generate(data_type, ...)
---     local method_name = 'generate'..data_type
+-- function DatasetFactory.generate(type_data, ...)
+--     local method_name = 'generate'..type_data
 --     return DatasetFactory[method_name](...)
 -- end
 
 function DatasetFactory.generate(opt, ...)
-    local data_type = opt.data_type:lower()
-    local method_name = 'generate_'..data_type
-    if data_type == 'spiral' or data_type == 'gauss' then
+    local type_data = opt.type_data:lower()
+    local method_name = 'generate_'..type_data
+    if type_data == 'spiral' or type_data == 'gauss' then
         return DatasetFactory[method_name](opt.N, opt.D, opt.K)
-    elseif data_type == 'recipe101' then
+    elseif type_data == 'recipe101' then
         return DatasetFactory[method_name](...)
     else
-        error(opt.data_type..' is not a valid type')
+        error(opt.type_data..' is not a valid type')
         return nil
     end
 end

@@ -5,9 +5,12 @@ require 'src/Optimizer'
 local OptimizerFactory = torch.class('OptimizerFactory')
 
 function OptimizerFactory.generate(opt)
-    local optimizer_type = opt.optimizer_type:lower()
-    local method_name = 'generate_'..optimizer_type
-    return OptimizerFactory[method_name](opt)
+    local type_optimizer = opt.type_optimizer:lower()
+    local method_name = 'generate_'..type_optimizer
+    local optimizer = OptimizerFactory[method_name](opt)
+    print(optimizer)
+    print('type : '..opt.type_optimizer)
+    return optimizer
 end
 
 function OptimizerFactory.generate_cg(opt)
