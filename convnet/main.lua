@@ -53,14 +53,8 @@ cmd:option('-model_test',	   'false',     '')
 cmd:option('-model_save',      'true',      '')
 cmd:text()
 local opt = cmd:parse(arg or {})
-
-for k, v in pairs(opt) do
-    if v == 'true' then
-        opt[k] = true
-    elseif v == 'false' then
-        opt[k] = false
-    end
-end
+Tools.convert_str2bool(opt)
+print(opt)
 
 ------------------------------------------------------------------------
 -- Global Effects
@@ -93,17 +87,17 @@ print(database)
 
 local model, criterion 
 model = ModelFactory.generate(opt)
---print(model)
 model, criterion = CriterionFactory.generate(opt, model)
+print(model)
+print('\nCriterion :\ntype: '..criterion:__tostring())
 if opt.cuda then
     model:cuda()
     criterion:cuda()
 end
-print(model)
-print(criterion)
 
 local optimizer = OptimizerFactory.generate(opt)
 print(optimizer)
+print('type : '..opt.optimizer_type)
 
 ------------------------------------------------------------------------
 -- Running

@@ -33,6 +33,8 @@ function OptimizerFactory.generate_sgd(opt)
     config.learningRateDecay = opt.learningRateDecay
     config.momentum          = opt.momentum
     config.weightDecay       = opt.weight_decay
+    config.nesterov          = true
+    config.dampening         = 0
     return Optimizer(method, config)
 end
 

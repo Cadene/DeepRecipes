@@ -24,3 +24,8 @@ function Database:nb_class()
     return #self:get_classname()
 end
 
+function Database:__tostring__()
+    return '\nDatabase :\n'
+        ..self:nb_class()..' classes'
+end
+

@@ -7,11 +7,12 @@ function Model:__init(m)
     self.m = m
 end
 
--- function Model:__tostring__()
---     local parameters, gradParameters = self.m:getParameters()
---     print(self.m)
---     print("Number of parameters "..parameters:size(1))
--- end
+function Model:__tostring__()
+    local parameters, gradParameters = self.m:getParameters()
+    return '\nModel :\n'
+        ..self.m:__tostring__()..'\n'
+        ..parameters:size(1)..' parameters'
+end
 
 function Model:add(layer)
     self.m:add(layer)
