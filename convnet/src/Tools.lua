@@ -11,6 +11,8 @@ function Tools.manage_gpu_lib(opt)
     if opt.cuda then
         print('# ... switching to CUDA')
         require 'cutorch'
+        cutorch.setDevice(opt.gpuid)
+        cutorch.manualSeed(opt.seed, opt.gpuid)
         require 'cunn'
         if opt.cudnn then
             require 'cudnn'
@@ -18,7 +20,5 @@ function Tools.manage_gpu_lib(opt)
         if opt.ccn2 then
             require 'ccn2'
         end
-        cutorch.setDevice(opt.gpuid)
-        cutorch.manualSeed(opt.seed, opt.gpuid)
     end
 end
