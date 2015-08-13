@@ -80,6 +80,13 @@ if opt.cuda then
     criterion:cuda()
 end
 
+global = {}
+global.database  = database
+global.model     = model
+global.criterion = criterion
+global.optimizer = optimizer
+global.opt       = opt
+
 ------------------------------------------------------------------------
 -- Running
 
