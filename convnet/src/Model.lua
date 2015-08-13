@@ -18,6 +18,10 @@ function Model:add(layer)
     self.m:add(layer)
 end
 
+function Model:cuda()
+    self.m:cuda()
+end
+
 function Model:train(database, criterion, optimizer, opt, epoch)
     --[[
         :Arg: opt.batch_size
