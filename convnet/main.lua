@@ -54,7 +54,7 @@ cmd:option('-load_model',      'false',     'loading model or not')
 cmd:option('-path2load',       './save/',   'path2load model')
 cmd:text()
 local om = OptManager()
-local opt = om:parse(cmd, arg)
+opt = om:parse(cmd, arg)
 
 ------------------------------------------------------------------------
 -- Global Effects
@@ -70,22 +70,15 @@ Tools.manage_gpu_lib(opt)
 ------------------------------------------------------------------------
 -- Initialisation
 
-local database = DatabaseFactory.generate(opt)
-local model = ModelFactory.generate(opt)
-local criterion = CriterionFactory.generate(opt)
-local optimizer = OptimizerFactory.generate(opt)
+database = DatabaseFactory.generate(opt)
+model = ModelFactory.generate(opt)
+criterion = CriterionFactory.generate(opt)
+optimizer = OptimizerFactory.generate(opt)
 
 if opt.cuda then
     model:cuda()
     criterion:cuda()
 end
-
-global = {}
-global.database  = database
-global.model     = model
-global.criterion = criterion
-global.optimizer = optimizer
-global.opt       = opt
 
 ------------------------------------------------------------------------
 -- Running
