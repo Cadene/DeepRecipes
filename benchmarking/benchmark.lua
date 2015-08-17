@@ -15,7 +15,7 @@ cmd:option('-z', 3, 'dim3')
 cmd:option('-relu_inplace', 'true', 'true use less memory?')
 cmd:option('-convMM', 'true', '')
 cmd:option('-cuda', 'false', 'CUDA')
-cmd:option('-sync', 'false', 'sync require cuda')
+cmd:option('-sync', 'true', 'sync require cuda')
 cmd:option('-cudnn', 'false', 'cuDNN require cuda')
 cmd:option('-relu_cudnn', 'false', 'different implementation? require cudnn')
 cmd:option('-ccn2', 'false', 'ccn2 require cuda')
@@ -81,7 +81,6 @@ end
 
 
 local model = nn.Sequential()
-
 model:add(SpatialConvolution(3, 96, 7, 7, 2, 2, 0, 0))
 model:add(ReLU(opt.relu_inplace))
 model:add(SpatialMaxPooling(3, 3, 3, 3))
@@ -137,10 +136,20 @@ cutorch_sync()
 tmd = sys.toc()/opt.batch_size
 print(':dry-run():', tmd*1000)
 print()
+cutorch_sync()
 
 -- benchmark
 
-collectgarbage()
+-- forward free run
+sys.tic()
+for t = 1, opt.iter do
+    output = model:updateOutput(input)
+end
+tmf = sys.toc()/opt.iter/opt.batch_size
+print('free :updateOutput():', tmf*1000)
+
+-- forward sync
+cutorch_sync()
 sys.tic()
 for t = 1, opt.iter do
     output = model:updateOutput(input)
@@ -149,16 +158,37 @@ cutorch_sync()
 tmf = sys.toc()/opt.iter/opt.batch_size
 print(':updateOutput():', tmf*1000)
 
-collectgarbage()
+-- backward free run
+cutorch_sync()
 sys.tic()
 for t = 1,opt.iter do
     model:updateGradInput(input, output)
 end
-cutorch_sync()
 tmbi = sys.toc()/opt.iter/opt.batch_size
+print('free :updateGradInput():', tmbi*1000)
+
+sys.tic()
+local ok = 1
+for t = 1,opt.iter do
+    ok = pcall(function() model:accGradParameters(input, output) end)
+end
+tmbg = sys.toc()/opt.iter/opt.batch_size
+if not ok then
+    print('free :accGradParameters():', 'FAILED!')
+else
+    print('free :accGradParameters():', tmbg*1000)
+end
+
+--backward sync
+cutorch_sync()
+sys.tic()
+for t = 1,opt.iter do
+    model:updateGradInput(input, output)
+end
+tmbi = sys.toc()/opt.iter/opt.batch_size
+cutorch_sync()
 print(':updateGradInput():', tmbi*1000)
 
-collectgarbage()
 sys.tic()
 local ok = 1
 for t = 1,opt.iter do
@@ -171,6 +201,8 @@ if not ok then
 else
     print(':accGradParameters():', tmbg*1000)
 end
+
+--rslt
 print(':Forward:', (tmf)*1000)
 print(':Backward:', (tmbi+tmbg)*1000)
 print(':TOTAL:', (tmf+tmbi+tmbg)*1000)
