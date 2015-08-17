@@ -22,7 +22,7 @@ function Model:cuda()
     self.m:cuda()
 end
 
-function Model:train(database, criterion, optimizer, opt, epoch)
+function Model:train(database, criterion, optimizer, logger, opt, epoch)
     --[[
         :Arg: opt.batch_size
     ]]
@@ -34,7 +34,6 @@ function Model:train(database, criterion, optimizer, opt, epoch)
     local timer = torch.Timer()
     local trainset = database:get_trainset()
     local confusion = optim.ConfusionMatrix(database:nb_class())
-    local logger = optim.Logger(opt.path2save..'train.log')
     local nb_batch = 1
     local nb_batch_max = math.ceil(trainset:size() / opt.batch_size)
     local pc_max = {0, 0}
@@ -109,21 +108,21 @@ function Model:train(database, criterion, optimizer, opt, epoch)
     print(": average row correct: "..(confusion.averageValid*100).."%")
     print(": average rowUcol correct (VOC measure): "..(confusion.averageUnionValid*100).."%")
     print(": > global correct: "..(confusion.totalValid*100).."%")
-    logger:add{['% mean class accuracy (train set)'] = confusion.totalValid * 100}
+    logger:maj(confusion.totalValid * 100, opt, epoch)
     confusion:zero()
 
-    if not opt.cuda and opt.data_type ~= 'Recipe101' and epoch % opt.plot_every == 0 then
-        require 'src/Ploter'
-        -- Ploter.decision_region(self.m, trainset:get_data(), database:get_classname(), 'epoch_'..epoch..'.png')
-    end
+    -- if not opt.cuda and opt.data_type ~= 'Recipe101' and epoch % opt.plot_every == 0 then
+    --     -- require 'src/Ploter'
+    --     -- Ploter.decision_region(self.m, trainset:get_data(), database:get_classname(), 'epoch_'..epoch..'.png')
+    -- end
 
-    if opt.plot then
-        logger:style{['% mean class accuracy (train set)'] = '-'}
-        logger:plot()
-    end
+    -- if opt.plot then
+    --     logger:style{['% mean class accuracy (train set)'] = '-'}
+    --     logger:plot()
+    -- end
 end
 
-function Model:test(database, criterion, optimizer, opt, epoch)
+function Model:test(database, criterion, optimizer, logger, opt, epoch)
     --[[
     ]]
     if not opt.test_model then
@@ -134,7 +133,6 @@ function Model:test(database, criterion, optimizer, opt, epoch)
     local timer = torch.Timer()
     local testset = database:get_testset()
     local confusion = optim.ConfusionMatrix(database:nb_class())
-    local logger = optim.Logger(opt.path2save..'test.log')
     local pc_max = 0
     local s
 
@@ -169,13 +167,13 @@ function Model:test(database, criterion, optimizer, opt, epoch)
     print(": average row correct: "..(confusion.averageValid*100).."%")
     print(": average rowUcol correct (VOC measure): "..(confusion.averageUnionValid*100).."%")
     print(": > global correct: "..(confusion.totalValid*100).."%")
-    logger:add{['% mean class accuracy (test set)'] = confusion.totalValid * 100}
+    logger:maj(confusion.totalValid * 100, opt, epoch)
     confusion:zero()
 
-    if opt.plot then
-        logger:style{['% mean class accuracy (test set)'] = '-'}
-        logger:plot()
-    end
+    -- if opt.plot then
+    --     logger:style{['% mean class accuracy (test set)'] = '-'}
+    --     logger:plot()
+    -- end
 
 end
 
@@ -188,4 +186,5 @@ function Model:save(opt, epoch)
     epoch = epoch or 0
     print('# ... saving model to '..opt.path2save_model)
     torch.save(opt.path2save_model, self.m)
+    torch.save(opt.path2save_epoch, epoch)
 end

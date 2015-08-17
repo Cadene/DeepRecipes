@@ -22,3 +22,12 @@ function Tools.manage_gpu_lib(opt)
         end
     end
 end
+
+function Tools.file_exist(path2file)
+    local f = io.open(path2file)
+    if f then
+        f:close()
+        return true
+    end
+    return false
+end

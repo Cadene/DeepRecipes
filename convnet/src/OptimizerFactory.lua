@@ -4,10 +4,10 @@ require 'src/Optimizer'
 
 local OptimizerFactory = torch.class('OptimizerFactory')
 
-function OptimizerFactory.generate(opt)
+function OptimizerFactory.generate(opt, ...)
     local type_optimizer = opt.type_optimizer:lower()
     local method_name = 'generate_'..type_optimizer
-    local optimizer = OptimizerFactory[method_name](opt)
+    local optimizer = OptimizerFactory[method_name](opt, ...)
     print(optimizer)
     print('type : '..opt.type_optimizer)
     return optimizer
@@ -28,9 +28,9 @@ function OptimizerFactory.generate_lbfgs(opt)
     return Optimizer(method, config)
 end
 
-function OptimizerFactory.generate_sgd(opt)
-    local method             = optim.sgd
-    local config             = {}
+function OptimizerFactory.generate_sgd(opt, config)
+    local method             = require 'src/sgd'
+    config = config or {}
     config.maxIter           = opt.max_iter
     config.learningRate      = opt.learning_rate
     config.learningRateDecay = opt.learningRateDecay
@@ -38,6 +38,7 @@ function OptimizerFactory.generate_sgd(opt)
     config.weightDecay       = opt.weight_decay
     config.nesterov          = true
     config.dampening         = 0
+    config.learningRates     = torch.Tensor(603):fill(5e-2)
     return Optimizer(method, config)
 end
 

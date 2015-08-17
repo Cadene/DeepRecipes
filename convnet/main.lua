@@ -4,6 +4,7 @@ require 'src/DatabaseFactory'
 require 'src/ModelFactory'
 require 'src/CriterionFactory'
 require 'src/OptimizerFactory'
+require 'src/LoggerFactory'
 require 'src/OptManager'
 
 ------------------------------------------------------------------------
@@ -24,7 +25,9 @@ cmd:option('-path2load_data',        '../data/recipe_101/recipe_101_clean', 'pat
 -- settings net building
 cmd:option('-cuda',            'false',     '')
 cmd:option('-cudnn',           'false',     '')
+cmd:option('-convMM',          'true',      '')
 cmd:option('-type_model',      'standard',  'model_type: standard | overfeat | medium')
+cmd:option('-pretrain_model',  'false',     'pretrain overfeat')
 cmd:option('-threads',         1,           'number of threads')
 cmd:option('-seed',            1337,        'seed')
 cmd:option('-gpuid',           1,           'gpu id')
@@ -54,7 +57,7 @@ cmd:option('-load_model',      'false',     'loading model or not')
 cmd:option('-path2load',       './save/',   'path2load model')
 cmd:text()
 local om = OptManager()
-opt = om:parse(cmd, arg)
+local opt = om:parse(cmd, arg)
 
 ------------------------------------------------------------------------
 -- Global Effects
@@ -70,10 +73,17 @@ Tools.manage_gpu_lib(opt)
 ------------------------------------------------------------------------
 -- Initialisation
 
-database = DatabaseFactory.generate(opt)
-model = ModelFactory.generate(opt)
-criterion = CriterionFactory.generate(opt)
-optimizer = OptimizerFactory.generate(opt)
+local epoch = 1
+if opt.load_epoch then
+    epoch = torch.load(opt.path2load_epoch) + 1
+end
+
+local database  = DatabaseFactory.generate(opt)
+local model     = ModelFactory.generate(opt)
+local criterion = CriterionFactory.generate(opt)
+local optimizer = OptimizerFactory.generate(opt)
+local log_train = LoggerFactory.generate('train', opt)
+local log_test  = LoggerFactory.generate('test', opt)
 
 if opt.cuda then
     model:cuda()
@@ -81,18 +91,31 @@ if opt.cuda then
 end
 
 ------------------------------------------------------------------------
+-- Global
+    
+g           = {}
+g.opt       = opt
+g.database  = database
+g.model     = model
+g.criterion = criterion
+g.optimizer = optimizer
+g.log_train = log_train
+g.log_test  = log_test
+
+
+------------------------------------------------------------------------
 -- Running
 
-model:test(database, criterion, optimizer, opt)
+model:test(database, criterion, optimizer, log_test, opt, epoch)
 
-for epoch = 1, opt.epoch do
+for epoch_i = epoch, (opt.epoch + epoch - 1) do
     print('')
     print('#####################')
-    print('# Epoch n° '..epoch)
+    print('# Epoch n° '..epoch_i)
 
-    model:train(database, criterion, optimizer, opt, epoch)
-    model:test(database, criterion, optimizer, opt, epoch)
-    model:save(opt, epoch)
+    model:train(database, criterion, optimizer, log_train, opt, epoch_i)
+    model:test(database, criterion, optimizer, log_test, opt, epoch_i)
+    model:save(opt, epoch_i)
 end
 
 

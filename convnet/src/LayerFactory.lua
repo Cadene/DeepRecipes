@@ -14,7 +14,7 @@ function LayerFactory.ReLU(opt)
     return nn.ReLU(opt.relu_inplace)
 end
 
-function LayerFactory:SpatialConvolution(opt, ...)
+function LayerFactory.SpatialConvolution(opt, ...)
     --[[
         :Arg: opt.cudnn
         :Arg: opt.ccn2
@@ -24,12 +24,14 @@ function LayerFactory:SpatialConvolution(opt, ...)
         return ccn2.SpatialConvolution(arg[1], arg[2], arg[3], arg[5], arg[7])
     elseif opt.cudnn then
         return cudnn.SpatialConvolution(...)
+    elseif opt.convMM then
+        return nn.SpatialConvolutionMM(...)
     else
         return nn.SpatialConvolution(...)
     end
 end
 
-function LayerFactory:SpatialMaxPooling(opt, ...)
+function LayerFactory.SpatialMaxPooling(opt, ...)
     --[[
         :Arg: opt.ccn2
     ]]
