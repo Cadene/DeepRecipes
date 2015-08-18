@@ -74,7 +74,7 @@ torch.setdefaulttensortype('torch.FloatTensor')
 torch.setnumthreads(8)
 
 local function cutorch_sync()
-    if opt.sync then
+    if opt.sync and opt.cuda then
         cutorch.synchronize()
     end
 end
@@ -105,6 +105,8 @@ model:add(nn.View(1000))
 model:add(nn.LogSoftMax())
 print(model)
 
+criterion = nn.ClassNLLCriterion()
+
 local input
 if opt['4d_tensor'] then
     input = torch.Tensor(opt.batch_size, opt.z, opt.x, opt.y)
@@ -113,9 +115,13 @@ else
     input = torch.Tensor(opt.z, opt.x, opt.y)
 end
 
+local target = torch.Tensor(opt.batch_size):fill(1)
+
 if opt.cuda then
     model:cuda()
+    criterion:cuda()
     input = input:cuda()
+    target = target:cuda()
 end
 
 local a = torch.Timer()
@@ -123,90 +129,43 @@ local time
 local tf_time = 0
 local tb_time = 0
 
--- dry-run
+-- benchmark 
 
-local tmd, tmf, tmbi, tmbg
+local tmd
+local tnf, tcf, tcb, tnb, tf
 
 model:zeroGradParameters()
+
 sys.tic()
-local output = model:updateOutput(input)
-local gradInput = model:updateGradInput(input, output)
-model:accGradParameters(input, output)
+output = model:forward(input)
+print(torch.type(output))
+err = criterion:forward(output, target)
+df_do = criterion:backward(output, target)
+gradInput = model:backward(input, df_do)
 cutorch_sync()
 tmd = sys.toc()/opt.batch_size
 print(':dry-run():', tmd*1000)
 print()
-cutorch_sync()
-
--- benchmark
-
--- forward free run
-sys.tic()
-for t = 1, opt.iter do
-    output = model:updateOutput(input)
-end
-tmf = sys.toc()/opt.iter/opt.batch_size
-print('free :updateOutput():', tmf*1000)
-
--- forward sync
-cutorch_sync()
-sys.tic()
-for t = 1, opt.iter do
-    output = model:updateOutput(input)
-end
-cutorch_sync()
-tmf = sys.toc()/opt.iter/opt.batch_size
-print(':updateOutput():', tmf*1000)
-
--- backward free run
-cutorch_sync()
-sys.tic()
-for t = 1,opt.iter do
-    model:updateGradInput(input, output)
-end
-tmbi = sys.toc()/opt.iter/opt.batch_size
-print('free :updateGradInput():', tmbi*1000)
 
 sys.tic()
-local ok = 1
-for t = 1,opt.iter do
-    ok = pcall(function() model:accGradParameters(input, output) end)
-end
-tmbg = sys.toc()/opt.iter/opt.batch_size
-if not ok then
-    print('free :accGradParameters():', 'FAILED!')
-else
-    print('free :accGradParameters():', tmbg*1000)
-end
-
---backward sync
+output = model:forward(input)
+tnf = sys.toc()/opt.batch_size
+err = criterion:forward(output, target)
+tcf = sys.toc()/opt.batch_size
+df_do = criterion:backward(output, target)
+tcb = sys.toc()/opt.batch_size
+gradInput = model:backward(input, df_do)
+tnb = sys.toc()/opt.batch_size
 cutorch_sync()
-sys.tic()
-for t = 1,opt.iter do
-    model:updateGradInput(input, output)
-end
-tmbi = sys.toc()/opt.iter/opt.batch_size
-cutorch_sync()
-print(':updateGradInput():', tmbi*1000)
-
-sys.tic()
-local ok = 1
-for t = 1,opt.iter do
-    ok = pcall(function() model:accGradParameters(input, output) end)
-end
-cutorch_sync()
-tmbg = sys.toc()/opt.iter/opt.batch_size
-if not ok then
-    print(':accGradParameters():', 'FAILED!')
-else
-    print(':accGradParameters():', tmbg*1000)
-end
-
---rslt
-print(':Forward:', (tmf)*1000)
-print(':Backward:', (tmbi+tmbg)*1000)
-print(':TOTAL:', (tmf+tmbi+tmbg)*1000)
+tf = sys.toc()/opt.batch_size
+print(':Net Forward:', (tnf)*1000)
+print(':Criterion Forward:', (tcf)*1000)
+print(':Criterion Backward:', (tcb)*1000)
+print(':Net Backward:', (tnb)*1000)
+print(':TOTAL:', (tf)*1000)
 print()
+
+
 
 
 
