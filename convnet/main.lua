@@ -118,25 +118,5 @@ for epoch_i = epoch, (opt.epoch + epoch - 1) do
     model:save(opt, epoch_i)
 end
 
-inputs = torch.Tensor(20,3,221,221)
-targets = torch.Tensor(20):fill(1)
-
-
-
-local parameters, gradParameters = g.model.m:getParameters()
-
-feval = function(x)
-    if x ~= parameters then -- optim
-        parameters:copy(x)
-    end
-    g.model.m:zeroGradParameters()
-    outputs = g.model.m:forward(inputs)
-    f = g.criterion:forward(outputs, targets)
-    df_do = criterion:backward(outputs, targets)
-    g.model.m:backward(inputs, df_do)
-    return f, gradParameters
-end
-
-g.optimizer:optimize(feval, parameters)
 
 
