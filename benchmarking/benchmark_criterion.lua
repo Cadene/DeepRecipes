@@ -148,21 +148,36 @@ print(':dry-run():', tmd*1000)
 print()
 
 sys.tic()
-output = model:forward(input)
-tnf = sys.toc()/opt.batch_size
-err = criterion:forward(output, target)
-tcf = sys.toc()/opt.batch_size
-df_do = criterion:backward(output, target)
-tcb = sys.toc()/opt.batch_size
-gradInput = model:backward(input, df_do)
-tnb = sys.toc()/opt.batch_size
+for i = 0, opt.iter do
+    output = model:forward(input)
+end
+tnf = sys.toc()/opt.batch_size/opt.iter
+
+sys.tic()
+for i = 0, opt.iter do
+    err = criterion:forward(output, target)
+end
+tcf = sys.toc()/opt.batch_size/opt.iter
+
+sys.tic()
+for i = 0, opt.iter do
+    df_do = criterion:backward(output, target)
+end
+tcb = sys.toc()/opt.batch_size/opt.iter
+
+sys.tic()
+for i = 0, opt.iter do
+    gradInput = model:backward(input, df_do)
+end
+tnb = sys.toc()/opt.batch_size/opt.iter
+
 cutorch_sync()
-tf = sys.toc()/opt.batch_size
+
 print(':Net Forward:', (tnf)*1000)
 print(':Criterion Forward:', (tcf)*1000)
 print(':Criterion Backward:', (tcb)*1000)
 print(':Net Backward:', (tnb)*1000)
-print(':TOTAL:', (tf)*1000)
+print(':TOTAL:', (tnf+tcf+tcb+tnb)*1000)
 print()
 
 

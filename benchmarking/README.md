@@ -75,3 +75,73 @@ th benchmark.lua -cuda true -4d_tensor true -batch_size 128 -cudnn true
 * :TOTAL: 37.729613296688 
 
 
+##Benchmarking_criterion
+
+# Interprétation
+
+cuda + cudnn + 4d_tensor > all
+cuda == cuda + 4d_tensor
+cuda + cudnn + 4d_tensor > cuda + 4d_tensor
+cuda > cuda + cudnn
+
+# Experiences
+
+th benchmark_criterion.lua -cuda true -4d_tensor true -batch_size 60 -cudnn true -sync true -iter 1
+:Net Forward:   0.050814946492513   
+:Criterion Forward: 13.108483950297 
+:Criterion Backward:    0.0010331471761068  
+:Net Backward:  0.059862931569417   
+:TOTAL: 13.220194975535 
+
+th benchmark_criterion.lua -cuda true -4d_tensor true -batch_size 60 -cudnn false -sync true -iter 1
+:Net Forward:   28.016364574432 
+:Criterion Forward: 12.552980581919 
+:Criterion Backward:    0.0010331471761068  
+:Net Backward:  66.642900307973 
+:TOTAL: 107.2132786115
+
+th benchmark_criterion.lua -cuda true -4d_tensor true -batch_size 1 -cudnn true -sync true -iter 60
+:Net Forward:   26.51203473409  
+:Criterion Forward: 15.875764687856 
+:Criterion Backward:    0.052201747894287   
+:Net Backward:  251.45123402278 
+:TOTAL: 293.89123519262 
+
+th benchmark_criterion.lua -cuda true -4d_tensor true -batch_size 1 -cudnn false -sync true -iter 60
+:Net Forward:   13.272786140442 
+:Criterion Forward: 7.5730164845785 
+:Criterion Backward:    0.053048133850098   
+:Net Backward:  28.667215506236 
+:TOTAL: 49.566066265106 
+
+th benchmark_criterion.lua -cuda true -4d_tensor false -batch_size 1 -cudnn true -sync true -iter 60
+:Net Forward:   26.483766237895 
+:Criterion Forward: 15.86366891861  
+:Criterion Backward:    0.053679943084717   
+:Net Backward:  251.4636516571  
+:TOTAL: 293.86476675669 
+
+th benchmark_criterion.lua -cuda true -4d_tensor false -batch_size 1 -cudnn false -sync true -iter 60
+:Net Forward:   13.272885481517 
+:Criterion Forward: 7.5749675432841 
+:Criterion Backward:    0.052014986673991   
+:Net Backward:  28.718133767446 
+:TOTAL: 49.61800177892  
+
+th benchmark_criterion.lua -cuda false -4d_tensor false -batch_size 1 -cudnn false -sync true -iter 60
+:Net Forward:   346.6170668602  
+:Criterion Forward: 0.0067472457885742  
+:Criterion Backward:    0.0081817309061686  
+:Net Backward:  454.49263254801 
+:TOTAL: 801.12462838491 
+
+th benchmark_criterion.lua -cuda false -4d_tensor true -batch_size 60 -cudnn false -sync true -iter 1
+:Net Forward:   479.14421955744 
+:Criterion Forward: 0.0042001406351725  
+:Criterion Backward:    0.0053167343139648  
+:Net Backward:  585.21529833476 
+:TOTAL: 1064.3690347672 
+
+
+
+

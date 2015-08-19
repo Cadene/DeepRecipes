@@ -1,6 +1,7 @@
 require 'torch'
 require 'src/Database'
 require 'src/DatasetFactory'
+require 'src/ImgLoader'
 
 local DatabaseFactory = torch.class('DatabaseFactory')
 
@@ -27,7 +28,7 @@ function DatabaseFactory.generate(opt)
         database = Database(trainset, testset, classname)
 
     elseif type_data == 'recipe101' then
-        database = DatasetFactory[method_name](opt)
+        database = DatabaseFactory[method_name](opt)
 
     else
         error(opt.type_data..' is not a valid type')
@@ -41,12 +42,11 @@ function DatabaseFactory.generate_recipe101(opt)
         :Arg: opt.path2load_data
         :Arg: opt.pc_train
     ]]
-    require 'ImgLoader'
-    loader = ImgLoader()
-    loader:load(opt.path2load_data)
+    loader = ImgLoader(opt.path2load_data)
+    loader:load()
     classname = loader:make_classname()
     trainset, testset = loader:make_train_test(opt.pc_train)
-    return Dataset(trainset, testset, classname)
+    return Database(trainset, testset, classname)
 end
 
 

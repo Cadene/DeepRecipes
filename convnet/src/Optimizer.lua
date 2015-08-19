@@ -15,7 +15,11 @@ end
 function Optimizer:__tostring__()
     local str = '\nOptimizer:'
     for k,v in pairs(self.config) do
-        str = str..'\n'..k..' : '..tostring(v)
+        if k ~= 'learningRates' then
+            str = str..'\n'..k..' : '..tostring(v)
+        else
+            str = str..'\n'..k..' : size['..tostring(v:size(1))
+        end
     end
     return str
 end
