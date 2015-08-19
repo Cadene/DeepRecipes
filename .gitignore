@@ -19,6 +19,7 @@ learn.sh
 *.png
 
 *.csv
+**/*.t7
 
 Config.lua
-model.t7
+convnet/save/*

@@ -54,34 +54,45 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
             pc_max[1] = pc_max[1] + 5
         end
 
-        local inputs = {}
-        local targets = {}
-        for i = t, math.min(t+opt.batch_size-1, trainset:size()) do
-            local input, target = trainset:get(i)
-            if opt.cuda then
-                input = input:cuda()
-            end
-            table.insert(inputs, input)
-            table.insert(targets, target)
-        end
+        local inputs, targets = trainset:get_batch(t, opt)
 
-        local feval = function(x)
-            if x ~= parameters then -- optim
-                parameters:copy(x)
+        local feval
+        if opt['4d_tensor'] then
+            feval = function(x)
+                if x ~= parameters then -- optim
+                    parameters:copy(x)
+                end
+                self.m:zeroGradParameters()
+                local outputs = self.m:forward(inputs)
+                local f = criterion:forward(outputs, targets)
+                local df_do = criterion:backward(outputs, targets)
+                gradInput = self.m:backward(inputs, df_do)
+
+                confusion:batchAdd(outputs, targets)
+
+                -- gradParameters:div(#inputs) ???
+                -- f = f / inputs:size(1) ???
+                return f, gradParameters
             end
-            self.m:zeroGradParameters()
-            local f = 0
-            for i = 1, #inputs do
-                local output = self.m:forward(inputs[i])
-                local err = criterion:forward(output, targets[i])
-                f = f + err
-                local df_do = criterion:backward(output, targets[i])
-                gradInput = self.m:backward(inputs[i], df_do)
-                confusion:add(output, targets[i]:squeeze())
+        else
+            feval = function(x)
+                if x ~= parameters then -- optim
+                    parameters:copy(x)
+                end
+                self.m:zeroGradParameters()
+                local f = 0
+                for i = 1, #inputs do
+                    local output = self.m:forward(inputs[i])
+                    local err = criterion:forward(output, targets[i])
+                    f = f + err
+                    local df_do = criterion:backward(output, targets[i])
+                    gradInput = self.m:backward(inputs[i], df_do)
+                    confusion:add(output, targets[i]:squeeze())
+                end
+                gradParameters:div(#inputs)
+                f = f / #inputs
+                return f, gradParameters -- f and df/dX
             end
-            gradParameters:div(#inputs)
-            f = f / #inputs
-            return f, gradParameters -- f and df/dX
         end
 
         optimizer:optimize(feval, parameters)

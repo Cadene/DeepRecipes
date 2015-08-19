@@ -20,8 +20,53 @@ function Dataset:get(index)
     return Xi, yi
 end
 
+function Dataset:get_batch(index_batch, opt)
+    if opt['4d_tensor'] then
+        return self:get_batch_4D(index_batch, opt)
+    else
+        return self:get_batch_3D(index_batch, opt)
+    end
+end
+
+function Dataset:get_batch_3D(index_batch, opt)
+    local inputs  = {}
+    local targets = {}
+    for i = index_batch, math.min(index_batch+opt.batch_size-1, self:size()) do
+        local input, target = self:get(i)
+        if opt.cuda then
+            input  = input:cuda()
+            target = target:cuda()
+        end
+        table.insert(inputs, input)
+        table.insert(targets, target)
+    end
+    return inputs, targets
+end
+
+function Dataset:get_batch_4D(index_batch, opt)
+    local batch_size = math.min(opt.batch_size, self:size() - index_batch + 1)
+    local inputs  = torch.Tensor(batch_size, 3, 221, 221)
+    local targets = torch.Tensor(batch_size)
+    local i_batch = 1
+    for i = index_batch, math.min(index_batch+opt.batch_size-1, self:size()) do
+        local input, target = self:get(i)
+        inputs[i_batch]  = input
+        targets[i_batch] = target
+        i_batch = i_batch + 1
+    end
+    if opt.cuda then
+        inputs  = inputs:cuda()
+        targets = targets:cuda()
+    end
+    return inputs, targets
+end
+
 function Dataset:size()
     return self.X:size(1)
+end
+
+function Dataset:size_X()
+    return self.X:size()
 end
 
 function Dataset:get_data()

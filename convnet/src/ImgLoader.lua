@@ -5,23 +5,29 @@ require 'src/ImgDataset'
 
 local ImgLoader = torch.class('ImgLoader')
 
-function ImgLoader:__init(path2esc)
+function ImgLoader:__init(path2dir, path2esc)
     self.path2esc = path2esc or {'.', '..', '.DS_Store', '._.DS_Store'}
     self.path2img = {}
+    self.path2dir = path2dir
 end
 
-function ImgLoader:load(path2dir)
+function ImgLoader:load()
     --[[ Load all the images ]]--
-    for _, dir_class in pairs(paths.dir(path2dir)) do
-	if not ImgLoader.__is_in(dir_class, self.path2esc) then
+    for _, dir_class in pairs(paths.dir(self.path2dir)) do
+	    if not ImgLoader.__is_in(dir_class, self.path2esc) then
+            --print(self.path2dir, dir_class)
             self.path2img[dir_class] = {}
-            for _, path_img in pairs(paths.dir(path2dir..dir_class)) do
+            for _, path_img in pairs(paths.dir(self.path2dir..dir_class)) do
                 if not ImgLoader.__is_in(path_img, self.path2esc) then
                    table.insert(self.path2img[dir_class], path_img)
                 end
             end
         end
     end
+end
+
+function ImgLoader:make_classname()
+    return self:class_str()
 end
 
 function ImgLoader:class_str()

@@ -16,7 +16,7 @@ cmd:text('CadNet')
 cmd:text()
 cmd:text('Options:')
 -- settings dataset building
-cmd:option('-type_data',       'Spiral',    'data_type: Spiral | Gauss | Recipe101')
+cmd:option('-type_data',       'spiral',    'data_type: spiral | gauss | recipe101')
 cmd:option('-K',               3,           'number of class')
 cmd:option('-N',               500,         'number of points per class')
 cmd:option('-D',               2,           'number of dimensionality')
@@ -41,7 +41,7 @@ cmd:option('-learning_rate_decay', 0.033,   'learning rate decay')
 cmd:option('-momentum',        0.6,         'momentum')
 cmd:option('-weight_decay',    1e-5,        'weight decay L2 regularization')
 cmd:option('-batch_size',      128,         'mini-batch size (1 = pure stochastic)')
-cmd:option('-t0',              1e-1,        '??')
+cmd:option('-4d_tensor',       'true',      '4D_Tensor instead of batch_size * 3D_Tensor ')
 -- settings saving, printing, ploting
 cmd:option('-epoch',           100,         'epoch number')
 cmd:option('-save_every',      1e10,        'save model')
@@ -79,7 +79,7 @@ if opt.load_epoch then
 end
 
 local database  = DatabaseFactory.generate(opt)
-local model     = ModelFactory.generate(opt)
+local model     = ModelFactory.generate(opt, database:nb_class())
 local criterion = CriterionFactory.generate(opt)
 local optimizer = OptimizerFactory.generate(opt)
 local log_train = LoggerFactory.generate('train', opt)
@@ -117,5 +117,26 @@ for epoch_i = epoch, (opt.epoch + epoch - 1) do
     model:test(database, criterion, optimizer, log_test, opt, epoch_i)
     model:save(opt, epoch_i)
 end
+
+inputs = torch.Tensor(20,3,221,221)
+targets = torch.Tensor(20):fill(1)
+
+
+
+local parameters, gradParameters = g.model.m:getParameters()
+
+feval = function(x)
+    if x ~= parameters then -- optim
+        parameters:copy(x)
+    end
+    g.model.m:zeroGradParameters()
+    outputs = g.model.m:forward(inputs)
+    f = g.criterion:forward(outputs, targets)
+    df_do = criterion:backward(outputs, targets)
+    g.model.m:backward(inputs, df_do)
+    return f, gradParameters
+end
+
+g.optimizer:optimize(feval, parameters)
 
 
