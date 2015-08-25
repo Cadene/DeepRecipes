@@ -2,6 +2,8 @@ require 'torch'
 require 'src/Database'
 require 'src/DatasetFactory'
 require 'src/ImgLoader'
+require 'src/ImgDataset'
+require 'src/ImgAugmentedDataset'
 
 local DatabaseFactory = torch.class('DatabaseFactory')
 
@@ -30,6 +32,9 @@ function DatabaseFactory.generate(opt)
     elseif type_data == 'recipe101' then
         database = DatabaseFactory[method_name](opt)
 
+    elseif type_data == 'recipe101_augmented' then
+        database = DatabaseFactory[method_name](opt)
+
     else
         error(opt.type_data..' is not a valid type')
     end
@@ -45,9 +50,24 @@ function DatabaseFactory.generate_recipe101(opt)
     loader = ImgLoader(opt.path2load_data)
     loader:load()
     classname = loader:make_classname()
-    trainset, testset = loader:make_train_test(opt.pc_train)
-    return Database(trainset, testset, classname)
+    local global, train, test = loader:make_train_test(opt.pc_train)
+    local trainset = ImgDataset(global['path2dir'], train['path2img'], train['label'], global['class_label'], global['label_class'])
+    local testset  = ImgDataset(global['path2dir'], test['path2img'], test['label'], global['class_label'], global['label_class'])
+    return  Database(trainset, testset, classname)
 end
 
+function DatabaseFactory.generate_recipe101_augmented(opt)
+    --[[
+        :Arg: opt.path2load_data
+        :Arg: opt.pc_train
+    ]]
+    loader = ImgLoader(opt.path2load_data)
+    loader:load()
+    classname = loader:make_classname()
+    local global, train, test = loader:make_train_test(opt.pc_train)
+    local trainset = ImgAugmentedDataset(global['path2dir'], train['path2img'], train['label'], global['class_label'], global['label_class'])
+    local testset  = ImgDataset(global['path2dir'], test['path2img'], test['label'], global['class_label'], global['label_class'])
+    return  Database(trainset, testset, classname)
+end
 
 

@@ -1,7 +1,6 @@
 require 'torch'
 require 'image'
 require 'string'
-require 'src/ImgDataset'
 
 local ImgLoader = torch.class('ImgLoader')
 
@@ -90,35 +89,52 @@ function ImgLoader:load_csv(path2csv)
     end
 end
 
-function ImgLoader:make_train_test(pc_train, seed)
+function ImgLoader:make_train_test(pc_train, seed, augmented)
     --[[ Once preprocessed and processed, build the train and test sets ]]--
     if seed then
         torch.manualSeed(seed)
     end
-    local trainSet = ImgDataset(self.path2dir)
-    local testSet = ImgDataset(self.path2dir)
+    local trainset, testset
+    local shuffle
+    local path2img_train = {}
+    local path2img_test  = {}
+    local label_train    = {}
+    local label_test     = {}
+    local class_label    = {}
+    local label_class    = {}
+
     local label = 1
     for class, path2img in pairs(self.path2img) do
-        trainSet.class_label[class] = label
-        trainSet.label_class[label] = class
-        testSet.class_label[class] = label
-        testSet.label_class[label] = class
+        class_label[class] = label
+        label_class[label] = class
         shuffle = torch.randperm(#self.path2img[class])
         limit = #self.path2img[class] * pc_train 
         for i = 1, #self.path2img[class] do
             if i < limit then
-                set = trainSet
+                table.insert(path2img_train, path2img[shuffle[i]])
+                table.insert(label_train, label)
             else
-                set = testSet
+                table.insert(path2img_test, path2img[shuffle[i]])
+                table.insert(label_test, label)
             end
-            table.insert(set.path2img, path2img[shuffle[i]])
-            table.insert(set.label, label)
         end
         label = label + 1
     end
-    trainSet:label2tensor()
-    testSet:label2tensor()
-    return trainSet, testSet
+
+    local global = {}
+    global['path2dir'] = self.path2dir
+    global['class_label'] = class_label
+    global['label_class'] = label_class
+
+    local train = {}
+    train['path2img'] = path2img_train
+    train['label'] = label_train
+
+    local test = {}
+    test['path2img'] = path2img_test
+    test['label'] = label_test
+
+    return global, train, test
 end
 
 function ImgLoader:preprocess(path2log)
