@@ -5,7 +5,7 @@ require 'src/Tools'
 
 local ImgDataset = torch.class('ImgDataset', 'Dataset')
 
-function ImgDataset:__init(path2dir, path2img, label, class_label, label_class, dim_in, dim_out)
+function ImgDataset:__init(path2dir, path2img, label, class_label, label_class, dim_in, dim_out, mean, std)
     self.path2dir = path2dir or '/Users/remicadene/data/recipe_101_tiny/'
     self.path2img = path2img or {}
     self.label = label or {}
@@ -16,6 +16,8 @@ function ImgDataset:__init(path2dir, path2img, label, class_label, label_class, 
     self.dim_out = dim_out or 221
     self:shuffle()
     self.prepare = true
+    self.mean = mean
+    self.std = std
 end
 
 function ImgDataset:get(id)
@@ -133,18 +135,17 @@ function ImgDataset:process_mean_std()
     local std  = img:clone():fill(0)
     for i = 1, self:size() do
         local img, label = self:get(i)
-        -- print(img:size())
         mean:add(img)
-        print('img 1,1,1', img[{1,1,1}])
     end
-    print('mean 1,1,1', mean[{1,1,1}])
     mean = mean / self:size()
-    -- for i = 1, self:size() do
-    --     local img, label = self:get(i)
-    --     local tmp = img - mean
-    --     tmp:pow(2)
-    --     std:add(tmp)
-    -- end
-    -- std = std:sqrt()
+    for i = 1, self:size() do
+        local img, label = self:get(i)
+        local tmp = img - mean
+        tmp:pow(2)
+        std:add(tmp)
+    end
+    std = std:sqrt()
+    self.mean = mean
+    self.std  = std
     return mean, std
 end
