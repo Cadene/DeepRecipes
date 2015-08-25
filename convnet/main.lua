@@ -16,7 +16,7 @@ cmd:text('CadNet')
 cmd:text()
 cmd:text('Options:')
 -- settings dataset building
-cmd:option('-type_data',       'spiral',    'data_type: spiral | gauss | recipe101')
+cmd:option('-type_data',       'spiral',    'data_type: spiral | gauss | recipe101 | recipe101_augmented')
 cmd:option('-K',               3,           'number of class')
 cmd:option('-N',               500,         'number of points per class')
 cmd:option('-D',               2,           'number of dimensionality')
