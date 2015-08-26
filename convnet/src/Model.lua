@@ -60,7 +60,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
         end
 
         local inputs, targets = trainset:get_batch(t, opt)
-        print("time to load batch", sys.toc()
+        print("time to load batch", sys.toc())
 
         local feval
         if opt['4d_tensor'] then
@@ -103,7 +103,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
 
         sys.tic()
         optimizer:optimize(feval, parameters)
-        print("time to optimize", sys.toc()
+        print("time to optimize", sys.toc())
 
         if pc_done > pc_max[2] then
             s = timer:time().real / batch_to * (trainset:size() - batch_to)
