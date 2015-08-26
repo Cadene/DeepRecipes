@@ -39,11 +39,16 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
     local pc_max = {0, 0}
     local s
 
+    local ti = {}
+
     trainset:shuffle()
     self.m:training()
     local parameters, gradParameters = self.m:getParameters()
 
     for t = 1, trainset:size(), opt.batch_size do
+
+
+        sys.tic()
         local batch_to = t+opt.batch_size-1
         if batch_to > trainset:size() then
             batch_to = trainset:size()
@@ -55,6 +60,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
         end
 
         local inputs, targets = trainset:get_batch(t, opt)
+        print("time to load batch", sys.toc()
 
         local feval
         if opt['4d_tensor'] then
@@ -95,7 +101,9 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
             end
         end
 
+        sys.tic()
         optimizer:optimize(feval, parameters)
+        print("time to optimize", sys.toc()
 
         if pc_done > pc_max[2] then
             s = timer:time().real / batch_to * (trainset:size() - batch_to)
