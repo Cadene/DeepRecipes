@@ -34,10 +34,18 @@ function OptManager:paths()
     local p2l = self.opt.path2load
     self.opt.path2save_model = paths.concat(p2s, 'model.t7')
     self.opt.path2load_model = paths.concat(p2l, 'model.t7')
+
     self.opt.path2save_log   = p2s
     self.opt.path2load_log   = p2l
+
     self.opt.path2save_epoch = paths.concat(p2s, 'epoch.t7')
     self.opt.path2load_epoch = paths.concat(p2s, 'epoch.t7')
+
+    self.opt.path2save_mean  = paths.concat(p2s, 'mean.t7')
+    self.opt.path2load_mean  = paths.concat(p2l, 'mean.t7')
+
+    self.opt.path2save_std   = paths.concat(p2s, 'std.t7')
+    self.opt.path2load_std   = paths.concat(p2l, 'std.t7')
 end
 
 function OptManager:loads()

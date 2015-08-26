@@ -129,8 +129,7 @@ function ImgDataset:equal(img_dataset)
     return true
 end
 
-function ImgDataset:process_mean_std()
-    print('# ... processing mean std')
+function ImgDataset:process_mean_std(opt)
     local img, label = self:get(1)
     local mean = img:clone():fill(0)
     local std  = img:clone():fill(0)
@@ -146,8 +145,8 @@ function ImgDataset:process_mean_std()
         std:add(tmp)
     end
     std = std:sqrt()
-    torch.save('mean.t7', mean)
-    torch.save('std.t7', std)
+    torch.save(opt.path2save_mean, mean)
+    torch.save(opt.path2save_std, std)
     self.mean = mean
     self.std  = std
     return mean, std
