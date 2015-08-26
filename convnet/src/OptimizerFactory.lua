@@ -42,6 +42,35 @@ function OptimizerFactory.generate_sgd(opt, config)
     return Optimizer(method, config)
 end
 
+function OptimizerFactory.generate_sgd_overfeat(opt, config)
+    local method             = require 'src/sgd'
+    config = config or {}
+    config.maxIter           = opt.max_iter
+    config.learningRate      = opt.learning_rate
+    config.learningRateDecay = opt.learningRateDecay
+    config.momentum          = opt.momentum
+    config.weightDecay       = opt.weight_decay
+    config.nesterov          = true
+    config.dampening         = 0
+
+    local nb_param = 140567682 -- 2 classes
+    -- local nb_param = 140973285 -- 101 classes
+
+    local lr_classif = config.learningRate
+    local lr_convo   = lr_classif / 10
+    local lrs        = torch.Tensor(nb_param)
+    for i = 1, 123778176 do
+        lrs[i] = lr_convo
+    end
+
+    for i = 123778177, nb_param do
+        lrs[i] = lr_classif
+    end
+    config.learningRates = lrs
+    
+    return Optimizer(method, config)
+end
+
 function OptimizerFactory.generate_adagrad(opt)
     local method        = optim.adagrad
     local config        = {}

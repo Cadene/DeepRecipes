@@ -1,4 +1,4 @@
-require('mobdebug').start()
+
 
 require 'nn'
 require 'image'

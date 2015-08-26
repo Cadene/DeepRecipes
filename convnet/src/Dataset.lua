@@ -54,7 +54,7 @@ function Dataset:get_batch_4D(index_batch, opt)
     local i_batch = 1
     for i = index_batch, math.min(index_batch+opt.batch_size-1, self:size()) do
         local input, target = self:get(i)
-        print(input:size(), target:size())
+        -- print(input:size(), target:size())
         inputs[i_batch]  = input
         targets[i_batch] = target
         i_batch = i_batch + 1
@@ -63,7 +63,7 @@ function Dataset:get_batch_4D(index_batch, opt)
         inputs  = inputs:cuda()
         targets = targets:cuda()
     end
-    print(inputs:size(), targets:size())
+    -- print(inputs:size(), targets:size())
     return inputs, targets
 end
 

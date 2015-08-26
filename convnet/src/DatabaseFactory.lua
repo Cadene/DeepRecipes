@@ -55,8 +55,20 @@ function DatabaseFactory.generate_recipe101(opt)
     end
     classname = loader:make_classname()
     local global, train, test = loader:make_train_test(opt.pc_train)
-    local trainset = ImgDataset(global['path2dir'], train['path2img'], train['label'], global['class_label'], global['label_class'])
-    local testset  = ImgDataset(global['path2dir'], test['path2img'], test['label'], global['class_label'], global['label_class'])
+    local trainset = ImgDataset(global['path2dir'],
+        train['path2img'], train['label'],
+        global['class_label'], global['label_class'])
+    
+    -- local mean_train, std_train = trainset:process_mean_std()
+    local mean_train = torch.Tensor(3,221,221):fill(0)
+    local std_train = torch.Tensor(3,221,221):fill(1)
+
+    local testset = ImgDataset(global['path2dir'],
+        test['path2img'], test['label'],
+        global['class_label'], global['label_class'],
+        nil, nil,
+        mean_train, std_train)
+    
     return  Database(trainset, testset, classname)
 end
 
@@ -67,16 +79,17 @@ function DatabaseFactory.generate_recipe101_augmented(opt)
     ]]
     loader = ImgLoader(opt.path2load_data)
     if opt.path2load_csv then
-        loader:load_csv('/home/cadene/data/recipe_101/success.log')
+        loader:load_csv(opt.path2load_csv)
     else
         loader:load()
     end
     classname = loader:make_classname()
     local global, train, test = loader:make_train_test(opt.pc_train)
-    
+
     local trainset = ImgAugmentedDataset(global['path2dir'],
         train['path2img'], train['label'],
         global['class_label'], global['label_class'])
+    
     local mean_train, std_train = trainset:process_mean_std()
     
     local testset = ImgDataset(global['path2dir'],

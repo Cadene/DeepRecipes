@@ -12,27 +12,29 @@ function ImgDataset:__init(path2dir, path2img, label, class_label, label_class, 
     self.label = Tools.table2tensor(self.label)
     self.class_label = class_label or {}
     self.label_class = label_class or {}
-    self.dim_in  = dim_in or 256
+    self.dim_in  = dim_in or 221
     self.dim_out = dim_out or 221
-    self:shuffle()
     self.prepare = true
     self.mean = mean
     self.std = std
 end
 
 function ImgDataset:get(id)
+    if id % 50 == 0 then
+        collectgarbage()
+    end
     local img
     local index = self:get_index(id)
     status, err = pcall(function ()
         local class_name = self.label_class[self.label[index]]
         local path2img = self.path2dir..class_name..'/'..self.path2img[index]
         if self.prepare then
-            img = ImgDataset.__prepare_img(path2img, self.dim_in, self.dim_out)
+            img = ImgDataset.__prepare_img(path2img, self.dim_in, self.dim_out, nil, nil, self.mean, self.std)
         else
             img = image.load(path2img)
-        end
-        if img:size(1) ~= 3 then
-            error('e101: invalid image [path='..path2img..']')
+            if img:size(1) ~= 3 then
+                error('e101: invalid image [path='..path2img..']')
+            end
         end
     end)
     if status then
@@ -49,16 +51,12 @@ end
 
 function ImgDataset:image_size()
     local img, label = self:get(1)
-    return #img:size()
-end
-
-function ImgDataset:image_size()
-    return ImgDataset.__prepare_img(self.path2img, self.dim_in, self.dim_out, 1, true)
+    return img:size()
 end
 
 function ImgDataset.__prepare_img(path2img, dim_in, dim_out, crop_type, flip, mean, std)
-    local dim     = dim_in or 256
-    local dim_out = dim_out or 221
+    local dim     = dim_in
+    local dim_out = dim_out
     local img_dim
     local img_raw = image.load(path2img) -- [0,1] -> [0,255]img
     local rh = img_raw:size(2)
@@ -111,10 +109,12 @@ function ImgDataset.__prepare_img(path2img, dim_in, dim_out, crop_type, flip, me
 
     -- add mean and div std
     if mean and std then 
-        img = (img + mean) / std
+        img:add(mean)
+        img:cdiv(std)
     end
+
     --img:add(-118.380948):div(61.896913) -- fixed distn ~ N(118.380948, 61.896913^2) [0,255] -> [0,1]
-    
+
     return img
 end
 
@@ -130,6 +130,7 @@ function ImgDataset:equal(img_dataset)
 end
 
 function ImgDataset:process_mean_std()
+    print('# ... processing mean std')
     local img, label = self:get(1)
     local mean = img:clone():fill(0)
     local std  = img:clone():fill(0)
@@ -145,6 +146,8 @@ function ImgDataset:process_mean_std()
         std:add(tmp)
     end
     std = std:sqrt()
+    torch.save('mean.t7', mean)
+    torch.save('std.t7', std)
     self.mean = mean
     self.std  = std
     return mean, std

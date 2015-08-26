@@ -107,11 +107,14 @@ g.log_test  = log_test
 ------------------------------------------------------------------------
 -- Running
 
+print('')
+print('######### RUNNING ############')
+print('')
+
 model:test(database, criterion, optimizer, log_test, opt, epoch)
 
 for epoch_i = epoch, (opt.epoch + epoch - 1) do
     print('')
-    print('#####################')
     print('# Epoch n° '..epoch_i)
 
     model:train(database, criterion, optimizer, log_train, opt, epoch_i)

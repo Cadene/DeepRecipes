@@ -15,7 +15,6 @@ function ImgAugmentedDataset:__init(path2dir, path2img, label, class_label, labe
         -- print(self.transform_queue)
     end
     self.augmented_size = #self.transform_queue[1] -- facteur d'augmentation
-    self:shuffle()
 end
 
 function ImgAugmentedDataset:get_augmented_size()
@@ -36,6 +35,9 @@ function ImgAugmentedDataset:get_index(id)
 end
 
 function ImgAugmentedDataset:get(id)
+    if id % 50 == 0 then
+        collectgarbage()
+    end
     prepare = prepare or true
     local img
     local index = self:get_index(id)

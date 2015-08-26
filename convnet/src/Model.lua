@@ -149,7 +149,7 @@ function Model:test(database, criterion, optimizer, logger, opt, epoch)
 
     self.m:evaluate()
 
-    for t = 1, testSet:size() do
+    for t = 1, testset:size() do
         local input, target = testset:get(t)
         if opt.double then
             input = input:double()
@@ -170,7 +170,7 @@ function Model:test(database, criterion, optimizer, logger, opt, epoch)
         end
     end
 
-    s = time['test']:time().real
+    s = timer:time().real
     print(": Time to test all samples = "..string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60))
 
     confusion:updateValids()
