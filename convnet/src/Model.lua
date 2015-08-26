@@ -30,6 +30,8 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
         do return end
     end
 
+    collectgarbage()
+
     epoch = epoch or 0
     local timer = torch.Timer()
     local trainset = database:get_trainset()
@@ -43,7 +45,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
 
     trainset:shuffle()
     self.m:training()
-    local parameters, gradParameters = self.m:getParameters()
+    local parameters, gradParameters = self.m:getParameters() --beware of the cuda runtime error - out of memory
 
     for t = 1, trainset:size(), opt.batch_size do
 
@@ -128,6 +130,8 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
     logger:maj(confusion.totalValid * 100, opt, epoch)
     confusion:zero()
 
+    parameters = nil
+    gradParameters = nil
     -- if not opt.cuda and opt.data_type ~= 'Recipe101' and epoch % opt.plot_every == 0 then
     --     -- require 'src/Ploter'
     --     -- Ploter.decision_region(self.m, trainset:get_data(), database:get_classname(), 'epoch_'..epoch..'.png')
