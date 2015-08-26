@@ -1,4 +1,4 @@
-gpu=0
+gpu=6
 gpuid=$(($gpu+1))
 path2save="./rslt/overfat_lr$gpuid"
 mkdir $path2save
@@ -14,7 +14,7 @@ echo "CUDA_VISIBLE_DEVICES=$gpu th main.lua \
     -type_model overfeat \
     -pretrain_model false \
     -type_optimizer SGD_overfeat \
-    -learning_rate 7e-1 \
+    -learning_rate 1e-1 \
     -learning_rate_decay 0 \
     -batch_size 60 \
     -save_every 1 \
