@@ -71,6 +71,9 @@ return function (opfunc, x, config, state)
       if not state.deltaParameters then
          state.deltaParameters = torch.Tensor():typeAs(x):resizeAs(dfdx)
       end
+      --print(state.deltaParameters:size())
+      --print(lrs:size())
+      --print(dfdx:size())
       state.deltaParameters:copy(lrs):cmul(dfdx)
       x:add(-clr, state.deltaParameters)
    else

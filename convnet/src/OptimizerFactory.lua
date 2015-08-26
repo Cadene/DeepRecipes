@@ -53,8 +53,8 @@ function OptimizerFactory.generate_sgd_overfeat(opt, config)
     config.nesterov          = true
     config.dampening         = 0
 
-    local nb_param = 140567682 -- 2 classes
-    -- local nb_param = 140973285 -- 101 classes
+    --local nb_param = 140567682 -- 2 classes
+    local nb_param = 140973285 -- 101 classes
 
     local lr_classif = config.learningRate
     local lr_convo   = lr_classif / 10

@@ -1,0 +1,54 @@
+{
+  cudnn : [0;34mtrue[0m
+  pretrain_model : [0;34mfalse[0m
+  weight_decay : [0;36m1e-05[0m
+  batch_size : [0;36m60[0m
+  cuda : [0;34mtrue[0m
+  test_model : [0;34mtrue[0m
+  load_epoch : [0;34mfalse[0m
+  type_data : [1;30m"[0m[0;32mrecipe101[0m[1;30m"[0m
+  plot_every : [0;36m10[0m
+  path2save_epoch : [1;30m"[0m[0;32m/home/cadene/doc/DeepRecipes/convnet/rslt/overfat/epoch.t7[0m[1;30m"[0m
+  path2load_std : [1;30m"[0m[0;32m/home/cadene/doc/DeepRecipes/convnet/save/std.t7[0m[1;30m"[0m
+  path2save_log : [1;30m"[0m[0;32m./rslt/overfat[0m[1;30m"[0m
+  load_model : [0;34mfalse[0m
+  save_model : [0;34mtrue[0m
+  N : [0;36m500[0m
+  momentum : [0;36m0.6[0m
+  threads : [0;36m1[0m
+  type_model : [1;30m"[0m[0;32moverfeat[0m[1;30m"[0m
+  path2load_epoch : [1;30m"[0m[0;32m/home/cadene/doc/DeepRecipes/convnet/rslt/overfat/epoch.t7[0m[1;30m"[0m
+  seed : [0;36m1337[0m
+  4d_tensor : [0;34mtrue[0m
+  path2save_std : [1;30m"[0m[0;32m/home/cadene/doc/DeepRecipes/convnet/rslt/overfat/std.t7[0m[1;30m"[0m
+  gpuid : [0;36m1[0m
+  path2load_mean : [1;30m"[0m[0;32m/home/cadene/doc/DeepRecipes/convnet/save/mean.t7[0m[1;30m"[0m
+  path2load_log : [1;30m"[0m[0;32m./save/[0m[1;30m"[0m
+  path2save_mean : [1;30m"[0m[0;32m/home/cadene/doc/DeepRecipes/convnet/rslt/overfat/mean.t7[0m[1;30m"[0m
+  pc_train : [0;36m0.8[0m
+  path2load_model : [1;30m"[0m[0;32m/home/cadene/doc/DeepRecipes/convnet/save/model.t7[0m[1;30m"[0m
+  path2save_model : [1;30m"[0m[0;32m/home/cadene/doc/DeepRecipes/convnet/rslt/overfat/model.t7[0m[1;30m"[0m
+  path2save : [1;30m"[0m[0;32m./rslt/overfat[0m[1;30m"[0m
+  path2load : [1;30m"[0m[0;32m./save/[0m[1;30m"[0m
+  path2load_data : [1;30m"[0m[0;32m/home/cadene/data/recipe_101/recipe_101/[0m[1;30m"[0m
+  dropout : [0;36m0.5[0m
+  epoch : [0;36m100[0m
+  type_criterion : [1;30m"[0m[0;32mNLL[0m[1;30m"[0m
+  load_mean_std : [0;34mfalse[0m
+  path2load_csv : [1;30m"[0m[0;32m/home/cadene/data/recipe_101/success.log[0m[1;30m"[0m
+  learning_rate_decay : [0;36m0[0m
+  load_logger : [0;34mfalse[0m
+  type_optimizer : [1;30m"[0m[0;32mSGD_overfeat[0m[1;30m"[0m
+  K : [0;36m3[0m
+  train_model : [0;34mtrue[0m
+  convMM : [0;34mtrue[0m
+  save_every : [0;36m1[0m
+  learning_rate : [0;36m0.05[0m
+  D : [0;36m2[0m
+  H : [0;36m100[0m
+  plot : [0;34mtrue[0m
+  process_mean_std : [0;34mtrue[0m
+}
+[0m# ... lunching using pid = 12462[0m	
+[0m# ... switching to CUDA[0m	
+[0m# ... processing mean std[0m	
