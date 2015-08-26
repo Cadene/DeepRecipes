@@ -38,7 +38,7 @@ function ImgLoader:class_str()
 end
 
 function ImgLoader:load_csv(path2csv)
-    function parse_line (line, sep) 
+    local parse_csv_line = function (line, sep) 
         local res = {}
         local pos = 1
         sep = sep or ','

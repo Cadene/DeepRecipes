@@ -23,6 +23,7 @@ cmd:option('-D',               2,           'number of dimensionality')
 cmd:option('-pc_train',        0.8,         'pourcentage for the training set')
 cmd:option('-path2load_data',  '../data/recipe_101/recipe_101_clean',           'path2img')
 cmd:option('-path2load_csv',   'false',    '/home/cadene/data/recipe_101/success.log')
+cmd:option('-load_mean_std',   'false',     'lead_mean_std')
 -- settings net building
 cmd:option('-cuda',            'false',     '')
 cmd:option('-cudnn',           'false',     '')

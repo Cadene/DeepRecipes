@@ -1,6 +1,7 @@
 th main.lua \
     -type_data recipe101 \
     -path2load_data /home/cadene/data/recipe_101/recipe_101/ \
+    -path2load_csv /home/cadene/data/recipe_101/success.log \
     -cuda true \
     -cudnn true \
     -4d_tensor true \
