@@ -52,3 +52,12 @@
 [0m# ... lunching using pid = 12462[0m	
 [0m# ... switching to CUDA[0m	
 [0m# ... processing mean std[0m	
+/home/cadene/torch/install/bin/luajit: ./src/ImgDataset.lua:148: attempt to index local 'opt' (a nil value)
+stack traceback:
+	./src/ImgDataset.lua:148: in function 'process_mean_std'
+	./src/DatabaseFactory.lua:69: in function <./src/DatabaseFactory.lua:45>
+	./src/DatabaseFactory.lua:33: in function 'generate'
+	main.lua:84: in main chunk
+	[C]: in function 'dofile'
+	...dene/torch/install/lib/luarocks/rocks/trepl/scm-1/bin/th:131: in main chunk
+	[C]: at 0x00405d30
