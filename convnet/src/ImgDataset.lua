@@ -5,7 +5,7 @@ require 'src/Tools'
 
 local ImgDataset = torch.class('ImgDataset', 'Dataset')
 
-function ImgDataset:__init(path2dir, path2img, label, class_label, label_class, dim_in, dim_out, mean, std)
+function ImgDataset:__init(path2dir, path2img, label, class_label, label_class, dim_in, dim_out, mean, std, prepare)
     self.path2dir = path2dir or '/Users/remicadene/data/recipe_101_tiny/'
     self.path2img = path2img or {}
     self.label = label or {}
@@ -14,7 +14,7 @@ function ImgDataset:__init(path2dir, path2img, label, class_label, label_class, 
     self.label_class = label_class or {}
     self.dim_in  = dim_in or 221
     self.dim_out = dim_out or 221
-    self.prepare = true
+    self.prepare = prepare or true
     self.mean = mean
     self.std = std
 end
