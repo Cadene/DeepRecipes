@@ -5,6 +5,9 @@ local Model = torch.class('Model')
 
 function Model:__init(m)
     self.m = m
+    local parameters, gradParameters = m:getParameters()
+    self.parameters = parameters
+    self.gradParameters = gradParameters
 end
 
 function Model:__tostring__()
@@ -45,7 +48,8 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
 
     trainset:shuffle()
     self.m:training()
-    local parameters, gradParameters = self.m:getParameters() --beware of the cuda runtime error - out of memory
+    local parameters = self.parameters --beware of the cuda runtime error - out of memory
+    local gradParameters = self.gradParameters
 
     for t = 1, trainset:size(), opt.batch_size do
 
