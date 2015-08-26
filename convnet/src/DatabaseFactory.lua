@@ -67,7 +67,7 @@ function DatabaseFactory.generate_recipe101(opt)
         std_train  = torch.load(opt.path2load_std)
     elseif opt.process_mean_std then
         print('# ... processing mean std')
-        mean_train, std_train = trainset:process_mean_std()
+        mean_train, std_train = trainset:process_mean_std(opt)
     else
         mean_train = torch.Tensor(3,221,221):fill(0)
         std_train = torch.Tensor(3,221,221):fill(1)
