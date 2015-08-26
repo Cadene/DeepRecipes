@@ -1,5 +1,5 @@
 #!/bin/bash
-gpu=3
+gpu=0
 gpuid=$(($gpu+1))
 path2save = './rslt/overfat_lr$gpuid'
 mkdir $path2save
@@ -22,4 +22,6 @@ CUDA_VISIBLE_DEVICES=$gpu th main.lua \
     -path2save $path2save \
     -train_model true \
     -test_model false \
-    -save_model true
+    -save_model true \
+    -load_model true \
+    -path2load $path2save
