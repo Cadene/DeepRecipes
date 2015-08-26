@@ -1,7 +1,9 @@
-th main.lua \
+CUDA_VISIBLE_DEVICES=1 th main.lua \
     -type_data recipe101 \
     -path2load_data /home/cadene/data/recipe_101/recipe_101/ \
     -path2load_csv /home/cadene/data/recipe_101/success.log \
+    -process_mean_std true \
+    -gpuid 1 \
     -cuda true \
     -cudnn true \
     -4d_tensor true \
