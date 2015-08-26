@@ -25,6 +25,7 @@ cmd:option('-path2load_data',  '../data/recipe_101/recipe_101_clean',           
 cmd:option('-path2load_csv',   'false',    '/home/cadene/data/recipe_101/success.log')
 cmd:option('-load_mean_std',   'false',     'lead_mean_std')
 cmd:option('-process_mean_std',   'false',     'lead_mean_std')
+cmd:option('-prepare_data',    'true',       'prepare data')
 -- settings net building
 cmd:option('-cuda',            'false',     '')
 cmd:option('-cudnn',           'false',     '')

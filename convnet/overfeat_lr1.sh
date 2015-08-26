@@ -1,4 +1,9 @@
-CUDA_VISIBLE_DEVICES=0 th main.lua \
+#!/bin/bash
+gpu=3
+gpuid=$(($gpu+1))
+path2save = './rslt/overfat_lr$gpuid'
+mkdir $path2save
+CUDA_VISIBLE_DEVICES=$gpu th main.lua \
     -type_data recipe101 \
     -path2load_data /home/cadene/data/recipe_101/recipe_101/ \
     -path2load_csv /home/cadene/data/recipe_101/success.log \
@@ -14,10 +19,7 @@ CUDA_VISIBLE_DEVICES=0 th main.lua \
     -learning_rate_decay 0 \
     -batch_size 60 \
     -save_every 1 \
-    -path2save ./rslt/overfat_lr1 \
+    -path2save $path2save \
     -train_model true \
     -test_model false \
-    -save_model true 
-
-
-    -path2load_data /Users/remicadene/data/recipe_101_tiny/ \
+    -save_model true

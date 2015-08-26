@@ -57,7 +57,8 @@ function DatabaseFactory.generate_recipe101(opt)
     local global, train, test = loader:make_train_test(opt.pc_train)
     local trainset = ImgDataset(global['path2dir'],
         train['path2img'], train['label'],
-        global['class_label'], global['label_class'])
+        global['class_label'], global['label_class'],
+        opt.prepare_data)
     
     local mean_train, std_train
     if opt.load_mean_std then
@@ -71,12 +72,13 @@ function DatabaseFactory.generate_recipe101(opt)
         mean_train = torch.Tensor(3,221,221):fill(0)
         std_train = torch.Tensor(3,221,221):fill(1)
     end
-    
+
     local testset = ImgDataset(global['path2dir'],
         test['path2img'], test['label'],
         global['class_label'], global['label_class'],
         nil, nil,
-        mean_train, std_train)
+        mean_train, std_train,
+        opt.prepare_data)
     
     return  Database(trainset, testset, classname)
 end
