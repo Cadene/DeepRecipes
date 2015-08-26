@@ -70,7 +70,8 @@ function DatabaseFactory.generate_recipe101(opt)
     else
         mean_train = torch.Tensor(3,221,221):fill(0)
         std_train = torch.Tensor(3,221,221):fill(1)
-
+    end
+    
     local testset = ImgDataset(global['path2dir'],
         test['path2img'], test['label'],
         global['class_label'], global['label_class'],
