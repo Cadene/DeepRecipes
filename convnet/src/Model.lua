@@ -107,15 +107,20 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 local t10 = torch.Timer()
                 local outputs = self.m:forward(inputs)
                 print('t10 '.. t10:time().real .. ' seconds')
+                
+                local t11 = torch.Timer()
                 local f = criterion:forward(outputs, targets)
                 local df_do = criterion:backward(outputs, targets)  
                 gradInput = self.m:backward(inputs, df_do)
+                print('t11 '.. t11:time().real .. ' seconds')
 
                 local _, argmax_outputs = outputs:max(2)
                 argmax_outputs:resize(targets:size())
 
+                local t12 = torch.Timer()
                 table.insert(conf_outputs, argmax_outputs)
                 table.insert(conf_outputs, targets)
+                print('t12 '.. t12:time().real .. ' seconds')
 
                 -- confusion:batchAdd(outputs, targets)
 
