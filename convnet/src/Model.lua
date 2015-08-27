@@ -69,6 +69,9 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
 
         print('inputs size', inputs:size())
 
+        local conf_outputs = torch.CudaTensor(trainset:size())
+        local conf_targets = torch.CudaTensor(trainset:size())
+
         local feval
         if opt['4d_tensor'] then
             feval = function(x)
@@ -94,20 +97,16 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 gradInput = self.m:backward(inputs, df_do)
                 print('t6 '.. t6:time().real .. ' seconds')
                 local t7 = torch.Timer()
-                print(torch.type(outputs))
-                print(torch.type(targets))
 
-                -- local _, argmax_outputs = outputs:max(2)
-                -- argmax_outputs:resize(targets:size())
+                local _, argmax_outputs = outputs:max(2)
+                argmax_outputs:resize(targets:size())
 
-                -- local t50 = torch.Timer()                
-                -- argmax_outputs = argmax_outputs:float()
-                -- print('t50 '.. t50:time().real .. ' seconds')
-                -- local t51 = torch.Timer()  
-                -- targets = targets:float()
-                -- print('t51 '.. t51:time().real .. ' seconds')
+                for i in argmax_outputs:size(1) do
+                    conf_outputs[t+i-1] = argmax_outputs[i]
+                    conf_targets[t+i-1] = targets[i]
+                end
 
-                confusion:batchAdd(outputs, targets)
+                -- confusion:batchAdd(outputs, targets)
                 print('t7 '.. t7:time().real .. ' seconds')
 
                 -- gradParameters:div(#inputs) ???
@@ -156,14 +155,22 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
     s = timer:time().real
     print(": Real time to learn full batch = "..string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60))
 
+    confusion:zero()
+    for i = 1, trainset:size() do
+        local output = torch.Tensor(database:nb_class()):fill(0)
+        local target = torch.Tensor(database:nb_class()):fill(0)
+        output[conf_outputs[i]] = 1
+        target[conf_targets[i]] = 1
+        confusion:add(ouput, target)
+    end
+
     confusion:updateValids()
     print("# Confusion Matrix")
     print(": average row correct: "..(confusion.averageValid*100).."%")
     print(": average rowUcol correct (VOC measure): "..(confusion.averageUnionValid*100).."%")
     print(": > global correct: "..(confusion.totalValid*100).."%")
     logger:maj(confusion.totalValid * 100, opt, epoch)
-    confusion:zero()
-
+    
     parameters = nil
     gradParameters = nil
     -- if not opt.cuda and opt.data_type ~= 'Recipe101' and epoch % opt.plot_every == 0 then
