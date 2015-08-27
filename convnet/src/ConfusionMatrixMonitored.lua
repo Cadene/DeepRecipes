@@ -2,7 +2,7 @@
 
 Example:
 
-    conf = optim.ConfusionMatrix( {'cat','dog','person'} )   -- new matrix
+    conf = optim.ConfusionMatrixMonitored( {'cat','dog','person'} )   -- new matrix
     conf:zero()                                              -- reset matrix
     for i = 1,N do
         conf:add( neuralnet:forward(sample), label )         -- accumulate errors
@@ -10,9 +10,9 @@ Example:
     print(conf)                                              -- print matrix
     image.display(conf:render())                             -- render matrix
 ]]
-local ConfusionMatrix = torch.class('optim.ConfusionMatrix')
+local ConfusionMatrixMonitored = torch.class('ConfusionMatrixMonitored')
 
-function ConfusionMatrix:__init(nclasses, classes)
+function ConfusionMatrixMonitored:__init(nclasses, classes)
    if type(nclasses) == 'table' then
       classes = nclasses
       nclasses = #classes
@@ -33,7 +33,7 @@ function ConfusionMatrix:__init(nclasses, classes)
 end
 
 -- takes scalar prediction and target as input
-function ConfusionMatrix:_add(p, t)
+function ConfusionMatrixMonitored:_add(p, t)
    -- non-positive values are considered missing
    -- and therefore ignored
    if t > 0 then 
@@ -41,7 +41,7 @@ function ConfusionMatrix:_add(p, t)
    end
 end
 
-function ConfusionMatrix:add(prediction, target)
+function ConfusionMatrixMonitored:add(prediction, target)
    if type(prediction) == 'number' then
       -- comparing numbers
       self:_add(prediction, target)
@@ -61,7 +61,7 @@ function ConfusionMatrix:add(prediction, target)
    end
 end
 
-function ConfusionMatrix:batchAdd(predictions, targets)
+function ConfusionMatrixMonitored:batchAdd(predictions, targets)
    local t20 = torch.Timer()
    local preds, targs, __
    self._prediction:resize(predictions:size()):copy(predictions)
@@ -109,7 +109,7 @@ function ConfusionMatrix:batchAdd(predictions, targets)
    print('t22 '.. t22:time().real .. ' seconds')
 end
 
-function ConfusionMatrix:zero()
+function ConfusionMatrixMonitored:zero()
    self.mat:zero()
    self.valids:zero()
    self.unionvalids:zero()
@@ -121,7 +121,7 @@ local function isNaN(number)
   return number ~= number
 end
 
-function ConfusionMatrix:updateValids()
+function ConfusionMatrixMonitored:updateValids()
    local total = 0
    for t = 1,self.nclasses do
       self.valids[t] = self.mat[t][t] / self.mat:select(1,t):sum()
@@ -149,7 +149,7 @@ end
 
 -- Calculating FAR/FRR associated with the confusion matrix
 
-function ConfusionMatrix:farFrr()
+function ConfusionMatrixMonitored:farFrr()
    local cmat = self.mat
    local noOfClasses = cmat:size()[1]
    self._frrs = self._frrs or torch.zeros(noOfClasses)
@@ -190,9 +190,9 @@ function ConfusionMatrix:farFrr()
    return self._classFrrs, self._classFars, returnFrrs, returnFars
 end
 
-function ConfusionMatrix:__tostring__()
+function ConfusionMatrixMonitored:__tostring__()
    self:updateValids()
-   local str = {'ConfusionMatrix:\n'}
+   local str = {'ConfusionMatrixMonitored:\n'}
    local nclasses = self.nclasses
    table.insert(str, '[')
    for t = 1,nclasses do
@@ -226,7 +226,7 @@ function ConfusionMatrix:__tostring__()
    return table.concat(str)
 end
 
-function ConfusionMatrix:render(sortmode, display, block, legendwidth)
+function ConfusionMatrixMonitored:render(sortmode, display, block, legendwidth)
    -- args
    local confusion = self.mat
    local classes = self.classes
