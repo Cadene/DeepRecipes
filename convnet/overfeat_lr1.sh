@@ -13,7 +13,7 @@ echo "CUDA_VISIBLE_DEVICES=$gpu th main.lua \
     -4d_tensor true \
     -type_model overfeat \
     -pretrain_model false \
-    -type_optimizer SGD_overfeat \
+    -type_optimizer SGD \
     -learning_rate 1e-3 \
     -learning_rate_decay 0 \
     -batch_size 60 \
