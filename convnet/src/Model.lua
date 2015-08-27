@@ -67,6 +67,8 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
         collectgarbage()
         local inputs, targets = trainset:get_batch(t, opt)
 
+        print('inputs size', inputs:size())
+
         local feval
         if opt['4d_tensor'] then
             feval = function(x)
@@ -94,6 +96,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 local t7 = torch.Timer()
                 print(torch.type(outputs))
                 print(torch.type(targets))
+                
                 confusion:batchAdd(outputs, targets)
                 print('t7 '.. t7:time().real .. ' seconds')
 

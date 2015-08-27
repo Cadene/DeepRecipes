@@ -8,9 +8,9 @@ echo "CUDA_VISIBLE_DEVICES=$gpu th main.lua \
     -process_mean_std false \
     -prepare_data false \
     -gpuid 1 \
-    -cuda false \
-    -cudnn false \
-    -4d_tensor false \
+    -cuda true \
+    -cudnn true \
+    -4d_tensor true \
     -type_model overfeat \
     -pretrain_model false \
     -type_optimizer SGD_overfeat \

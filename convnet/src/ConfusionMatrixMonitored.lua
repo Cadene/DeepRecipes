@@ -71,7 +71,15 @@ function ConfusionMatrixMonitored:batchAdd(predictions, targets)
    print(targets:size())
    print('')
 
-   self._prediction:resize(predictions:size()):copy(predictions)
+   local t40 = torch.Timer()
+   self._prediction:resize(predictions:size())
+   print('> > t40 '.. t40:time().real .. ' seconds')
+
+   local t41 = torch.Timer()
+   self._prediction:copy(predictions)
+   print('> > t41 '.. t41:time().real .. ' seconds')
+
+   
    print('>t30 '.. t30:time().real .. ' seconds')
    if predictions:dim() == 1 then
       print('predictions is a vector of classes')
