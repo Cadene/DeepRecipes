@@ -112,8 +112,10 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
 
                 local t72 = torch.Timer()
                 for i = 1, argmax_outputs:size(1) do
+                    local t700 = torch.Timer()
                     conf_outputs[t+i-1] = argmax_outputs[i]
                     conf_targets[t+i-1] = targets[i]
+                    print('>     t700 '.. t700:time().real .. ' seconds')
                 end
                 print('t72 '.. t72:time().real .. ' seconds')
 
