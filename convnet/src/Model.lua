@@ -68,16 +68,31 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
         local feval
         if opt['4d_tensor'] then
             feval = function(x)
+                sys.tic()
                 if x ~= parameters then -- optim
                     parameters:copy(x)
                 end
+                print('-----')
+                print('feval')
+                print(sys.toc())
+                sys.tic()
                 self.m:zeroGradParameters()
+                print(sys.toc())
+                sys.tic()
                 local outputs = self.m:forward(inputs)
+                print(sys.toc())
+                sys.tic()
                 local f = criterion:forward(outputs, targets)
+                print(sys.toc())
+                sys.tic()
                 local df_do = criterion:backward(outputs, targets)
+                print(sys.toc())
+                sys.tic()
                 gradInput = self.m:backward(inputs, df_do)
-
+                print(sys.toc())
+                sys.tic()
                 confusion:batchAdd(outputs, targets)
+                print(sys.toc())
 
                 -- gradParameters:div(#inputs) ???
                 -- f = f / inputs:size(1) ???

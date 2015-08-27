@@ -4,7 +4,8 @@ posix = require 'posix'
 local Tools = torch.class('Tools')
 
 function Tools.display_pid()
-    print("# ... lunching using pid = "..posix.getpid("pid"))
+    local pid = posix.getpid("pid")
+    print("# ... lunching using pid = "..pid)
 end
 
 function Tools.manage_gpu_lib(opt)
