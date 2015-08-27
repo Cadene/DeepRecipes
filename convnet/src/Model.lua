@@ -107,7 +107,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 -- targets = targets:float()
                 -- print('t51 '.. t51:time().real .. ' seconds')
 
-                confusion:batchAdd(argmax_outputs, targets)
+                confusion:batchAdd(outputs, targets)
                 print('t7 '.. t7:time().real .. ' seconds')
 
                 -- gradParameters:div(#inputs) ???
