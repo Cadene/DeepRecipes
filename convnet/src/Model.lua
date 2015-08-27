@@ -106,8 +106,8 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 argmax_outputs:resize(targets:size())
                 print('t71 '.. t71:time().real .. ' seconds')
 
-                print(torch.type(argmax_ouputs))
-                print(torch.type(conf_ouputs))
+                print(torch.type(argmax_outputs))
+                print(torch.type(conf_outputs))
                 print(torch.type(conf_targets))
 
                 local t72 = torch.Timer()
