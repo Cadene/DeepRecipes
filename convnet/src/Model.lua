@@ -65,8 +65,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
             pc_max[1] = pc_max[1] + 5
         end
         print('t01 '.. t01:time().real .. ' seconds')
-
-        collectgarbage()
+        
         local t0 = torch.Timer()
         local inputs, targets = trainset:get_batch(t, opt)
         print('t0 '.. t0:time().real .. ' seconds')
