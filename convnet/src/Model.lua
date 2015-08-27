@@ -65,7 +65,9 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
         end
 
         collectgarbage()
+        local t0 = torch.Timer()
         local inputs, targets = trainset:get_batch(t, opt)
+        print('t0 '.. t0:time().real .. ' seconds')
 
         print('inputs size', inputs:size())
 
@@ -80,43 +82,18 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                     parameters:copy(x)
                 end
                 print('feval')
-                print('t1 '.. t1:time().real .. ' seconds')
-                local t2 = torch.Timer()
                 self.m:zeroGradParameters()
-                print('t2 '.. t2:time().real .. ' seconds')
-                local t3 = torch.Timer()
                 local outputs = self.m:forward(inputs)
-                print('t3 '.. t3:time().real .. ' seconds')
-                local t4 = torch.Timer()
-                local f = criterion:forward(outputs, targets)
-                print('t4 '.. t4:time().real .. ' seconds')
-                local t5 = torch.Timer()
-                local df_do = criterion:backward(outputs, targets)
-                print('t5 '.. t5:time().real .. ' seconds')
-                local t6 = torch.Timer()
+                local f = criterion:forward(outputs, targets)  
                 gradInput = self.m:backward(inputs, df_do)
-                print('t6 '.. t6:time().real .. ' seconds')
 
-                local t7 = torch.Timer()
-
-                local t70 = torch.Timer()
                 local _, argmax_outputs = outputs:max(2)
-                print('t70 '.. t70:time().real .. ' seconds')
-                local t71 = torch.Timer()
                 argmax_outputs:resize(targets:size())
-                print('t71 '.. t71:time().real .. ' seconds')
 
-                print(torch.type(argmax_outputs))
-                print(torch.type(conf_outputs))
-                print(torch.type(conf_targets))
-
-                local t72 = torch.Timer()
                 table.insert(conf_outputs, argmax_outputs)
                 table.insert(conf_outputs, targets)
-                print('t72 '.. t72:time().real .. ' seconds')
 
                 -- confusion:batchAdd(outputs, targets)
-                print('t7 '.. t7:time().real .. ' seconds')
 
                 -- gradParameters:div(#inputs) ???
                 -- f = f / inputs:size(1) ???
@@ -165,14 +142,9 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
     print(": Real time to learn full batch = "..string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60))
 
     confusion:zero()
-    for i = 1, trainset:size() do
-        local output = torch.Tensor(database:nb_class()):fill(0)
-        local target = torch.Tensor(database:nb_class()):fill(0)
-        output[conf_outputs[i]] = 1
-        target[conf_targets[i]] = 1
-        confusion:add(ouput, target)
+    for i = 1, nb_batch_max do
+        confusion:batchAdd(conf_outputs[i], conf_targets[i])
     end
-
     confusion:updateValids()
     print("# Confusion Matrix")
     print(": average row correct: "..(confusion.averageValid*100).."%")
