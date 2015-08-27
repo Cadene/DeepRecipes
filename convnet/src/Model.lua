@@ -69,8 +69,8 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
 
         print('inputs size', inputs:size())
 
-        local conf_outputs = torch.CudaTensor(trainset:size())
-        local conf_targets = torch.CudaTensor(trainset:size())
+        local conf_outputs = {}
+        local conf_targets = {}
 
         local feval
         if opt['4d_tensor'] then
@@ -111,12 +111,8 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 print(torch.type(conf_targets))
 
                 local t72 = torch.Timer()
-                for i = 1, argmax_outputs:size(1) do
-                    local t700 = torch.Timer()
-                    conf_outputs[t+i-1] = argmax_outputs[i]
-                    conf_targets[t+i-1] = targets[i]
-                    print('>     t700 '.. t700:time().real .. ' seconds')
-                end
+                table.insert(conf_outputs, argmax_outputs)
+                table.insert(conf_outputs, targets)
                 print('t72 '.. t72:time().real .. ' seconds')
 
                 -- confusion:batchAdd(outputs, targets)
