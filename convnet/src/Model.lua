@@ -96,8 +96,11 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 local t7 = torch.Timer()
                 print(torch.type(outputs))
                 print(torch.type(targets))
-                
-                confusion:batchAdd(outputs, targets)
+
+                local _, argmax_outputs = outputs:max(2)
+                argmax_outputs:resize(targets:size())
+
+                confusion:batchAdd(argmax_outputs, targets)
                 print('t7 '.. t7:time().real .. ' seconds')
 
                 -- gradParameters:div(#inputs) ???
