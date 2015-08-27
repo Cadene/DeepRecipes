@@ -80,8 +80,8 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
             for i = 1, 10 do
                 local inputs, targets = trainset:get_batch(t, opt)
                 local index = t + (i-1) * opt.batch_size
-                inputs_table[index]  = inputs:cuda()
-                targets_table[index] = targets:cuda()
+                inputs_table[index]  = inputs
+                targets_table[index] = targets
                 print('index', index)
             end
             inputs = inputs_table[t]
@@ -104,7 +104,9 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 end
                 print('feval')
                 self.m:zeroGradParameters()
+                local t10 = torch.Timer()
                 local outputs = self.m:forward(inputs)
+                print('t10 '.. t10:time().real .. ' seconds')
                 local f = criterion:forward(outputs, targets)
                 local df_do = criterion:backward(outputs, targets)  
                 gradInput = self.m:backward(inputs, df_do)
