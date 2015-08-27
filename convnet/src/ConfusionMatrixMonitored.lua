@@ -64,7 +64,9 @@ end
 function ConfusionMatrixMonitored:batchAdd(predictions, targets)
    local t20 = torch.Timer()
    local preds, targs, __
+   local t30 = torch.Timer()
    self._prediction:resize(predictions:size()):copy(predictions)
+   print('>t30 '.. t30:time().real .. ' seconds')
    if predictions:dim() == 1 then
       print('predictions is a vector of classes')
       preds = self._prediction
@@ -74,8 +76,12 @@ function ConfusionMatrixMonitored:batchAdd(predictions, targets)
          print('or prediction just needs flattening')
          preds = self._prediction:select(2,1)
       else
+         local t31 = torch.Timer()
          self._max:max(self._pred_idx, self._prediction, 2)
+         print('>t31 '.. t31:time().real .. ' seconds')
+         local t32 = torch.Timer()
          preds = self._pred_idx:select(2,1)
+         print('>t32 '.. t32:time().real .. ' seconds')
       end
    else
       error("predictions has invalid number of dimensions")
