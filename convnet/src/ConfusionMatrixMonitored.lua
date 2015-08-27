@@ -25,8 +25,8 @@ function ConfusionMatrixMonitored:__init(nclasses, classes)
    self.averageValid = 0
    self.classes = classes or {}
    -- buffers
-   self._target = torch.FloatTensor()
-   self._prediction = torch.FloatTensor()
+   self._target = torch.CudaTensor()
+   self._prediction = torch.CudaTensor()
    self._max = torch.FloatTensor()
    self._pred_idx = torch.LongTensor()
    self._targ_idx = torch.LongTensor()
