@@ -100,6 +100,9 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 local _, argmax_outputs = outputs:max(2)
                 argmax_outputs:resize(targets:size())
 
+                argmax_ouputs = argmax_ouputs:float()
+                targets = targets:float()
+
                 confusion:batchAdd(argmax_outputs, targets)
                 print('t7 '.. t7:time().real .. ' seconds')
 
