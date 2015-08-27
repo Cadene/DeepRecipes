@@ -100,8 +100,12 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 local _, argmax_outputs = outputs:max(2)
                 argmax_outputs:resize(targets:size())
 
+                local t50 = torch.Timer()                
                 argmax_outputs = argmax_outputs:float()
+                print('t50 '.. t50:time().real .. ' seconds')
+                local t51 = torch.Timer()  
                 targets = targets:float()
+                print('t51 '.. t51:time().real .. ' seconds')
 
                 confusion:batchAdd(argmax_outputs, targets)
                 print('t7 '.. t7:time().real .. ' seconds')
