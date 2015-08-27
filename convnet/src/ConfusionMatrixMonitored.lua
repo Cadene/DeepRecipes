@@ -65,6 +65,12 @@ function ConfusionMatrixMonitored:batchAdd(predictions, targets)
    local t20 = torch.Timer()
    local preds, targs, __
    local t30 = torch.Timer()
+
+   print('')
+   print(predictions:size())
+   print(targets:size())
+   print('')
+
    self._prediction:resize(predictions:size()):copy(predictions)
    print('>t30 '.. t30:time().real .. ' seconds')
    if predictions:dim() == 1 then

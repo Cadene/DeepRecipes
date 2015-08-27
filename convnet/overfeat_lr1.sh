@@ -1,5 +1,5 @@
 gpu=0
-name="overfat$gpu"
+name="overfat_test$gpu"
 path2save="./rslt/$name"
 mkdir $path2save
 echo "CUDA_VISIBLE_DEVICES=$gpu th main.lua \
@@ -8,13 +8,13 @@ echo "CUDA_VISIBLE_DEVICES=$gpu th main.lua \
     -process_mean_std false \
     -prepare_data false \
     -gpuid 1 \
-    -cuda true \
-    -cudnn true \
-    -4d_tensor true \
+    -cuda false \
+    -cudnn false \
+    -4d_tensor false \
     -type_model overfeat \
     -pretrain_model false \
     -type_optimizer SGD_overfeat \
-    -learning_rate 5e-1 \
+    -learning_rate 1e-3 \
     -learning_rate_decay 0 \
     -batch_size 60 \
     -save_every 1 \
@@ -24,5 +24,16 @@ echo "CUDA_VISIBLE_DEVICES=$gpu th main.lua \
     -save_model true \
     -load_model false \
     -path2load $path2save" > $name.sh
+chmod 777 $name.sh
 nohup ./$name.sh > $path2save/run.log &
+cat $path2save/run.log
+
+gate
+ssh kepler
+convnet
+
+
+gpu=0
+name="overfat$gpu"
+path2save="./rslt/$name"
 cat $path2save/run.log
