@@ -52,6 +52,9 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
     local parameters = self.parameters --beware of the cuda runtime error - out of memory
     local gradParameters = self.gradParameters
 
+    local inputs_table  = {}
+    local targets_table = {}
+
     for t = 1, trainset:size(), opt.batch_size do
 
         local t01 = torch.Timer()
@@ -65,9 +68,25 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
             pc_max[1] = pc_max[1] + 5
         end
         print('t01 '.. t01:time().real .. ' seconds')
-        
+
         local t0 = torch.Timer()
-        local inputs, targets = trainset:get_batch(t, opt)
+
+        local inputs, targets
+        if inputs_table[t] then
+            inputs = inputs_table[t]
+            targets = targets_table[t]
+        else
+            for i = 1, 10 do
+                local inputs, targets = trainset:get_batch(t, opt)
+                local index = t + (i-1) * opt.batch_size
+                inputs_table[index]  = inputs
+                targets_table[index] = targets
+                print(index)
+            end
+            inputs = inputs_table[t]
+            targets = targets_table[t]
+        end
+
         print('t0 '.. t0:time().real .. ' seconds')
 
         local conf_outputs = {}
