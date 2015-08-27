@@ -11,10 +11,9 @@ function Model:__init(m)
 end
 
 function Model:__tostring__()
-    local parameters, gradParameters = self.m:getParameters()
     return '\nModel :\n'
         ..self.m:__tostring__()..'\n'
-        ..parameters:size(1)..' parameters'
+        ..self.parameters:size(1)..' parameters'
 end
 
 function Model:add(layer)
