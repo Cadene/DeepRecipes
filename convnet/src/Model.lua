@@ -1,6 +1,8 @@
 require 'torch'
 require 'optim'
 
+require 'src/ConfusionMatrix'
+
 local Model = torch.class('Model')
 
 function Model:__init(m)
@@ -37,7 +39,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
     epoch = epoch or 0
     local timer = torch.Timer()
     local trainset = database:get_trainset()
-    local confusion = optim.ConfusionMatrix(database:nb_class())
+    local confusion = ConfusionMatrix(database:nb_class())
     local nb_batch = 1
     local nb_batch_max = math.ceil(trainset:size() / opt.batch_size)
     local pc_max = {0, 0}
