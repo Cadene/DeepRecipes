@@ -57,7 +57,6 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
 
     for t = 1, trainset:size(), opt.batch_size do
 
-        local t01 = torch.Timer()
         local batch_to = t+opt.batch_size-1
         if batch_to > trainset:size() then
             batch_to = trainset:size()
@@ -67,10 +66,10 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
             print(".:. Batch "..t.." to "..batch_to.." on "..trainset:size().." images")
             pc_max[1] = pc_max[1] + 5
         end
-        print('t01 '.. t01:time().real .. ' seconds')
 
         local t0 = torch.Timer()
 
+        print('###############')
         print('t', t)
 
         local inputs, targets
@@ -88,6 +87,8 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
             inputs = inputs_table[t]
             targets = targets_table[t]
         end
+        print(torch.type(inputs))
+        print(torch.type(targets))
 
         print('t0 '.. t0:time().real .. ' seconds')
 
