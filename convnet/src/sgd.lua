@@ -36,13 +36,14 @@ return function (opfunc, x, config, state)
    assert(not nesterov or (mom > 0 and damp == 0), "Nesterov momentum requires a momentum and zero dampening")
 
    -- (1) evaluate f(x) and df/dx
-   sys.tic()
+   print('-----')
+   local t8 = torch.Timer()
    local fx,dfdx = opfunc(x)
    print('sgd')
-   print(sys.toc())
+   print('t8 '.. t8:time().real .. ' seconds')
 
    -- (2) weight decay with single or individual parameters
-   sys.tic()
+   local t9 = torch.Timer()
    if wd ~= 0 then
       dfdx:add(wd, x)
    elseif wds then
@@ -52,10 +53,10 @@ return function (opfunc, x, config, state)
       state.decayParameters:copy(wds):cmul(x)
       dfdx:add(state.decayParameters)
    end
-   print(sys.toc())
+   print('t9 '.. t9:time().real .. ' seconds')
 
    -- (3) apply momentum
-   sys.tic()
+   local t10 = torch.Timer()
    if mom ~= 0 then
       if not state.dfdx then
          state.dfdx = torch.Tensor():typeAs(dfdx):resizeAs(dfdx):copy(dfdx)
@@ -68,13 +69,13 @@ return function (opfunc, x, config, state)
          dfdx = state.dfdx
       end
    end
-   print(sys.toc())
+   print('t10 '.. t10:time().real .. ' seconds')
 
    -- (4) learning rate decay (annealing)
    local clr = lr / (1 + nevals*lrd)
    
    -- (5) parameter update with single or individual learning rates
-   sys.tic()
+   local t11 = torch.Timer()
    if lrs then
       if not state.deltaParameters then
          state.deltaParameters = torch.Tensor():typeAs(x):resizeAs(dfdx)
@@ -87,7 +88,7 @@ return function (opfunc, x, config, state)
    else
       x:add(-clr, dfdx)
    end
-   print(sys.toc())
+   print('t11 '.. t11:time().real .. ' seconds')
 
    -- (6) update evaluation counter
    state.evalCounter = state.evalCounter + 1
