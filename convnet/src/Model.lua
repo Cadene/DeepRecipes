@@ -107,11 +107,17 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 local t10 = torch.Timer()
                 local outputs = self.m:forward(inputs)
                 print('t10 '.. t10:time().real .. ' seconds')
-                
+
                 local t11 = torch.Timer()
+                local t110 = torch.Timer()
                 local f = criterion:forward(outputs, targets)
+                print('t110 '.. t110:time().real .. ' seconds')
+                local t111 = torch.Timer()
                 local df_do = criterion:backward(outputs, targets)  
+                print('t111 '.. t111:time().real .. ' seconds')
+                local t112 = torch.Timer()
                 gradInput = self.m:backward(inputs, df_do)
+                print('t112 '.. t112:time().real .. ' seconds')
                 print('t11 '.. t11:time().real .. ' seconds')
 
                 local _, argmax_outputs = outputs:max(2)
