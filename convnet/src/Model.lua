@@ -71,6 +71,8 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
 
         local t0 = torch.Timer()
 
+        print('t', t)
+
         local inputs, targets
         if inputs_table[t] then
             inputs = inputs_table[t]
@@ -79,9 +81,9 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
             for i = 1, 10 do
                 local inputs, targets = trainset:get_batch(t, opt)
                 local index = t + (i-1) * opt.batch_size
-                inputs_table[index]  = inputs
-                targets_table[index] = targets
-                print(index)
+                inputs_table[index]  = inputs:cuda()
+                targets_table[index] = targets:cuda()
+                print('index', index)
             end
             inputs = inputs_table[t]
             targets = targets_table[t]
