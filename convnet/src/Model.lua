@@ -96,15 +96,26 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 local t6 = torch.Timer()
                 gradInput = self.m:backward(inputs, df_do)
                 print('t6 '.. t6:time().real .. ' seconds')
+
                 local t7 = torch.Timer()
 
+                local t70 = torch.Timer()
                 local _, argmax_outputs = outputs:max(2)
+                print('t70 '.. t70:time().real .. ' seconds')
+                local t71 = torch.Timer()
                 argmax_outputs:resize(targets:size())
+                print('t71 '.. t71:time().real .. ' seconds')
 
+                print(torch.type(argmax_ouputs))
+                print(torch.type(conf_ouputs))
+                print(torch.type(conf_targets))
+
+                local t72 = torch.Timer()
                 for i = 1, argmax_outputs:size(1) do
                     conf_outputs[t+i-1] = argmax_outputs[i]
                     conf_targets[t+i-1] = targets[i]
                 end
+                print('t72 '.. t72:time().real .. ' seconds')
 
                 -- confusion:batchAdd(outputs, targets)
                 print('t7 '.. t7:time().real .. ' seconds')
