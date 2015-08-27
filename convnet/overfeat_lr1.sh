@@ -9,14 +9,14 @@ echo "CUDA_VISIBLE_DEVICES=$gpu th main.lua \
     -prepare_data false \
     -gpuid 1 \
     -cuda true \
-    -cudnn false \
+    -cudnn true \
     -4d_tensor true \
     -type_model overfeat \
     -pretrain_model false \
     -type_optimizer SGD \
     -learning_rate 1e-3 \
     -learning_rate_decay 0 \
-    -batch_size 10 \
+    -batch_size 60 \
     -save_every 1 \
     -path2save $path2save \
     -train_model true \
