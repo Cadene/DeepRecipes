@@ -101,7 +101,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 local _, argmax_outputs = outputs:max(2)
                 argmax_outputs:resize(targets:size())
 
-                for i in argmax_outputs:size(1) do
+                for i = 1, argmax_outputs:size(1) do
                     conf_outputs[t+i-1] = argmax_outputs[i]
                     conf_targets[t+i-1] = targets[i]
                 end
