@@ -90,6 +90,8 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 gradInput = self.m:backward(inputs, df_do)
                 print('t6 '.. t6:time().real .. ' seconds')
                 local t7 = torch.Timer()
+                print(torch.type(outputs))
+                print(torch.type(targets))
                 confusion:batchAdd(outputs, targets)
                 print('t7 '.. t7:time().real .. ' seconds')
 
