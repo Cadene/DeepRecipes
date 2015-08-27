@@ -25,8 +25,8 @@ function ConfusionMatrixMonitored:__init(nclasses, classes)
    self.averageValid = 0
    self.classes = classes or {}
    -- buffers
-   self._target = torch.CudaTensor()
-   self._prediction = torch.CudaTensor()
+   self._target = torch.FloatTensor()
+   self._prediction = torch.FloatTensor()
    self._max = torch.FloatTensor()
    self._pred_idx = torch.LongTensor()
    self._targ_idx = torch.LongTensor()
@@ -71,25 +71,6 @@ function ConfusionMatrixMonitored:batchAdd(predictions, targets)
    print(targets:size())
    print('')
 
-   local t21 = torch.Timer()   
-   self._target:resize(targets:size()):copy(targets)
-   if targets:dim() == 1 then
-      print('targets is a vector of classes')
-      targs = self._target
-   elseif targets:dim() == 2 then
-      print('targets is a matrix of one-hot rows')
-      if targets:size(2) == 1 then
-         print('or targets just needs flattening')
-         targs = self._target:select(2,1)
-      else
-         self._max:max(self._targ_idx, self._target, 2)
-         targs = self._targ_idx:select(2,1)
-      end
-   else
-      error("targets has invalid number of dimensions")
-   end
-   print('t21 '.. t21:time().real .. ' seconds')
-
    local t40 = torch.Timer()
    self._prediction:resize(predictions:size())
    print('> > t40 '.. t40:time().real .. ' seconds')
@@ -97,6 +78,7 @@ function ConfusionMatrixMonitored:batchAdd(predictions, targets)
    local t41 = torch.Timer()
    self._prediction:copy(predictions)
    print('> > t41 '.. t41:time().real .. ' seconds')
+
    
    print('>t30 '.. t30:time().real .. ' seconds')
    if predictions:dim() == 1 then
@@ -119,6 +101,25 @@ function ConfusionMatrixMonitored:batchAdd(predictions, targets)
       error("predictions has invalid number of dimensions")
    end
    print('t20 '.. t20:time().real .. ' seconds')
+      
+   local t21 = torch.Timer()   
+   self._target:resize(targets:size()):copy(targets)
+   if targets:dim() == 1 then
+      print('targets is a vector of classes')
+      targs = self._target
+   elseif targets:dim() == 2 then
+      print('targets is a matrix of one-hot rows')
+      if targets:size(2) == 1 then
+         print('or targets just needs flattening')
+         targs = self._target:select(2,1)
+      else
+         self._max:max(self._targ_idx, self._target, 2)
+         targs = self._targ_idx:select(2,1)
+      end
+   else
+      error("targets has invalid number of dimensions")
+   end
+   print('t21 '.. t21:time().real .. ' seconds')
    
    local t22 = torch.Timer()
    --loop over each pair of indices
