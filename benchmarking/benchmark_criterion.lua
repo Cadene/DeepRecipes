@@ -36,7 +36,7 @@ end
 if opt.cuda then
     require 'cunn'
     require 'cutorch'
-    cutorch.setDevice(8)
+    cutorch.setDevice(1)
 end
 
 local SpatialConvolution
