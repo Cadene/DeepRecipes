@@ -106,36 +106,36 @@ print(model)
 
 criterion = nn.ClassNLLCriterion()
 
-local input
-if opt['4d_tensor'] then
-    input = torch.Tensor(opt.batch_size, opt.z, opt.x, opt.y)
-else
-    opt.batch_size = 1
-    input = torch.Tensor(opt.z, opt.x, opt.y)
+local get_input_target = function (opt)
+    local input
+    if opt['4d_tensor'] then
+        input = torch.Tensor(opt.batch_size, opt.z, opt.x, opt.y)
+    else
+        opt.batch_size = 1
+        input = torch.Tensor(opt.z, opt.x, opt.y)
+    end
+    local target = torch.Tensor(opt.batch_size):fill(1)
+    if opt.cuda then 
+        input = input:cuda()
+        target = target:cuda()
+    end
+    return input, target
 end
-
-local target = torch.Tensor(opt.batch_size):fill(1)
 
 if opt.cuda then
     model:cuda()
     criterion:cuda()
-    input = input:cuda()
-    target = target:cuda()
 end
 
-local a = torch.Timer()
-local time
-local tf_time = 0
-local tb_time = 0
+
 
 -- benchmark 
 
-local tmd
-local tnf, tcf, tcb, tnb, tf
 
-model:zeroGradParameters()
 
 local t_dry_run = torch.Timer()
+input, target = get_input_target(opt)
+model:zeroGradParameters()
 output = model:forward(input)
 err = criterion:forward(output, target)
 df_do = criterion:backward(output, target)
@@ -151,6 +151,7 @@ else
     iter = 1
 end
 for i = 1, iter do
+    input, target = get_input_target(opt)
     output = model:forward(input)
     err = criterion:forward(output, target)
     df_do = criterion:backward(output, target)
