@@ -101,9 +101,9 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
         if opt['4d_tensor'] then
             feval = function(x)
                 local t1 = torch.Timer()
-                if x ~= parameters then -- optim
-                    parameters:copy(x)
-                end
+                -- if x ~= parameters then -- optim
+                --     parameters:copy(x)
+                -- end
 
                 print('memory state before :')
                 print('CPU', collectgarbage("count"))
