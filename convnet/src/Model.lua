@@ -156,7 +156,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
         end
 
         local tgarbage = torch.Timer()
-        if nb_batch % 2 == 0 then
+        if nb_batch % 4 == 0 then
             collectgarbage()
         end
         print('tgarbage '.. tgarbage:time().real .. ' seconds')
