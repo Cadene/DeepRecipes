@@ -8,7 +8,6 @@ cmd:text()
 cmd:text('Benchmark Overfeat')
 cmd:text()
 cmd:text('Options:')
-cmd:option('-iter', 10, '')
 cmd:option('-x', 221, 'dim1')
 cmd:option('-y', 221, 'dim2')
 cmd:option('-z', 3, 'dim3')
@@ -146,16 +145,15 @@ print('dry_run '.. (t_dry_run:time().real) .. ' seconds')
 print()
 
 local t_feed = torch.Timer()
-for i = 0, opt.iter do
+if not opt['4d_tensor'] then
+    iter = opt.batch_size
+else
+    iter = 1
+end
+for i = 1, iter do
     output = model:forward(input)
-end
-for i = 0, opt.iter do
     err = criterion:forward(output, target)
-end
-for i = 0, opt.iter do
     df_do = criterion:backward(output, target)
-end
-for i = 0, opt.iter do
     gradInput = model:backward(input, df_do)
 end
 cutorch_sync()
