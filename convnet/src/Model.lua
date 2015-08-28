@@ -68,8 +68,6 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
             pc_max[1] = pc_max[1] + 5
         end
 
-        local t0 = torch.Timer()
-
         print('###############')
         print('t', t)
 
@@ -84,9 +82,19 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
         --     end
         -- end
 
+        local t00 = torch.Timer()
         local inputs, targets = trainset:get_batch(t, opt)
+        print('t00 '.. t00:time().real .. ' seconds')
 
-        print('t0 '.. t0:time().real .. ' seconds')
+        local t01 = torch.Timer()
+        inputs:cuda()
+        print('t01 '.. t01:time().real .. ' seconds')
+
+        local t02 = torch.Timer()
+        targets:cuda()
+        print('t02 '.. t02:time().real .. ' seconds')
+
+        print(torch.type(inputs), torch.type(targets))
 
         print('Memory usage')
         print('CPU', collectgarbage("count"))
