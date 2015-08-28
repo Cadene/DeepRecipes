@@ -157,6 +157,9 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
             end
         end
 
+        local tgarbage = torch.Timer()
+        collectgarbage()
+        print('tgarbage '.. tgarbage:time().real .. ' seconds')
         --sys.tic()
         optimizer:optimize(feval, parameters)
         --print("time to optimize", sys.toc())
