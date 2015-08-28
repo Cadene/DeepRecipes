@@ -1,4 +1,4 @@
-gpu=4
+gpu=0
 name="overfat_test$gpu"
 path2save="./rslt/$name"
 mkdir $path2save
@@ -24,7 +24,7 @@ echo "CUDA_VISIBLE_DEVICES=$gpu th main.lua \
     -save_model true \
     -load_model false \
     -path2load $path2save" > $name.sh
-chmod 777 $name.sh
+chmod 777 $name.sh ; ./$name.sh
 nohup ./$name.sh > $path2save/run.log &
 cat $path2save/run.log
 
@@ -37,3 +37,11 @@ gpu=0
 name="overfat$gpu"
 path2save="./rslt/$name"
 cat $path2save/run.log
+
+CUDA_VISIBLE_DEVICES=0 th benchmark_criterion.lua \
+    -cuda true \
+    -cudnn false \
+    -4d_tensor true \
+    -batch_size 60 \
+    -sync true \
+    -iter 1
