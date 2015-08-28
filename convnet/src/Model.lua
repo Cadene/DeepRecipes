@@ -56,6 +56,9 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
     collectgarbage('collect')
     collectgarbage('stop')
 
+    local conf_outputs = {}
+    local conf_targets = {}
+
     for t = 1, trainset:size(), opt.batch_size do
 
         local batch_to = t+opt.batch_size-1
@@ -68,15 +71,14 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
             pc_max[1] = pc_max[1] + 5
             print('Memory usage')
             print('CPU', collectgarbage("count"))
-            local freeMemory, totalMemory = cutorch.getMemoryUsage(opt.gpuid)
-            print('GPU', freeMemory .. ' / ' .. totalMemory)
+            if opt.cuda then
+                local freeMemory, totalMemory = cutorch.getMemoryUsage(opt.gpuid)
+                print('GPU', freeMemory .. ' / ' .. totalMemory)
+            end
         end
 
         local inputs, targets = trainset:get_batch(t, opt)
-
-        local conf_outputs = {}
-        local conf_targets = {}
-
+        
         local feval
         if opt['4d_tensor'] then
             feval = function(x)
@@ -98,7 +100,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 argmax_outputs:resize(targets:size())
 
                 table.insert(conf_outputs, argmax_outputs)
-                table.insert(conf_outputs, targets)
+                table.insert(conf_targets, targets)
 
                 -- local tbatchadd = torch.Timer()
                 -- confusion:batchAdd(argmax_outputs, targets)
