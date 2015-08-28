@@ -163,6 +163,7 @@ for j = 1, opt.iter do
         err = criterion:forward(output, target)
         df_do = criterion:backward(output, target)
         gradInput = model:backward(input, df_do)
+        cutorch_sync()
         print('t1 '.. (t1:time().real) .. ' seconds')
     end
 end
