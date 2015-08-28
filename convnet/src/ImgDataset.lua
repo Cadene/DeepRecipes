@@ -20,9 +20,9 @@ function ImgDataset:__init(path2dir, path2img, label, class_label, label_class, 
 end
 
 function ImgDataset:get(id)
-    if id % 50 == 0 then
-        collectgarbage()
-    end
+    -- if id % 50 == 0 then
+    --     collectgarbage()
+    -- end
     local img
     local index = self:get_index(id)
     status, err = pcall(function ()
