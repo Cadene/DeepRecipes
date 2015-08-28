@@ -52,6 +52,7 @@ function Dataset:get_batch_4D(index_batch, opt)
     local inputs  = torch.Tensor(batch_size, 3, 221, 221)
     local targets = torch.Tensor(batch_size)
     local i_batch = 1
+    local t000 = torch.Timer()
     for i = index_batch, math.min(index_batch+opt.batch_size-1, self:size()) do
         local input, target = self:get(i)
         -- print(input:size(), target:size())
@@ -59,9 +60,12 @@ function Dataset:get_batch_4D(index_batch, opt)
         targets[i_batch] = target
         i_batch = i_batch + 1
     end
+    print('t000 '.. t000:time().real .. ' seconds')
     if opt.cuda then
-        inputs  = inputs:cuda()
-        targets = targets:cuda()
+        local t001 = torch.Timer()
+        inputs:cuda()
+        targets:cuda()
+        print('t001 '.. t001:time().real .. ' seconds')
     end
     -- print(inputs:size(), targets:size())
     return inputs, targets

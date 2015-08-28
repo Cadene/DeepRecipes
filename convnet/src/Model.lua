@@ -86,14 +86,6 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
         local inputs, targets = trainset:get_batch(t, opt)
         print('t00 '.. t00:time().real .. ' seconds')
 
-        local t01 = torch.Timer()
-        inputs:cuda()
-        print('t01 '.. t01:time().real .. ' seconds')
-
-        local t02 = torch.Timer()
-        targets:cuda()
-        print('t02 '.. t02:time().real .. ' seconds')
-
         print(torch.type(inputs), torch.type(targets))
 
         print('Memory usage')
