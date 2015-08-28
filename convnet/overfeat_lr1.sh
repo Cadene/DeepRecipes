@@ -40,8 +40,7 @@ cat $path2save/run.log
 
 CUDA_VISIBLE_DEVICES=0 th benchmark_criterion.lua \
     -cuda true \
-    -cudnn false \
-    -4d_tensor true \
+    -cudnn true \
+    -4d_tensor false \
     -batch_size 60 \
-    -sync true \
-    -iter 1
+    -sync true 
