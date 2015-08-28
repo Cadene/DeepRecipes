@@ -107,14 +107,14 @@ print(model)
 criterion = nn.ClassNLLCriterion()
 
 local get_input_target = function (opt)
-    local input
+    local input, target
     if opt['4d_tensor'] then
         input = torch.Tensor(opt.batch_size, opt.z, opt.x, opt.y)
+        target = torch.Tensor(opt.batch_size):fill(1)
     else
-        opt.batch_size = 1
         input = torch.Tensor(opt.z, opt.x, opt.y)
+        target = torch.Tensor(1):fill(1)
     end
-    local target = torch.Tensor(opt.batch_size):fill(1)
     if opt.cuda then 
         input = input:cuda()
         target = target:cuda()
@@ -150,6 +150,7 @@ if not opt['4d_tensor'] then
 else
     iter = 1
 end
+print('iter', iter)
 for i = 1, iter do
     local t1 = torch.Timer()
     input, target = get_input_target(opt)
