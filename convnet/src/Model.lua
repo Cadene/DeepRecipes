@@ -106,7 +106,9 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 end
 
                 print('memory state before :')
-                print(collectgarbage("count"))
+                print('CPU', collectgarbage("count"))
+                local freeMemory, totalMemory = cutorch.getMemoryUsage(opt.gpuid)
+                print('GPU', freeMemory, '/', totalMemory)
 
                 print('feval')
                 self.m:zeroGradParameters()
@@ -135,7 +137,9 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 print('t12 '.. t12:time().real .. ' seconds')
 
                 print('memory state after :')
-                print(collectgarbage("count"))
+                print('CPU', collectgarbage("count"))
+                freeMemory, totalMemory = cutorch.getMemoryUsage(opt.gpuid)
+                print('GPU', freeMemory, '/', totalMemory)
 
                 -- confusion:batchAdd(outputs, targets)
 
