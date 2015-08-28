@@ -66,30 +66,13 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
         if pc_done >= pc_max[1] then
             print(".:. Batch "..t.." to "..batch_to.." on "..trainset:size().." images")
             pc_max[1] = pc_max[1] + 5
+            print('Memory usage')
+            print('CPU', collectgarbage("count"))
+            local freeMemory, totalMemory = cutorch.getMemoryUsage(opt.gpuid)
+            print('GPU', freeMemory .. ' / ' .. totalMemory)
         end
 
-        print('###############')
-        print('t', t)
-
-        -- if not inputs_table[t] then
-        --     local tgarbage = torch.Timer()
-        --     collectgarbage('collect')
-        --     print('tgarbage '.. tgarbage:time().real .. ' seconds')
-        --     for i = 1, 10 do
-        --         local index = t + (i-1) * opt.batch_size
-        --         inputs_table[index], targets_table[index] = trainset:get_batch(t, opt)
-        --         print('index', index)
-        --     end
-        -- end
-
-        local t0 = torch.Timer()
         local inputs, targets = trainset:get_batch(t, opt)
-        print('t0 '.. t0:time().real .. ' seconds')
-
-        print('Memory usage')
-        print('CPU', collectgarbage("count"))
-        local freeMemory, totalMemory = cutorch.getMemoryUsage(opt.gpuid)
-        print('GPU', freeMemory, '/', totalMemory)
 
         local conf_outputs = {}
         local conf_targets = {}
@@ -166,7 +149,6 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
     s = timer:time().real
     print(": Real time to learn full batch = "..string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60))
 
-    confusion:zero()
     for i = 1, nb_batch_max do
         confusion:batchAdd(conf_outputs[i], conf_targets[i])
     end
@@ -176,6 +158,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
     print(": average rowUcol correct (VOC measure): "..(confusion.averageUnionValid*100).."%")
     print(": > global correct: "..(confusion.totalValid*100).."%")
     logger:maj(confusion.totalValid * 100, opt, epoch)
+    confusion:zero()
 
     -- if not opt.cuda and opt.data_type ~= 'Recipe101' and epoch % opt.plot_every == 0 then
     --     -- require 'src/Ploter'
