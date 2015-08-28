@@ -108,11 +108,12 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 local outputs = self.m:forward(inputs)
                 print('t10 '.. t10:time().real .. ' seconds')
 
+                os.execute('nvidia-smi')
+
                 local t11 = torch.Timer()
                 local t110 = torch.Timer()
                 local f = criterion:forward(outputs, targets)
                 print('t110 '.. t110:time().real .. ' seconds')
-                os.execute('nvidia-smi')
                 local t111 = torch.Timer()
                 local df_do = criterion:backward(outputs, targets)  
                 print('t111 '.. t111:time().real .. ' seconds')
