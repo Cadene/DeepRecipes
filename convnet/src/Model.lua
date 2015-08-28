@@ -108,8 +108,6 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 local outputs = self.m:forward(inputs)
                 print('t10 '.. t10:time().real .. ' seconds')
 
-                os.execute('nvidia-smi')
-
                 local t11 = torch.Timer()
                 local t110 = torch.Timer()
                 local f = criterion:forward(outputs, targets)
@@ -158,7 +156,9 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
         end
 
         local tgarbage = torch.Timer()
-        collectgarbage()
+        if nb_batch % 2 == 0 then
+            collectgarbage()
+        end
         print('tgarbage '.. tgarbage:time().real .. ' seconds')
         --sys.tic()
         optimizer:optimize(feval, parameters)
@@ -169,7 +169,6 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
             print(": "..pc_done.."% done",
                 string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60).." left")
             pc_max[2] = pc_max[2] + 5
-            collectgarbage()
         end
 
         nb_batch = nb_batch + 1
