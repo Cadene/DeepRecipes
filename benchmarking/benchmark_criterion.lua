@@ -146,18 +146,10 @@ print('dry_run '.. (t_dry_run:time().real) .. ' seconds')
 print()
 
 local t_feed = torch.Timer()
-for i = 0, opt.iter do
-    output = model:forward(input)
-end
-for i = 0, opt.iter do
-    err = criterion:forward(output, target)
-end
-for i = 0, opt.iter do
-    df_do = criterion:backward(output, target)
-end
-for i = 0, opt.iter do
-    gradInput = model:backward(input, df_do)
-end
+output = model:forward(input)
+err = criterion:forward(output, target)
+df_do = criterion:backward(output, target)
+gradInput = model:backward(input, df_do)
 cutorch_sync()
 print('feed '.. (t_feed:time().real) .. ' seconds')
 
