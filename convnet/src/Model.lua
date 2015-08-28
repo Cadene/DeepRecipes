@@ -34,8 +34,6 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
         do return end
     end
 
-    collectgarbage()
-
     epoch = epoch or 0
     local timer = torch.Timer()
     local trainset = database:get_trainset()
@@ -54,6 +52,9 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
 
     local inputs_table  = {}
     local targets_table = {}
+
+    collectgarbage('collect')
+    collectgarbage('stop')
 
     for t = 1, trainset:size(), opt.batch_size do
 
@@ -74,9 +75,12 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
 
         local inputs, targets
         if inputs_table[t] then
-            inputs = inputs_table[t]
+            inputs  = inputs_table[t]
             targets = targets_table[t]
         else
+            local tgarbage = torch.Timer()
+            collectgarbage('collect')
+            print('tgarbage '.. tgarbage:time().real .. ' seconds')
             for i = 1, 10 do
                 local inputs, targets = trainset:get_batch(t, opt)
                 local index = t + (i-1) * opt.batch_size
@@ -87,8 +91,6 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
             inputs = inputs_table[t]
             targets = targets_table[t]
         end
-        print(torch.type(inputs))
-        print(torch.type(targets))
 
         print('t0 '.. t0:time().real .. ' seconds')
 
@@ -155,14 +157,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
             end
         end
 
-        local tgarbage = torch.Timer()
-        if nb_batch % 4 == 0 then
-            collectgarbage()
-        end
-        print('tgarbage '.. tgarbage:time().real .. ' seconds')
-        --sys.tic()
         optimizer:optimize(feval, parameters)
-        --print("time to optimize", sys.toc())
 
         if pc_done > pc_max[2] then
             s = timer:time().real / batch_to * (trainset:size() - batch_to)
@@ -173,6 +168,8 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
 
         nb_batch = nb_batch + 1
     end
+
+    collectgarbage('restart')
 
     print(".:. End of Epoch n° "..epoch)
     s = timer:time().real / nb_batch_max
@@ -190,9 +187,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
     print(": average rowUcol correct (VOC measure): "..(confusion.averageUnionValid*100).."%")
     print(": > global correct: "..(confusion.totalValid*100).."%")
     logger:maj(confusion.totalValid * 100, opt, epoch)
-    
-    parameters = nil
-    gradParameters = nil
+
     -- if not opt.cuda and opt.data_type ~= 'Recipe101' and epoch % opt.plot_every == 0 then
     --     -- require 'src/Ploter'
     --     -- Ploter.decision_region(self.m, trainset:get_data(), database:get_classname(), 'epoch_'..epoch..'.png')
