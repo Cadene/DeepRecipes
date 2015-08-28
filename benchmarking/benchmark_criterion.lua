@@ -20,6 +20,7 @@ cmd:option('-relu_cudnn', 'false', 'different implementation? require cudnn')
 cmd:option('-ccn2', 'false', 'ccn2 require cuda')
 cmd:option('-4d_tensor', 'false', '')
 cmd:option('-batch_size', 1, '')
+cmd:option('-iter', 5, '')
 
 
 opt = cmd:parse(arg)
@@ -144,25 +145,29 @@ cutorch_sync()
 print('dry_run '.. (t_dry_run:time().real) .. ' seconds')
 print()
 
-local t_feed = torch.Timer()
+
 if not opt['4d_tensor'] then
     iter = opt.batch_size
 else
     iter = 1
 end
+print('opt.iter', opt.iter)
 print('iter', iter)
-for i = 1, iter do
-    local t1 = torch.Timer()
-    input, target = get_input_target(opt)
-    cutorch_sync()
-    output = model:forward(input)
-    err = criterion:forward(output, target)
-    df_do = criterion:backward(output, target)
-    gradInput = model:backward(input, df_do)
-    print('t1 '.. (t1:time().real) .. ' seconds')
+local t_feed = torch.Timer()
+for j = 1, opt.iter do
+    for i = 1, iter do
+        local t1 = torch.Timer()
+        input, target = get_input_target(opt)
+        cutorch_sync()
+        output = model:forward(input)
+        err = criterion:forward(output, target)
+        df_do = criterion:backward(output, target)
+        gradInput = model:backward(input, df_do)
+        print('t1 '.. (t1:time().real) .. ' seconds')
+    end
 end
 cutorch_sync()
-print('feed '.. (t_feed:time().real) .. ' seconds')
+print('feed moyen '.. (t_feed:time().real/opt.iter) .. ' seconds')
 
 -- print(':Net Forward:', (tnf)*1000)
 -- print(':Criterion Forward:', (tcf)*1000)
