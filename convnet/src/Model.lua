@@ -114,12 +114,12 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 local _, argmax_outputs = outputs:max(2)
                 argmax_outputs:resize(targets:size())
 
-                -- table.insert(conf_outputs, argmax_outputs)
-                -- table.insert(conf_outputs, targets)
+                table.insert(conf_outputs, argmax_outputs)
+                table.insert(conf_outputs, targets)
 
-                local tbatchadd = torch.Timer()
-                confusion:batchAdd(argmax_outputs, targets)
-                print('tbatchadd '.. tbatchadd:time().real .. ' seconds')
+                -- local tbatchadd = torch.Timer()
+                -- confusion:batchAdd(argmax_outputs, targets)
+                -- print('tbatchadd '.. tbatchadd:time().real .. ' seconds')
 
                 -- gradParameters:div(#inputs) ???
                 -- f = f / inputs:size(1) ???
