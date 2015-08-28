@@ -97,7 +97,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
         local feval
         if opt['4d_tensor'] then
             feval = function(x)
-                local t1 = torch.Timer()
+
                 if x ~= parameters then -- optim
                     parameters:copy(x)
                 end
@@ -111,15 +111,15 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 
                 gradInput = self.m:backward(inputs, df_do)
 
-                -- local _, argmax_outputs = outputs:max(2)
-                -- argmax_outputs:resize(targets:size())
+                local _, argmax_outputs = outputs:max(2)
+                argmax_outputs:resize(targets:size())
 
                 -- table.insert(conf_outputs, argmax_outputs)
                 -- table.insert(conf_outputs, targets)
 
-                local t1 = torch.Timer()
-                confusion:batchAdd(outputs, targets)
-                print('t1 '.. t1:time().real .. ' seconds')
+                local tbatchadd = torch.Timer()
+                confusion:batchAdd(argmax_outputs, targets)
+                print('tbatchadd '.. tbatchadd:time().real .. ' seconds')
 
                 -- gradParameters:div(#inputs) ???
                 -- f = f / inputs:size(1) ???
