@@ -78,8 +78,8 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
             collectgarbage('collect')
             print('tgarbage '.. tgarbage:time().real .. ' seconds')
             for i = 1, 10 do
-                inputs_table[index], targets_table[index] = trainset:get_batch(t, opt)
                 local index = t + (i-1) * opt.batch_size
+                inputs_table[index], targets_table[index] = trainset:get_batch(t, opt)
                 print('index', index)
             end
         end
