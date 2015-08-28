@@ -151,11 +151,13 @@ else
     iter = 1
 end
 for i = 1, iter do
+    local t1 = torch.Timer()
     input, target = get_input_target(opt)
     output = model:forward(input)
     err = criterion:forward(output, target)
     df_do = criterion:backward(output, target)
     gradInput = model:backward(input, df_do)
+    print('t1 '.. (t1:time().real) .. ' seconds')
 end
 cutorch_sync()
 print('feed '.. (t_feed:time().real) .. ' seconds')
