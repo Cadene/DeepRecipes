@@ -82,11 +82,9 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
         --     end
         -- end
 
-        local t00 = torch.Timer()
+        local t0 = torch.Timer()
         local inputs, targets = trainset:get_batch(t, opt)
-        print('t00 '.. t00:time().real .. ' seconds')
-
-        print(torch.type(inputs), torch.type(targets))
+        print('t0 '.. t0:time().real .. ' seconds')
 
         print('Memory usage')
         print('CPU', collectgarbage("count"))
@@ -113,13 +111,15 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 
                 gradInput = self.m:backward(inputs, df_do)
 
-                local _, argmax_outputs = outputs:max(2)
-                argmax_outputs:resize(targets:size())
+                -- local _, argmax_outputs = outputs:max(2)
+                -- argmax_outputs:resize(targets:size())
 
-                table.insert(conf_outputs, argmax_outputs)
-                table.insert(conf_outputs, targets)
+                -- table.insert(conf_outputs, argmax_outputs)
+                -- table.insert(conf_outputs, targets)
 
+                -- local t1 = torch.Timer()
                 -- confusion:batchAdd(outputs, targets)
+                -- print('t1 '.. t1:time().real .. ' seconds')
 
                 -- gradParameters:div(#inputs) ???
                 -- f = f / inputs:size(1) ???
