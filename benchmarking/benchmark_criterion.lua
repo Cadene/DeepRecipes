@@ -161,6 +161,7 @@ for i = 1, iter do
     gradInput = model:backward(input, df_do)
     print('t1 '.. (t1:time().real) .. ' seconds')
 end
+cutorch_sync()
 print('feed '.. (t_feed:time().real) .. ' seconds')
 
 -- print(':Net Forward:', (tnf)*1000)
