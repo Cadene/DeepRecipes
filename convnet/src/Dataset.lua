@@ -60,12 +60,9 @@ function Dataset:get_batch_4D(index_batch, opt)
         targets[i_batch] = target
         i_batch = i_batch + 1
     end
-    print('t000 '.. t000:time().real .. ' seconds')
     if opt.cuda then
-        local t001 = torch.Timer()
         inputs  = inputs:cuda()
         targets = targets:cuda()
-        print('t001 '.. t001:time().real .. ' seconds')
     end
     -- print(inputs:size(), targets:size())
     return inputs, targets
