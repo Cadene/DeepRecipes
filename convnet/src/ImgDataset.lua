@@ -31,7 +31,9 @@ function ImgDataset:get(id)
         if self.prepare then
             img = ImgDataset.__prepare_img(path2img, self.dim_in, self.dim_out, nil, nil, self.mean, self.std)
         else
+            local t000 = torch.Timer()
             img = image.load(path2img)
+            print('t000 '.. t000:time().real .. ' seconds')
             if img:size(1) ~= 3 then
                 error('e101: invalid image [path='..path2img..']')
             end
