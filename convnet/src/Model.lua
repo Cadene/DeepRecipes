@@ -117,9 +117,9 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 -- table.insert(conf_outputs, argmax_outputs)
                 -- table.insert(conf_outputs, targets)
 
-                -- local t1 = torch.Timer()
-                -- confusion:batchAdd(outputs, targets)
-                -- print('t1 '.. t1:time().real .. ' seconds')
+                local t1 = torch.Timer()
+                confusion:batchAdd(outputs, targets)
+                print('t1 '.. t1:time().real .. ' seconds')
 
                 -- gradParameters:div(#inputs) ???
                 -- f = f / inputs:size(1) ???
