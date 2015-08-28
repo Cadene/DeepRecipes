@@ -73,23 +73,15 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
         print('###############')
         print('t', t)
 
-        local inputs, targets
-        if inputs_table[t] then
-            inputs  = inputs_table[t]
-            targets = targets_table[t]
-        else
+        if not inputs_table[t] then
             local tgarbage = torch.Timer()
             collectgarbage('collect')
             print('tgarbage '.. tgarbage:time().real .. ' seconds')
             for i = 1, 10 do
-                local inputs, targets = trainset:get_batch(t, opt)
+                inputs_table[index], targets_table[index] = trainset:get_batch(t, opt)
                 local index = t + (i-1) * opt.batch_size
-                inputs_table[index]  = inputs
-                targets_table[index] = targets
                 print('index', index)
             end
-            inputs = inputs_table[t]
-            targets = targets_table[t]
         end
 
         print('t0 '.. t0:time().real .. ' seconds')
@@ -113,27 +105,27 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 print('feval')
                 self.m:zeroGradParameters()
                 local t10 = torch.Timer()
-                local outputs = self.m:forward(inputs)
+                local outputs = self.m:forward(inputs_table[t])
                 print('t10 '.. t10:time().real .. ' seconds')
 
                 local t11 = torch.Timer()
                 local t110 = torch.Timer()
-                local f = criterion:forward(outputs, targets)
+                local f = criterion:forward(outputs, targets_table[t])
                 print('t110 '.. t110:time().real .. ' seconds')
                 local t111 = torch.Timer()
-                local df_do = criterion:backward(outputs, targets)  
+                local df_do = criterion:backward(outputs, targets_table[t])  
                 print('t111 '.. t111:time().real .. ' seconds')
                 local t112 = torch.Timer()
-                gradInput = self.m:backward(inputs, df_do)
+                gradInput = self.m:backward(inputs_table[t], df_do)
                 print('t112 '.. t112:time().real .. ' seconds')
                 print('t11 '.. t11:time().real .. ' seconds')
 
                 local _, argmax_outputs = outputs:max(2)
-                argmax_outputs:resize(targets:size())
+                argmax_outputs:resize(targets_table[t]:size())
 
                 local t12 = torch.Timer()
                 table.insert(conf_outputs, argmax_outputs)
-                table.insert(conf_outputs, targets)
+                table.insert(conf_outputs, targets_table[t])
                 print('t12 '.. t12:time().real .. ' seconds')
 
                 print('memory state after :')
