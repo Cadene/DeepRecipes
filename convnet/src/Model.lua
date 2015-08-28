@@ -104,6 +104,10 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 if x ~= parameters then -- optim
                     parameters:copy(x)
                 end
+
+                print('memory state before :')
+                print(collectgarbage("count"))
+
                 print('feval')
                 self.m:zeroGradParameters()
                 local t10 = torch.Timer()
@@ -129,6 +133,9 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 table.insert(conf_outputs, argmax_outputs)
                 table.insert(conf_outputs, targets)
                 print('t12 '.. t12:time().real .. ' seconds')
+
+                print('memory state after :')
+                print(collectgarbage("count"))
 
                 -- confusion:batchAdd(outputs, targets)
 
