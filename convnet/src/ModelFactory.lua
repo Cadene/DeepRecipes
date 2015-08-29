@@ -37,32 +37,65 @@ end
 
 function ModelFactory.generate_overfeat(opt, nb_class)
     local model = nn.Sequential()
-    -- convolution
-    model:add(lf.SpatialConvolution(opt, 3, 96, 7, 7, 2, 2))
-    model:add(lf.ReLU(opt))
-    model:add(lf.SpatialMaxPooling(opt, 3, 3, 3, 3))
-    model:add(lf.SpatialConvolution(opt, 96, 256, 7, 7, 1, 1))
-    model:add(lf.ReLU(opt))
-    model:add(lf.SpatialMaxPooling(opt, 2, 2, 2, 2))
-    model:add(lf.SpatialConvolution(opt, 256, 512, 3, 3, 1, 1, 1, 1))
-    model:add(lf.ReLU(opt))
-    model:add(lf.SpatialConvolution(opt, 512, 512, 3, 3, 1, 1, 1, 1))
-    model:add(lf.ReLU(opt))
-    model:add(lf.SpatialConvolution(opt, 512, 1024, 3, 3, 1, 1, 1, 1))
-    model:add(lf.ReLU(opt))
-    model:add(lf.SpatialConvolution(opt, 1024, 1024, 3, 3, 1, 1, 1, 1))
-    model:add(lf.ReLU(opt))
-    model:add(lf.SpatialMaxPooling(opt, 3, 3, 3, 3))
-    model:add(lf.SpatialConvolution(opt, 1024, 4096, 5, 5, 1, 1))
-    model:add(lf.ReLU(opt))
-    -- classifier
-    model:add(nn.Dropout(opt.dropout))
-    model:add(lf.SpatialConvolution(opt, 4096, 4096, 1, 1, 1, 1))
-    model:add(lf.ReLU(opt))
-    model:add(nn.Dropout(opt.dropout))
-    model:add(lf.SpatialConvolution(opt, 4096, nb_class, 1, 1, 1, 1))
-    model:add(nn.View(nb_class))
-    model:add(nn.LogSoftMax())
+    -- model:add(lf.SpatialConvolution(opt, 3, 96, 7, 7, 2, 2))
+    -- model:add(lf.ReLU(opt))
+    -- model:add(lf.SpatialMaxPooling(opt, 3, 3, 3, 3))
+    -- model:add(lf.SpatialConvolution(opt, 96, 256, 7, 7, 1, 1))
+    -- model:add(lf.ReLU(opt))
+    -- model:add(lf.SpatialMaxPooling(opt, 2, 2, 2, 2))
+    -- model:add(lf.SpatialConvolution(opt, 256, 512, 3, 3, 1, 1, 1, 1))
+    -- model:add(lf.ReLU(opt))
+    -- model:add(lf.SpatialConvolution(opt, 512, 512, 3, 3, 1, 1, 1, 1))
+    -- model:add(lf.ReLU(opt))
+    -- model:add(lf.SpatialConvolution(opt, 512, 1024, 3, 3, 1, 1, 1, 1))
+    -- model:add(lf.ReLU(opt))
+    -- model:add(lf.SpatialConvolution(opt, 1024, 1024, 3, 3, 1, 1, 1, 1))
+    -- model:add(lf.ReLU(opt))
+    -- -- classifier
+    -- model:add(lf.SpatialMaxPooling(opt, 3, 3, 3, 3))
+    -- model:add(lf.SpatialConvolution(opt, 1024, 4096, 5, 5, 1, 1))
+    -- model:add(lf.ReLU(opt))
+    -- model:add(nn.Dropout(opt.dropout))
+    -- model:add(lf.SpatialConvolution(opt, 4096, 4096, 1, 1, 1, 1))
+    -- model:add(lf.ReLU(opt))
+    -- model:add(nn.Dropout(opt.dropout))
+    -- model:add(lf.SpatialConvolution(opt, 4096, nb_class, 1, 1, 1, 1))
+    -- model:add(nn.View(nb_class))
+    -- model:add(nn.LogSoftMax())
+
+    local SpatialConvolution = nn.SpatialConvolution
+    local SpatialConvolutionMM = nn.SpatialConvolutionMM
+    local SpatialMaxPooling = nn.SpatialMaxPooling
+    if cuda then
+        SpatialConvolution = cudnn.SpatialConvolution
+        SpatialConvolutionMM = cudnn.SpatialConvolution
+        SpatialMaxPooling = cudnn.SpatialMaxPooling
+    end
+
+    -- 18,916,480
+    model:add(SpatialConvolution(3, 96, 7, 7, 2, 2))
+    model:add(nn.ReLU(true))
+    model:add(SpatialMaxPooling(3, 3, 3, 3))
+    model:add(SpatialConvolutionMM(96, 256, 7, 7, 1, 1))
+    model:add(nn.ReLU(true))
+    model:add(SpatialMaxPooling(2, 2, 2, 2))
+    model:add(SpatialConvolutionMM(256, 512, 3, 3, 1, 1, 1, 1))
+    model:add(nn.ReLU(true))
+    model:add(SpatialConvolutionMM(512, 512, 3, 3, 1, 1, 1, 1))
+    model:add(nn.ReLU(true))
+    model:add(SpatialConvolutionMM(512, 1024, 3, 3, 1, 1, 1, 1))
+    model:add(nn.ReLU(true))
+    model:add(SpatialConvolutionMM(1024, 1024, 3, 3, 1, 1, 1, 1))
+    model:add(nn.ReLU(true))
+
+    model:add(SpatialMaxPooling(3, 3, 3, 3))
+    model:add(SpatialConvolutionMM(1024, 4096, 5, 5, 1, 1))
+    model:add(nn.ReLU(true))
+    model:add(SpatialConvolutionMM(4096, 4096, 1, 1, 1, 1))
+    model:add(nn.ReLU(true))
+    model:add(SpatialConvolutionMM(4096, 101, 1, 1, 1, 1))
+    model:add(nn.View(101))
+    model:add(nn.SoftMax())
 
     if opt.pretrain_model then
         local m = model.modules

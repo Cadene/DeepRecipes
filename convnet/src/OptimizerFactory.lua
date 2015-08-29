@@ -50,20 +50,19 @@ function OptimizerFactory.generate_sgd_overfeat(opt, config)
     config.learningRateDecay = opt.learningRateDecay
     config.momentum          = opt.momentum
     config.weightDecay       = opt.weight_decay
-    config.nesterov          = true
+    config.nesterov          = false
     config.dampening         = 0
 
-    --local nb_param = 140567682 -- 2 classes
     local nb_param = 140973285 -- 101 classes
 
     local lr_classif = config.learningRate
     local lr_convo   = lr_classif / 10
     local lrs        = torch.Tensor(nb_param)
-    for i = 1, 123778176 do
+    for i = 1,  18916480 do
         lrs[i] = lr_convo
     end
 
-    for i = 123778177, nb_param do
+    for i =  18916480, nb_param do
         lrs[i] = lr_classif
     end
     config.learningRates = lrs
