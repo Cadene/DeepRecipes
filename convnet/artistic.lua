@@ -135,8 +135,8 @@ input_gener  = prepare('fraise.jpg')
 print(input_origin[{1,1,1}])
 print(input_gener[{1,1,1}])
 
-activ_origin = model:forward(input_origin)
-activ_gener  = model:forward(input_gener)
+activ_origin = model:forward(input_origin):clone()
+activ_gener  = model:forward(input_gener):clone()
 
 for i=1, 96 do
     image.save('test/bee_layer'..i..'.jpg',activ_origin[i])

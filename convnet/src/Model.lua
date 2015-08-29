@@ -78,7 +78,8 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
         end
 
         local inputs, targets = trainset:get_batch(t, opt)
-        
+        local loss
+
         local feval
         if opt['4d_tensor'] then
             feval = function(x)
@@ -91,7 +92,8 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 local outputs = self.m:forward(inputs)
 
                 local f = criterion:forward(outputs, targets)
-                
+                loss = f
+
                 local df_do = criterion:backward(outputs, targets)  
                 
                 gradInput = self.m:backward(inputs, df_do)
@@ -131,7 +133,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
             end
         end
 
-        local _, loss = optimizer:optimize(feval, parameters)
+        optimizer:optimize(feval, parameters)
 
         if pc_done > pc_max[2] then
             s = timer:time().real / batch_to * (trainset:size() - batch_to)
