@@ -131,12 +131,13 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
             end
         end
 
-        optimizer:optimize(feval, parameters)
+        local _, loss = optimizer:optimize(feval, parameters)
 
         if pc_done > pc_max[2] then
             s = timer:time().real / batch_to * (trainset:size() - batch_to)
             print(": "..pc_done.."% done",
                 string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60).." left")
+            print('loss:', loss)
             pc_max[2] = pc_max[2] + 5
         end
 
