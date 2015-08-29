@@ -1,0 +1,2047 @@
+{
+  cudnn : [0;34mtrue[0m
+  pretrain_model : [0;34mfalse[0m
+  weight_decay : [0;36m1e-05[0m
+  batch_size : [0;36m60[0m
+  cuda : [0;34mtrue[0m
+  test_model : [0;34mfalse[0m
+  load_epoch : [0;34mfalse[0m
+  type_data : [1;30m"[0m[0;32mrecipe101[0m[1;30m"[0m
+  plot_every : [0;36m10[0m
+  path2save_epoch : [1;30m"[0m[0;32m/home/cadene/doc/DeepRecipes/convnet/rslt/overfat+2+8e-3/epoch.t7[0m[1;30m"[0m
+  path2load_std : [1;30m"[0m[0;32m/home/cadene/doc/DeepRecipes/convnet/rslt/overfat+2+8e-3/std.t7[0m[1;30m"[0m
+  path2save_log : [1;30m"[0m[0;32m./rslt/overfat+2+8e-3[0m[1;30m"[0m
+  load_model : [0;34mfalse[0m
+  save_model : [0;34mtrue[0m
+  K : [0;36m3[0m
+  momentum : [0;36m0.6[0m
+  threads : [0;36m1[0m
+  type_model : [1;30m"[0m[0;32moverfeat[0m[1;30m"[0m
+  path2load_epoch : [1;30m"[0m[0;32m/home/cadene/doc/DeepRecipes/convnet/rslt/overfat+2+8e-3/epoch.t7[0m[1;30m"[0m
+  load_logger : [0;34mfalse[0m
+  seed : [0;36m1337[0m
+  path2save_std : [1;30m"[0m[0;32m/home/cadene/doc/DeepRecipes/convnet/rslt/overfat+2+8e-3/std.t7[0m[1;30m"[0m
+  path2load_mean : [1;30m"[0m[0;32m/home/cadene/doc/DeepRecipes/convnet/rslt/overfat+2+8e-3/mean.t7[0m[1;30m"[0m
+  gpuid : [0;36m1[0m
+  path2load_model : [1;30m"[0m[0;32m/home/cadene/doc/DeepRecipes/convnet/rslt/overfat+2+8e-3/model.t7[0m[1;30m"[0m
+  path2load_log : [1;30m"[0m[0;32m./rslt/overfat+2+8e-3[0m[1;30m"[0m
+  path2save_mean : [1;30m"[0m[0;32m/home/cadene/doc/DeepRecipes/convnet/rslt/overfat+2+8e-3/mean.t7[0m[1;30m"[0m
+  pc_train : [0;36m0.8[0m
+  path2save_model : [1;30m"[0m[0;32m/home/cadene/doc/DeepRecipes/convnet/rslt/overfat+2+8e-3/model.t7[0m[1;30m"[0m
+  H : [0;36m100[0m
+  path2save : [1;30m"[0m[0;32m./rslt/overfat+2+8e-3[0m[1;30m"[0m
+  type_criterion : [1;30m"[0m[0;32mNLL[0m[1;30m"[0m
+  path2load : [1;30m"[0m[0;32m./rslt/overfat+2+8e-3[0m[1;30m"[0m
+  dropout : [0;36m0.5[0m
+  epoch : [0;36m100[0m
+  path2load_data : [1;30m"[0m[0;32m/home/cadene/data/recipe_101_clean/[0m[1;30m"[0m
+  learning_rate_decay : [0;36m0[0m
+  path2load_csv : [0;34mfalse[0m
+  4d_tensor : [0;34mtrue[0m
+  prepare_data : [0;34mfalse[0m
+  type_optimizer : [1;30m"[0m[0;32mSGD_overfeat[0m[1;30m"[0m
+  N : [0;36m500[0m
+  train_model : [0;34mtrue[0m
+  convMM : [0;34mtrue[0m
+  save_every : [0;36m1[0m
+  learning_rate : [0;36m0.008[0m
+  D : [0;36m2[0m
+  plot : [0;34mtrue[0m
+  load_mean_std : [0;34mfalse[0m
+  process_mean_std : [0;34mfalse[0m
+}
+[0m# ... lunching using pid = 13727[0m	
+[0m# ... switching to CUDA[0m	
+
+Database :
+101 classes
+
+Model :
+nn.Sequential {
+  [input -> (1) -> (2) -> (3) -> (4) -> (5) -> (6) -> (7) -> (8) -> (9) -> (10) -> (11) -> (12) -> (13) -> (14) -> (15) -> (16) -> (17) -> (18) -> (19) -> (20) -> (21) -> (22) -> (23) -> (24) -> output]
+  (1): cudnn.SpatialConvolution(3 -> 96, 7x7, 2,2)
+  (2): nn.ReLU
+  (3): nn.SpatialMaxPooling(3,3,3,3)
+  (4): cudnn.SpatialConvolution(96 -> 256, 7x7)
+  (5): nn.ReLU
+  (6): nn.SpatialMaxPooling(2,2,2,2)
+  (7): cudnn.SpatialConvolution(256 -> 512, 3x3, 1,1, 1,1)
+  (8): nn.ReLU
+  (9): cudnn.SpatialConvolution(512 -> 512, 3x3, 1,1, 1,1)
+  (10): nn.ReLU
+  (11): cudnn.SpatialConvolution(512 -> 1024, 3x3, 1,1, 1,1)
+  (12): nn.ReLU
+  (13): cudnn.SpatialConvolution(1024 -> 1024, 3x3, 1,1, 1,1)
+  (14): nn.ReLU
+  (15): nn.SpatialMaxPooling(3,3,3,3)
+  (16): cudnn.SpatialConvolution(1024 -> 4096, 5x5)
+  (17): nn.ReLU
+  (18): nn.Dropout(0.500000)
+  (19): cudnn.SpatialConvolution(4096 -> 4096, 1x1)
+  (20): nn.ReLU
+  (21): nn.Dropout(0.500000)
+  (22): cudnn.SpatialConvolution(4096 -> 101, 1x1)
+  (23): nn.View
+  (24): nn.LogSoftMax
+}
+140973285 parameters
+[0m
+Criterion :
+type: nn.ClassNLLCriterion[0m	
+
+Optimizer:
+nesterov : true
+learningRates : size[140973285
+dampening : 0
+learningRate : 0.008
+weightDecay : 1e-05
+momentum : 0.6
+[0mtype : SGD_overfeat[0m	
+[0m[0m	
+[0m######### RUNNING ############[0m	
+[0m[0m	
+[0m[0m	
+[0m# Epoch n° 1[0m	
+[0m.:. Batch 1 to 60 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m7839.7275390625[0m	
+[0mGPU[0m	[0m3779072000 / 5032706048[0m	
+[0m: 1% done[0m	[0m01:11:16 left[0m	
+[0m.:. Batch 3241 to 3300 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8671.404296875[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 6% done[0m	[0m01:01:12 left[0m	
+[0m.:. Batch 6841 to 6900 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8677.875[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 11% done[0m	[0m00:57:39 left[0m	
+[0m.:. Batch 10441 to 10500 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8685.5712890625[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 16% done[0m	[0m00:54:19 left[0m	
+[0m.:. Batch 14101 to 14160 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8755.1572265625[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 21% done[0m	[0m00:50:59 left[0m	
+[0m.:. Batch 17701 to 17760 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8762.966796875[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 26% done[0m	[0m00:47:46 left[0m	
+[0m.:. Batch 21301 to 21360 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8766.673828125[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 31% done[0m	[0m00:44:33 left[0m	
+[0m.:. Batch 24961 to 25020 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8835.216796875[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 36% done[0m	[0m00:41:17 left[0m	
+[0m.:. Batch 28561 to 28620 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8839.0732421875[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 41% done[0m	[0m00:38:05 left[0m	
+[0m.:. Batch 32161 to 32220 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8850.8916015625[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 46% done[0m	[0m00:34:53 left[0m	
+[0m.:. Batch 35761 to 35820 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8854.521484375[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 51% done[0m	[0m00:31:39 left[0m	
+[0m.:. Batch 39421 to 39480 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8923.4609375[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 56% done[0m	[0m00:28:27 left[0m	
+[0m.:. Batch 43021 to 43080 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8927.125[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 61% done[0m	[0m00:25:15 left[0m	
+[0m.:. Batch 46621 to 46680 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8930.908203125[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 66% done[0m	[0m00:22:04 left[0m	
+[0m.:. Batch 50281 to 50340 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8999.9755859375[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 71% done[0m	[0m00:18:49 left[0m	
+[0m.:. Batch 53881 to 53940 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9004.0029296875[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 76% done[0m	[0m00:15:38 left[0m	
+[0m.:. Batch 57481 to 57540 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9008.142578125[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 81% done[0m	[0m00:12:27 left[0m	
+[0m.:. Batch 61141 to 61200 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9076.900390625[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 86% done[0m	[0m00:09:12 left[0m	
+[0m.:. Batch 64741 to 64800 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9096.7490234375[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 91% done[0m	[0m00:06:01 left[0m	
+[0m.:. Batch 68341 to 68400 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9100.4775390625[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 96% done[0m	[0m00:02:50 left[0m	
+[0m.:. Batch 71941 to 72000 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9104.4951171875[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m.:. End of Epoch n° 1[0m	
+[0m: Real time to learn 1 batch = 00:00:03[0m	
+[0m: Real time to learn full batch = 01:04:23[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 0.91049036271593%[0m	
+[0m: average rowUcol correct (VOC measure): 0.10157647199173%[0m	
+[0m: > global correct: 0.92218781108284%[0m	
+[0m# ... saving model to /home/cadene/doc/DeepRecipes/convnet/rslt/overfat+2+8e-3/model.t7[0m	
+[0m[0m	
+[0m# Epoch n° 2[0m	
+[0m.:. Batch 1 to 60 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m10765.876953125[0m	
+[0mGPU[0m	[0m1562734592 / 5032706048[0m	
+[0m: 1% done[0m	[0m01:07:21 left[0m	
+[0m.:. Batch 3241 to 3300 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8684.841796875[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 6% done[0m	[0m01:00:35 left[0m	
+[0m.:. Batch 6841 to 6900 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8690.1318359375[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 11% done[0m	[0m00:57:17 left[0m	
+[0m.:. Batch 10441 to 10500 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8695.44921875[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 16% done[0m	[0m00:54:03 left[0m	
+[0m.:. Batch 14101 to 14160 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8764.4775390625[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 21% done[0m	[0m00:50:47 left[0m	
+[0m.:. Batch 17701 to 17760 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8772.4638671875[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 26% done[0m	[0m00:47:38 left[0m	
+[0m.:. Batch 21301 to 21360 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8776.3994140625[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 31% done[0m	[0m00:44:27 left[0m	
+[0m.:. Batch 24961 to 25020 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8845.3984375[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 36% done[0m	[0m00:41:14 left[0m	
+[0m.:. Batch 28561 to 28620 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8848.7197265625[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 41% done[0m	[0m00:38:02 left[0m	
+[0m.:. Batch 32161 to 32220 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8860.779296875[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 46% done[0m	[0m00:34:51 left[0m	
+[0m.:. Batch 35761 to 35820 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8864.6953125[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 51% done[0m	[0m00:31:36 left[0m	
+[0m.:. Batch 39421 to 39480 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8933.23046875[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 56% done[0m	[0m00:28:30 left[0m	
+[0m.:. Batch 43021 to 43080 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8936.90625[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 61% done[0m	[0m00:25:18 left[0m	
+[0m.:. Batch 46621 to 46680 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8941.0439453125[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 66% done[0m	[0m00:22:06 left[0m	
+[0m.:. Batch 50281 to 50340 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9009.8310546875[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 71% done[0m	[0m00:18:51 left[0m	
+[0m.:. Batch 53881 to 53940 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9013.857421875[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 76% done[0m	[0m00:15:39 left[0m	
+[0m.:. Batch 57481 to 57540 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9017.2119140625[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 81% done[0m	[0m00:12:28 left[0m	
+[0m.:. Batch 61141 to 61200 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9085.578125[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 86% done[0m	[0m00:09:13 left[0m	
+[0m.:. Batch 64741 to 64800 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9106.0888671875[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 91% done[0m	[0m00:06:02 left[0m	
+[0m.:. Batch 68341 to 68400 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9109.4580078125[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 96% done[0m	[0m00:02:50 left[0m	
+[0m.:. Batch 71941 to 72000 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9113.314453125[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m.:. End of Epoch n° 2[0m	
+[0m: Real time to learn 1 batch = 00:00:03[0m	
+[0m: Real time to learn full batch = 01:04:45[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 1.0022749136534%[0m	
+[0m: average rowUcol correct (VOC measure): 0.10448351749081%[0m	
+[0m: > global correct: 1.0120561884747%[0m	
+[0m# ... saving model to /home/cadene/doc/DeepRecipes/convnet/rslt/overfat+2+8e-3/model.t7[0m	
+[0m[0m	
+[0m# Epoch n° 3[0m	
+[0m.:. Batch 1 to 60 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m10165.345703125[0m	
+[0mGPU[0m	[0m1562734592 / 5032706048[0m	
+[0m: 1% done[0m	[0m01:00:55 left[0m	
+[0m.:. Batch 3241 to 3300 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8689.078125[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 6% done[0m	[0m00:59:57 left[0m	
+[0m.:. Batch 6841 to 6900 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8693.9033203125[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 11% done[0m	[0m00:56:53 left[0m	
+[0m.:. Batch 10441 to 10500 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8699.4931640625[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 16% done[0m	[0m00:53:45 left[0m	
+[0m.:. Batch 14101 to 14160 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8768.453125[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 21% done[0m	[0m00:50:32 left[0m	
+[0m.:. Batch 17701 to 17760 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8775.8955078125[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 26% done[0m	[0m00:47:23 left[0m	
+[0m.:. Batch 21301 to 21360 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8779.9130859375[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 31% done[0m	[0m00:44:13 left[0m	
+[0m.:. Batch 24961 to 25020 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8848.7431640625[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 36% done[0m	[0m00:41:00 left[0m	
+[0m.:. Batch 28561 to 28620 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8852.349609375[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 41% done[0m	[0m00:37:51 left[0m	
+[0m.:. Batch 32161 to 32220 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8863.943359375[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 46% done[0m	[0m00:34:41 left[0m	
+[0m.:. Batch 35761 to 35820 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8868.1953125[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 51% done[0m	[0m00:31:28 left[0m	
+[0m.:. Batch 39421 to 39480 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8936.5634765625[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 56% done[0m	[0m00:28:18 left[0m	
+[0m.:. Batch 43021 to 43080 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8940.537109375[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 61% done[0m	[0m00:25:08 left[0m	
+[0m.:. Batch 46621 to 46680 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8944.1044921875[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 66% done[0m	[0m00:21:58 left[0m	
+[0m.:. Batch 50281 to 50340 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9013.376953125[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 71% done[0m	[0m00:18:44 left[0m	
+[0m.:. Batch 53881 to 53940 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9017.1708984375[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 76% done[0m	[0m00:15:34 left[0m	
+[0m.:. Batch 57481 to 57540 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9020.5185546875[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 81% done[0m	[0m00:12:23 left[0m	
+[0m.:. Batch 61141 to 61200 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9089.2421875[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 86% done[0m	[0m00:09:10 left[0m	
+[0m.:. Batch 64741 to 64800 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9109.482421875[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 91% done[0m	[0m00:05:59 left[0m	
+[0m.:. Batch 68341 to 68400 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9112.9833984375[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 96% done[0m	[0m00:02:49 left[0m	
+[0m.:. Batch 71941 to 72000 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9116.73046875[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m.:. End of Epoch n° 3[0m	
+[0m: Real time to learn 1 batch = 00:00:03[0m	
+[0m: Real time to learn full batch = 01:03:47[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 0.94768102522847%[0m	
+[0m: average rowUcol correct (VOC measure): 0.095232598146995%[0m	
+[0m: > global correct: 0.96090034288242%[0m	
+[0m# ... saving model to /home/cadene/doc/DeepRecipes/convnet/rslt/overfat+2+8e-3/model.t7[0m	
+[0m[0m	
+[0m# Epoch n° 4[0m	
+[0m.:. Batch 1 to 60 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m10038.876953125[0m	
+[0mGPU[0m	[0m1562734592 / 5032706048[0m	
+[0m: 1% done[0m	[0m01:01:18 left[0m	
+[0m.:. Batch 3241 to 3300 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8689.3369140625[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 6% done[0m	[0m01:00:07 left[0m	
+[0m.:. Batch 6841 to 6900 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8694.138671875[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 11% done[0m	[0m00:57:07 left[0m	
+[0m.:. Batch 10441 to 10500 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8699.7255859375[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 16% done[0m	[0m00:53:55 left[0m	
+[0m.:. Batch 14101 to 14160 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8768.75390625[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 21% done[0m	[0m00:50:43 left[0m	
+[0m.:. Batch 17701 to 17760 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8776.287109375[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 26% done[0m	[0m00:47:32 left[0m	
+[0m.:. Batch 21301 to 21360 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8780.28125[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 31% done[0m	[0m00:44:21 left[0m	
+[0m.:. Batch 24961 to 25020 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8849.193359375[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 36% done[0m	[0m00:41:07 left[0m	
+[0m.:. Batch 28561 to 28620 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8852.5498046875[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 41% done[0m	[0m00:37:57 left[0m	
+[0m.:. Batch 32161 to 32220 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8864.4892578125[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 46% done[0m	[0m00:34:46 left[0m	
+[0m.:. Batch 35761 to 35820 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8868.248046875[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 51% done[0m	[0m00:31:33 left[0m	
+[0m.:. Batch 39421 to 39480 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8937.328125[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 56% done[0m	[0m00:28:22 left[0m	
+[0m.:. Batch 43021 to 43080 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8940.9619140625[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 61% done[0m	[0m00:25:11 left[0m	
+[0m.:. Batch 46621 to 46680 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8944.7900390625[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 66% done[0m	[0m00:21:59 left[0m	
+[0m.:. Batch 50281 to 50340 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9012.9833984375[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 71% done[0m	[0m00:18:46 left[0m	
+[0m.:. Batch 53881 to 53940 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9017.0087890625[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 76% done[0m	[0m00:15:35 left[0m	
+[0m.:. Batch 57481 to 57540 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9020.919921875[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 81% done[0m	[0m00:12:24 left[0m	
+[0m.:. Batch 61141 to 61200 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9089.681640625[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 86% done[0m	[0m00:09:11 left[0m	
+[0m.:. Batch 64741 to 64800 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9109.46484375[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 91% done[0m	[0m00:06:00 left[0m	
+[0m.:. Batch 68341 to 68400 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9112.796875[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 96% done[0m	[0m00:02:49 left[0m	
+[0m.:. Batch 71941 to 72000 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9116.7421875[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m.:. End of Epoch n° 4[0m	
+[0m: Real time to learn 1 batch = 00:00:03[0m	
+[0m: Real time to learn full batch = 01:03:51[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 1.0272074829658%[0m	
+[0m: average rowUcol correct (VOC measure): 0.10136372829317%[0m	
+[0m: > global correct: 1.0410905873244%[0m	
+[0m# ... saving model to /home/cadene/doc/DeepRecipes/convnet/rslt/overfat+2+8e-3/model.t7[0m	
+[0m[0m	
+[0m# Epoch n° 5[0m	
+[0m.:. Batch 1 to 60 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m10032.876953125[0m	
+[0mGPU[0m	[0m1562734592 / 5032706048[0m	
+[0m: 1% done[0m	[0m01:00:03 left[0m	
+[0m.:. Batch 3241 to 3300 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8688.9892578125[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 6% done[0m	[0m00:59:58 left[0m	
+[0m.:. Batch 6841 to 6900 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8693.6552734375[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 11% done[0m	[0m00:56:59 left[0m	
+[0m.:. Batch 10441 to 10500 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8700.1005859375[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 16% done[0m	[0m00:53:50 left[0m	
+[0m.:. Batch 14101 to 14160 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8768.6630859375[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 21% done[0m	[0m00:50:38 left[0m	
+[0m.:. Batch 17701 to 17760 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8776.421875[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 26% done[0m	[0m00:47:30 left[0m	
+[0m.:. Batch 21301 to 21360 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8779.9287109375[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 31% done[0m	[0m00:44:20 left[0m	
+[0m.:. Batch 24961 to 25020 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8848.7783203125[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 36% done[0m	[0m00:41:06 left[0m	
+[0m.:. Batch 28561 to 28620 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8852.638671875[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 41% done[0m	[0m00:37:56 left[0m	
+[0m.:. Batch 32161 to 32220 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8864.58203125[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 46% done[0m	[0m00:34:46 left[0m	
+[0m.:. Batch 35761 to 35820 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8868.427734375[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 51% done[0m	[0m00:31:32 left[0m	
+[0m.:. Batch 39421 to 39480 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8937.2490234375[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 56% done[0m	[0m00:28:22 left[0m	
+[0m.:. Batch 43021 to 43080 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8940.7138671875[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 61% done[0m	[0m00:25:11 left[0m	
+[0m.:. Batch 46621 to 46680 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8944.4462890625[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 66% done[0m	[0m00:22:00 left[0m	
+[0m.:. Batch 50281 to 50340 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9013.6474609375[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 71% done[0m	[0m00:18:46 left[0m	
+[0m.:. Batch 53881 to 53940 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9017.484375[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 76% done[0m	[0m00:15:36 left[0m	
+[0m.:. Batch 57481 to 57540 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9020.955078125[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 81% done[0m	[0m00:12:25 left[0m	
+[0m.:. Batch 61141 to 61200 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9089.904296875[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 86% done[0m	[0m00:09:11 left[0m	
+[0m.:. Batch 64741 to 64800 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9109.1298828125[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 91% done[0m	[0m00:06:00 left[0m	
+[0m.:. Batch 68341 to 68400 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9113.3662109375[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 96% done[0m	[0m00:02:50 left[0m	
+[0m.:. Batch 71941 to 72000 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9117.0595703125[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m.:. End of Epoch n° 5[0m	
+[0m: Real time to learn 1 batch = 00:00:03[0m	
+[0m: Real time to learn full batch = 01:03:54[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 0.95131935662415%[0m	
+[0m: average rowUcol correct (VOC measure): 0.10550051194496%[0m	
+[0m: > global correct: 0.96366552372525%[0m	
+[0m# ... saving model to /home/cadene/doc/DeepRecipes/convnet/rslt/overfat+2+8e-3/model.t7[0m	
+[0m[0m	
+[0m# Epoch n° 6[0m	
+[0m.:. Batch 1 to 60 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m10027.517578125[0m	
+[0mGPU[0m	[0m1562734592 / 5032706048[0m	
+[0m: 1% done[0m	[0m01:01:46 left[0m	
+[0m.:. Batch 3241 to 3300 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8689.55859375[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 6% done[0m	[0m00:59:57 left[0m	
+[0m.:. Batch 6841 to 6900 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8694.28125[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 11% done[0m	[0m00:56:53 left[0m	
+[0m.:. Batch 10441 to 10500 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8700.1513671875[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 16% done[0m	[0m00:53:43 left[0m	
+[0m.:. Batch 14101 to 14160 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8768.98828125[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 21% done[0m	[0m00:50:32 left[0m	
+[0m.:. Batch 17701 to 17760 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8776.5576171875[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 26% done[0m	[0m00:47:22 left[0m	
+[0m.:. Batch 21301 to 21360 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8780.3349609375[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 31% done[0m	[0m00:44:11 left[0m	
+[0m.:. Batch 24961 to 25020 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8849.15234375[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 36% done[0m	[0m00:40:59 left[0m	
+[0m.:. Batch 28561 to 28620 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8852.8466796875[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 41% done[0m	[0m00:37:50 left[0m	
+[0m.:. Batch 32161 to 32220 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8864.642578125[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 46% done[0m	[0m00:34:41 left[0m	
+[0m.:. Batch 35761 to 35820 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8868.318359375[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 51% done[0m	[0m00:31:28 left[0m	
+[0m.:. Batch 39421 to 39480 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8937.494140625[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 56% done[0m	[0m00:28:18 left[0m	
+[0m.:. Batch 43021 to 43080 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8941.119140625[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 61% done[0m	[0m00:25:08 left[0m	
+[0m.:. Batch 46621 to 46680 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8944.5302734375[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 66% done[0m	[0m00:21:58 left[0m	
+[0m.:. Batch 50281 to 50340 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9013.837890625[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 71% done[0m	[0m00:18:44 left[0m	
+[0m.:. Batch 53881 to 53940 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9017.2353515625[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 76% done[0m	[0m00:15:34 left[0m	
+[0m.:. Batch 57481 to 57540 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9021.541015625[0m	
+[0mGPU[0m	[0m1104637952 / 5032706048[0m	
+[0m: 81% done[0m	[0m00:12:24 left[0m	
+[0m.:. Batch 61141 to 61200 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9089.6416015625[0m	
+[0mGPU[0m	[0m1068331008 / 5032706048[0m	
+[0m: 86% done[0m	[0m00:09:10 left[0m	
+[0m.:. Batch 64741 to 64800 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9109.4384765625[0m	
+[0mGPU[0m	[0m1068331008 / 5032706048[0m	
+[0m: 91% done[0m	[0m00:06:00 left[0m	
+[0m.:. Batch 68341 to 68400 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9113.5634765625[0m	
+[0mGPU[0m	[0m1068331008 / 5032706048[0m	
+[0m: 96% done[0m	[0m00:02:49 left[0m	
+[0m.:. Batch 71941 to 72000 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9117.1357421875[0m	
+[0mGPU[0m	[0m1068331008 / 5032706048[0m	
+[0m.:. End of Epoch n° 6[0m	
+[0m: Real time to learn 1 batch = 00:00:03[0m	
+[0m: Real time to learn full batch = 01:03:50[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 0.95184433705054%[0m	
+[0m: average rowUcol correct (VOC measure): 0.099486637385654%[0m	
+[0m: > global correct: 0.96366552372525%[0m	
+[0m# ... saving model to /home/cadene/doc/DeepRecipes/convnet/rslt/overfat+2+8e-3/model.t7[0m	
+[0m[0m	
+[0m# Epoch n° 7[0m	
+[0m.:. Batch 1 to 60 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m10023.267578125[0m	
+[0mGPU[0m	[0m1562996736 / 5032706048[0m	
+[0m: 1% done[0m	[0m02:09:44 left[0m	
+[0m.:. Batch 3241 to 3300 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8689.5205078125[0m	
+[0mGPU[0m	[0m1245671424 / 5032706048[0m	
+[0m: 6% done[0m	[0m01:06:41 left[0m	
+[0m.:. Batch 6841 to 6900 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8694.771484375[0m	
+[0mGPU[0m	[0m1245671424 / 5032706048[0m	
+[0m: 11% done[0m	[0m01:00:19 left[0m	
+[0m.:. Batch 10441 to 10500 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8700.0888671875[0m	
+[0mGPU[0m	[0m1245671424 / 5032706048[0m	
+[0m: 16% done[0m	[0m00:55:59 left[0m	
+[0m.:. Batch 14101 to 14160 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8768.86328125[0m	
+[0mGPU[0m	[0m1210413056 / 5032706048[0m	
+[0m: 21% done[0m	[0m00:52:07 left[0m	
+[0m.:. Batch 17701 to 17760 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8776.4873046875[0m	
+[0mGPU[0m	[0m1210413056 / 5032706048[0m	
+[0m: 26% done[0m	[0m00:48:45 left[0m	
+[0m.:. Batch 21301 to 21360 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8780.55859375[0m	
+[0mGPU[0m	[0m1210413056 / 5032706048[0m	
+[0m: 31% done[0m	[0m00:45:17 left[0m	
+[0m.:. Batch 24961 to 25020 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8849.3173828125[0m	
+[0mGPU[0m	[0m1175154688 / 5032706048[0m	
+[0m: 36% done[0m	[0m00:41:51 left[0m	
+[0m.:. Batch 28561 to 28620 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8853.1357421875[0m	
+[0mGPU[0m	[0m1175154688 / 5032706048[0m	
+[0m: 41% done[0m	[0m00:38:32 left[0m	
+[0m.:. Batch 32161 to 32220 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8864.59765625[0m	
+[0mGPU[0m	[0m1175154688 / 5032706048[0m	
+[0m: 46% done[0m	[0m00:35:15 left[0m	
+[0m.:. Batch 35761 to 35820 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8868.08984375[0m	
+[0mGPU[0m	[0m1175154688 / 5032706048[0m	
+[0m: 51% done[0m	[0m00:31:55 left[0m	
+[0m.:. Batch 39421 to 39480 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8937.0537109375[0m	
+[0mGPU[0m	[0m1139896320 / 5032706048[0m	
+[0m: 56% done[0m	[0m00:28:40 left[0m	
+[0m.:. Batch 43021 to 43080 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8941.275390625[0m	
+[0mGPU[0m	[0m1139896320 / 5032706048[0m	
+[0m: 61% done[0m	[0m00:25:26 left[0m	
+[0m.:. Batch 46621 to 46680 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8944.9072265625[0m	
+[0mGPU[0m	[0m1139896320 / 5032706048[0m	
+[0m: 66% done[0m	[0m00:22:13 left[0m	
+[0m.:. Batch 50281 to 50340 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9013.474609375[0m	
+[0mGPU[0m	[0m1104637952 / 5032706048[0m	
+[0m: 71% done[0m	[0m00:18:56 left[0m	
+[0m.:. Batch 53881 to 53940 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9017.716796875[0m	
+[0mGPU[0m	[0m1104637952 / 5032706048[0m	
+[0m: 76% done[0m	[0m00:15:43 left[0m	
+[0m.:. Batch 57481 to 57540 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9021.0546875[0m	
+[0mGPU[0m	[0m1104637952 / 5032706048[0m	
+[0m: 81% done[0m	[0m00:12:31 left[0m	
+[0m.:. Batch 61141 to 61200 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9090.04296875[0m	
+[0mGPU[0m	[0m1068331008 / 5032706048[0m	
+[0m: 86% done[0m	[0m00:09:15 left[0m	
+[0m.:. Batch 64741 to 64800 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9109.7841796875[0m	
+[0mGPU[0m	[0m1068331008 / 5032706048[0m	
+[0m: 91% done[0m	[0m00:06:03 left[0m	
+[0m.:. Batch 68341 to 68400 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9113.71484375[0m	
+[0mGPU[0m	[0m1068331008 / 5032706048[0m	
+[0m: 96% done[0m	[0m00:02:51 left[0m	
+[0m.:. Batch 71941 to 72000 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9117.1083984375[0m	
+[0mGPU[0m	[0m1068331008 / 5032706048[0m	
+[0m.:. End of Epoch n° 7[0m	
+[0m: Real time to learn 1 batch = 00:00:03[0m	
+[0m: Real time to learn full batch = 01:04:20[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 1.0477565524012%[0m	
+[0m: average rowUcol correct (VOC measure): 0.11517042467039%[0m	
+[0m: > global correct: 1.0604468532242%[0m	
+[0m# ... saving model to /home/cadene/doc/DeepRecipes/convnet/rslt/overfat+2+8e-3/model.t7[0m	
+[0m[0m	
+[0m# Epoch n° 8[0m	
+[0m.:. Batch 1 to 60 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m10023.568359375[0m	
+[0mGPU[0m	[0m1562996736 / 5032706048[0m	
+[0m: 1% done[0m	[0m01:03:54 left[0m	
+[0m.:. Batch 3241 to 3300 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8689.8837890625[0m	
+[0mGPU[0m	[0m1245671424 / 5032706048[0m	
+[0m: 6% done[0m	[0m01:00:11 left[0m	
+[0m.:. Batch 6841 to 6900 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8694.6337890625[0m	
+[0mGPU[0m	[0m1245671424 / 5032706048[0m	
+[0m: 11% done[0m	[0m00:57:05 left[0m	
+[0m.:. Batch 10441 to 10500 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8700.4150390625[0m	
+[0mGPU[0m	[0m1245671424 / 5032706048[0m	
+[0m: 16% done[0m	[0m00:53:56 left[0m	
+[0m.:. Batch 14101 to 14160 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8769.2451171875[0m	
+[0mGPU[0m	[0m1210413056 / 5032706048[0m	
+[0m: 21% done[0m	[0m00:50:43 left[0m	
+[0m.:. Batch 17701 to 17760 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8776.8974609375[0m	
+[0mGPU[0m	[0m1210413056 / 5032706048[0m	
+[0m: 26% done[0m	[0m00:47:32 left[0m	
+[0m.:. Batch 21301 to 21360 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8780.884765625[0m	
+[0mGPU[0m	[0m1210413056 / 5032706048[0m	
+[0m: 31% done[0m	[0m00:44:22 left[0m	
+[0m.:. Batch 24961 to 25020 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8849.7080078125[0m	
+[0mGPU[0m	[0m1175154688 / 5032706048[0m	
+[0m: 36% done[0m	[0m00:41:08 left[0m	
+[0m.:. Batch 28561 to 28620 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8853.6044921875[0m	
+[0mGPU[0m	[0m1175154688 / 5032706048[0m	
+[0m: 41% done[0m	[0m00:37:57 left[0m	
+[0m.:. Batch 32161 to 32220 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8864.826171875[0m	
+[0mGPU[0m	[0m1175154688 / 5032706048[0m	
+[0m: 46% done[0m	[0m00:34:46 left[0m	
+[0m.:. Batch 35761 to 35820 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8868.7919921875[0m	
+[0mGPU[0m	[0m1175154688 / 5032706048[0m	
+[0m: 51% done[0m	[0m00:31:32 left[0m	
+[0m.:. Batch 39421 to 39480 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8937.7529296875[0m	
+[0mGPU[0m	[0m1139896320 / 5032706048[0m	
+[0m: 56% done[0m	[0m00:28:22 left[0m	
+[0m.:. Batch 43021 to 43080 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8941.6357421875[0m	
+[0mGPU[0m	[0m1139896320 / 5032706048[0m	
+[0m: 61% done[0m	[0m00:25:11 left[0m	
+[0m.:. Batch 46621 to 46680 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8945.263671875[0m	
+[0mGPU[0m	[0m1139896320 / 5032706048[0m	
+[0m: 66% done[0m	[0m00:22:00 left[0m	
+[0m.:. Batch 50281 to 50340 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9014.021484375[0m	
+[0mGPU[0m	[0m1104637952 / 5032706048[0m	
+[0m: 71% done[0m	[0m00:18:46 left[0m	
+[0m.:. Batch 53881 to 53940 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9017.1875[0m	
+[0mGPU[0m	[0m1104637952 / 5032706048[0m	
+[0m: 76% done[0m	[0m00:15:35 left[0m	
+[0m.:. Batch 57481 to 57540 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9021.9638671875[0m	
+[0mGPU[0m	[0m1104637952 / 5032706048[0m	
+[0m: 81% done[0m	[0m00:12:25 left[0m	
+[0m.:. Batch 61141 to 61200 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9090.296875[0m	
+[0mGPU[0m	[0m1068331008 / 5032706048[0m	
+[0m: 86% done[0m	[0m00:09:11 left[0m	
+[0m.:. Batch 64741 to 64800 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9109.841796875[0m	
+[0mGPU[0m	[0m1068331008 / 5032706048[0m	
+[0m: 91% done[0m	[0m00:06:00 left[0m	
+[0m.:. Batch 68341 to 68400 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9113.9599609375[0m	
+[0mGPU[0m	[0m1068331008 / 5032706048[0m	
+[0m: 96% done[0m	[0m00:02:49 left[0m	
+[0m.:. Batch 71941 to 72000 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9117.7041015625[0m	
+[0mGPU[0m	[0m1068331008 / 5032706048[0m	
+[0m.:. End of Epoch n° 8[0m	
+[0m: Real time to learn 1 batch = 00:00:03[0m	
+[0m: Real time to learn full batch = 01:03:53[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 0.93138608332299%[0m	
+[0m: average rowUcol correct (VOC measure): 0.10051635568869%[0m	
+[0m: > global correct: 0.94016148656122%[0m	
+[0m# ... saving model to /home/cadene/doc/DeepRecipes/convnet/rslt/overfat+2+8e-3/model.t7[0m	
+[0m[0m	
+[0m# Epoch n° 9[0m	
+[0m.:. Batch 1 to 60 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m10023.568359375[0m	
+[0mGPU[0m	[0m1562996736 / 5032706048[0m	
+[0m: 1% done[0m	[0m01:18:10 left[0m	
+[0m.:. Batch 3241 to 3300 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8690.171875[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 6% done[0m	[0m01:01:38 left[0m	
+[0m.:. Batch 6841 to 6900 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8694.521484375[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 11% done[0m	[0m00:57:42 left[0m	
+[0m.:. Batch 10441 to 10500 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8700.23046875[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 16% done[0m	[0m00:55:00 left[0m	
+[0m.:. Batch 14101 to 14160 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8769.0791015625[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 21% done[0m	[0m01:02:54 left[0m	
+[0m.:. Batch 17701 to 17760 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8777.2255859375[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 26% done[0m	[0m00:59:01 left[0m	
+[0m.:. Batch 21301 to 21360 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8780.7841796875[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 31% done[0m	[0m00:55:40 left[0m	
+[0m.:. Batch 24961 to 25020 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8849.37890625[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 36% done[0m	[0m00:50:06 left[0m	
+[0m.:. Batch 28561 to 28620 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8853.3173828125[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 41% done[0m	[0m00:45:24 left[0m	
+[0m.:. Batch 32161 to 32220 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8864.8134765625[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 46% done[0m	[0m00:41:30 left[0m	
+[0m.:. Batch 35761 to 35820 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8868.7841796875[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 51% done[0m	[0m00:37:02 left[0m	
+[0m.:. Batch 39421 to 39480 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8937.3564453125[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 56% done[0m	[0m00:32:52 left[0m	
+[0m.:. Batch 43021 to 43080 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8941.4267578125[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 61% done[0m	[0m00:28:51 left[0m	
+[0m.:. Batch 46621 to 46680 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8945.1416015625[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 66% done[0m	[0m00:24:58 left[0m	
+[0m.:. Batch 50281 to 50340 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9013.974609375[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 71% done[0m	[0m00:21:09 left[0m	
+[0m.:. Batch 53881 to 53940 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9017.435546875[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 76% done[0m	[0m00:17:27 left[0m	
+[0m.:. Batch 57481 to 57540 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9021.6171875[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 81% done[0m	[0m00:13:49 left[0m	
+[0m.:. Batch 61141 to 61200 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9090.45703125[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 86% done[0m	[0m00:10:09 left[0m	
+[0m.:. Batch 64741 to 64800 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9110.228515625[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 91% done[0m	[0m00:06:36 left[0m	
+[0m.:. Batch 68341 to 68400 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9113.6552734375[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 96% done[0m	[0m00:03:06 left[0m	
+[0m.:. Batch 71941 to 72000 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9117.607421875[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m.:. End of Epoch n° 9[0m	
+[0m: Real time to learn 1 batch = 00:00:03[0m	
+[0m: Real time to learn full batch = 01:10:47[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 0.96552150674386%[0m	
+[0m: average rowUcol correct (VOC measure): 0.10239525944788%[0m	
+[0m: > global correct: 0.97749142793939%[0m	
+[0m# ... saving model to /home/cadene/doc/DeepRecipes/convnet/rslt/overfat+2+8e-3/model.t7[0m	
+[0m[0m	
+[0m# Epoch n° 10[0m	
+[0m.:. Batch 1 to 60 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m10023.630859375[0m	
+[0mGPU[0m	[0m1562734592 / 5032706048[0m	
+[0m: 1% done[0m	[0m01:00:39 left[0m	
+[0m.:. Batch 3241 to 3300 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8690.1123046875[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 6% done[0m	[0m00:59:57 left[0m	
+[0m.:. Batch 6841 to 6900 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8694.8740234375[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 11% done[0m	[0m00:56:57 left[0m	
+[0m.:. Batch 10441 to 10500 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8700.7548828125[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 16% done[0m	[0m00:53:47 left[0m	
+[0m.:. Batch 14101 to 14160 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8769.259765625[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 21% done[0m	[0m00:56:07 left[0m	
+[0m.:. Batch 17701 to 17760 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8777.0205078125[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 26% done[0m	[0m00:51:36 left[0m	
+[0m.:. Batch 21301 to 21360 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8780.6123046875[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 31% done[0m	[0m00:47:31 left[0m	
+[0m.:. Batch 24961 to 25020 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8849.5517578125[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 36% done[0m	[0m00:43:37 left[0m	
+[0m.:. Batch 28561 to 28620 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8853.2236328125[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 41% done[0m	[0m00:39:58 left[0m	
+[0m.:. Batch 32161 to 32220 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8865.060546875[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 46% done[0m	[0m00:36:45 left[0m	
+[0m.:. Batch 35761 to 35820 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8868.791015625[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 51% done[0m	[0m00:34:04 left[0m	
+[0m.:. Batch 39421 to 39480 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8937.2470703125[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 56% done[0m	[0m00:30:25 left[0m	
+[0m.:. Batch 43021 to 43080 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8941.4189453125[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 61% done[0m	[0m00:26:52 left[0m	
+[0m.:. Batch 46621 to 46680 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8944.9775390625[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 66% done[0m	[0m00:23:22 left[0m	
+[0m.:. Batch 50281 to 50340 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9014.2001953125[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 71% done[0m	[0m00:19:57 left[0m	
+[0m.:. Batch 53881 to 53940 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9017.861328125[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 76% done[0m	[0m00:17:15 left[0m	
+[0m.:. Batch 57481 to 57540 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9022.0390625[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 81% done[0m	[0m00:13:39 left[0m	
+[0m.:. Batch 61141 to 61200 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9090.6904296875[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 86% done[0m	[0m00:10:32 left[0m	
+[0m.:. Batch 64741 to 64800 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9110.166015625[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 91% done[0m	[0m00:07:02 left[0m	
+[0m.:. Batch 68341 to 68400 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9113.97265625[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 96% done[0m	[0m00:03:30 left[0m	
+[0m.:. Batch 71941 to 72000 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9117.353515625[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m.:. End of Epoch n° 10[0m	
+[0m: Real time to learn 1 batch = 00:00:04[0m	
+[0m: Real time to learn full batch = 01:23:56[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 0.98931040063888%[0m	
+[0m: average rowUcol correct (VOC measure): 0.10825964301769%[0m	
+[0m: > global correct: 1.0009954651034%[0m	
+[0m# ... saving model to /home/cadene/doc/DeepRecipes/convnet/rslt/overfat+2+8e-3/model.t7[0m	
+[0m[0m	
+[0m# Epoch n° 11[0m	
+[0m.:. Batch 1 to 60 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m10024.255859375[0m	
+[0mGPU[0m	[0m1562734592 / 5032706048[0m	
+[0m: 1% done[0m	[0m01:59:02 left[0m	
+[0m.:. Batch 3241 to 3300 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8690.24609375[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 6% done[0m	[0m02:06:38 left[0m	
+[0m.:. Batch 6841 to 6900 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8694.7734375[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 11% done[0m	[0m01:31:09 left[0m	
+[0m.:. Batch 10441 to 10500 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8700.603515625[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 16% done[0m	[0m01:15:43 left[0m	
+[0m.:. Batch 14101 to 14160 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8769.416015625[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 21% done[0m	[0m01:06:07 left[0m	
+[0m.:. Batch 17701 to 17760 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8776.9697265625[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 26% done[0m	[0m00:59:11 left[0m	
+[0m.:. Batch 21301 to 21360 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8780.8740234375[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 31% done[0m	[0m00:53:26 left[0m	
+[0m.:. Batch 24961 to 25020 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8849.767578125[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 36% done[0m	[0m00:48:25 left[0m	
+[0m.:. Batch 28561 to 28620 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8853.2783203125[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 41% done[0m	[0m00:43:51 left[0m	
+[0m.:. Batch 32161 to 32220 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8864.9951171875[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 46% done[0m	[0m00:39:34 left[0m	
+[0m.:. Batch 35761 to 35820 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8868.8076171875[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 51% done[0m	[0m00:35:27 left[0m	
+[0m.:. Batch 39421 to 39480 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8937.8916015625[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 56% done[0m	[0m00:31:34 left[0m	
+[0m.:. Batch 43021 to 43080 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8941.7529296875[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 61% done[0m	[0m00:27:48 left[0m	
+[0m.:. Batch 46621 to 46680 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8945.009765625[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 66% done[0m	[0m00:24:08 left[0m	
+[0m.:. Batch 50281 to 50340 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9014.41015625[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 71% done[0m	[0m00:20:27 left[0m	
+[0m.:. Batch 53881 to 53940 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9017.767578125[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 76% done[0m	[0m00:16:54 left[0m	
+[0m.:. Batch 57481 to 57540 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9021.3583984375[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 81% done[0m	[0m00:13:23 left[0m	
+[0m.:. Batch 61141 to 61200 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9090.2861328125[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 86% done[0m	[0m00:09:52 left[0m	
+[0m.:. Batch 64741 to 64800 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9110.1787109375[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 91% done[0m	[0m00:06:26 left[0m	
+[0m.:. Batch 68341 to 68400 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9113.8955078125[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 96% done[0m	[0m00:03:01 left[0m	
+[0m.:. Batch 71941 to 72000 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9117.8056640625[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m.:. End of Epoch n° 11[0m	
+[0m: Real time to learn 1 batch = 00:00:03[0m	
+[0m: Real time to learn full batch = 01:07:57[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 0.91859270544206%[0m	
+[0m: average rowUcol correct (VOC measure): 0.10190929140951%[0m	
+[0m: > global correct: 0.92910076318991%[0m	
+[0m# ... saving model to /home/cadene/doc/DeepRecipes/convnet/rslt/overfat+2+8e-3/model.t7[0m	
+[0m[0m	
+[0m# Epoch n° 12[0m	
+[0m.:. Batch 1 to 60 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m10024.255859375[0m	
+[0mGPU[0m	[0m1562734592 / 5032706048[0m	
+[0m: 1% done[0m	[0m01:09:35 left[0m	
+[0m.:. Batch 3241 to 3300 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8689.892578125[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 6% done[0m	[0m01:00:50 left[0m	
+[0m.:. Batch 6841 to 6900 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8694.8369140625[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 11% done[0m	[0m00:57:22 left[0m	
+[0m.:. Batch 10441 to 10500 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8700.392578125[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 16% done[0m	[0m00:54:04 left[0m	
+[0m.:. Batch 14101 to 14160 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8769.25390625[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 21% done[0m	[0m00:50:46 left[0m	
+[0m.:. Batch 17701 to 17760 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8777.05078125[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 26% done[0m	[0m00:47:33 left[0m	
+[0m.:. Batch 21301 to 21360 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8781.07421875[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 31% done[0m	[0m00:44:21 left[0m	
+[0m.:. Batch 24961 to 25020 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8849.7373046875[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 36% done[0m	[0m00:41:08 left[0m	
+[0m.:. Batch 28561 to 28620 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8853.068359375[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 41% done[0m	[0m00:37:57 left[0m	
+[0m.:. Batch 32161 to 32220 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8865.4541015625[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 46% done[0m	[0m00:34:46 left[0m	
+[0m.:. Batch 35761 to 35820 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8868.6806640625[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 51% done[0m	[0m00:31:33 left[0m	
+[0m.:. Batch 39421 to 39480 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8937.83203125[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 56% done[0m	[0m00:28:22 left[0m	
+[0m.:. Batch 43021 to 43080 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8941.4404296875[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 61% done[0m	[0m00:25:11 left[0m	
+[0m.:. Batch 46621 to 46680 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8945.1806640625[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 66% done[0m	[0m00:22:01 left[0m	
+[0m.:. Batch 50281 to 50340 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9013.876953125[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 71% done[0m	[0m00:18:47 left[0m	
+[0m.:. Batch 53881 to 53940 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9017.6767578125[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 76% done[0m	[0m00:15:36 left[0m	
+[0m.:. Batch 57481 to 57540 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9021.32421875[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 81% done[0m	[0m00:12:25 left[0m	
+[0m.:. Batch 61141 to 61200 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9090.16796875[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 86% done[0m	[0m00:09:11 left[0m	
+[0m.:. Batch 64741 to 64800 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9110.0009765625[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 91% done[0m	[0m00:06:00 left[0m	
+[0m.:. Batch 68341 to 68400 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9113.8427734375[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 96% done[0m	[0m00:02:50 left[0m	
+[0m.:. Batch 71941 to 72000 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9117.158203125[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m.:. End of Epoch n° 12[0m	
+[0m: Real time to learn 1 batch = 00:00:03[0m	
+[0m: Real time to learn full batch = 01:03:54[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 0.99657061797945%[0m	
+[0m: average rowUcol correct (VOC measure): 0.11126274971457%[0m	
+[0m: > global correct: 1.0079084172105%[0m	
+[0m# ... saving model to /home/cadene/doc/DeepRecipes/convnet/rslt/overfat+2+8e-3/model.t7[0m	
+[0m[0m	
+[0m# Epoch n° 13[0m	
+[0m.:. Batch 1 to 60 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m10024.255859375[0m	
+[0mGPU[0m	[0m1562734592 / 5032706048[0m	
+[0m: 1% done[0m	[0m01:09:43 left[0m	
+[0m.:. Batch 3241 to 3300 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8689.9462890625[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 6% done[0m	[0m01:00:46 left[0m	
+[0m.:. Batch 6841 to 6900 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8694.783203125[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 11% done[0m	[0m00:57:19 left[0m	
+[0m.:. Batch 10441 to 10500 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8700.267578125[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 16% done[0m	[0m00:54:02 left[0m	
+[0m.:. Batch 14101 to 14160 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8769.1689453125[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 21% done[0m	[0m00:50:45 left[0m	
+[0m.:. Batch 17701 to 17760 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8777.298828125[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 26% done[0m	[0m00:47:35 left[0m	
+[0m.:. Batch 21301 to 21360 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8780.693359375[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 31% done[0m	[0m00:44:24 left[0m	
+[0m.:. Batch 24961 to 25020 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8849.8759765625[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 36% done[0m	[0m00:41:09 left[0m	
+[0m.:. Batch 28561 to 28620 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8853.3896484375[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 41% done[0m	[0m00:37:57 left[0m	
+[0m.:. Batch 32161 to 32220 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8865.1337890625[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 46% done[0m	[0m00:34:46 left[0m	
+[0m.:. Batch 35761 to 35820 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8868.869140625[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 51% done[0m	[0m00:31:32 left[0m	
+[0m.:. Batch 39421 to 39480 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8937.5634765625[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 56% done[0m	[0m00:28:21 left[0m	
+[0m.:. Batch 43021 to 43080 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8940.853515625[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 61% done[0m	[0m00:25:10 left[0m	
+[0m.:. Batch 46621 to 46680 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8945.55859375[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 66% done[0m	[0m00:21:59 left[0m	
+[0m.:. Batch 50281 to 50340 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9014.0185546875[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 71% done[0m	[0m00:18:45 left[0m	
+[0m.:. Batch 53881 to 53940 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9017.873046875[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 76% done[0m	[0m00:15:35 left[0m	
+[0m.:. Batch 57481 to 57540 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9021.7626953125[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 81% done[0m	[0m00:12:24 left[0m	
+[0m.:. Batch 61141 to 61200 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9090.3125[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 86% done[0m	[0m00:09:10 left[0m	
+[0m.:. Batch 64741 to 64800 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9110.1005859375[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 91% done[0m	[0m00:06:00 left[0m	
+[0m.:. Batch 68341 to 68400 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9113.9208984375[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 96% done[0m	[0m00:02:49 left[0m	
+[0m.:. Batch 71941 to 72000 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9117.5205078125[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m.:. End of Epoch n° 13[0m	
+[0m: Real time to learn 1 batch = 00:00:03[0m	
+[0m: Real time to learn full batch = 01:03:49[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 0.98252378238162%[0m	
+[0m: average rowUcol correct (VOC measure): 0.10524500071504%[0m	
+[0m: > global correct: 0.99408251299635%[0m	
+[0m# ... saving model to /home/cadene/doc/DeepRecipes/convnet/rslt/overfat+2+8e-3/model.t7[0m	
+[0m[0m	
+[0m# Epoch n° 14[0m	
+[0m.:. Batch 1 to 60 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m10023.630859375[0m	
+[0mGPU[0m	[0m1562734592 / 5032706048[0m	
+[0m: 1% done[0m	[0m01:22:16 left[0m	
+[0m.:. Batch 3241 to 3300 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8689.8984375[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 6% done[0m	[0m01:02:02 left[0m	
+[0m.:. Batch 6841 to 6900 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8694.3583984375[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 11% done[0m	[0m00:57:54 left[0m	
+[0m.:. Batch 10441 to 10500 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8700.828125[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 16% done[0m	[0m00:54:25 left[0m	
+[0m.:. Batch 14101 to 14160 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8769.505859375[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 21% done[0m	[0m00:51:03 left[0m	
+[0m.:. Batch 17701 to 17760 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8777.2470703125[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 26% done[0m	[0m00:47:47 left[0m	
+[0m.:. Batch 21301 to 21360 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8781.189453125[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 31% done[0m	[0m00:44:35 left[0m	
+[0m.:. Batch 24961 to 25020 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8849.5849609375[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 36% done[0m	[0m00:41:18 left[0m	
+[0m.:. Batch 28561 to 28620 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8853.2822265625[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 41% done[0m	[0m00:38:06 left[0m	
+[0m.:. Batch 32161 to 32220 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8865.1640625[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 46% done[0m	[0m00:34:53 left[0m	
+[0m.:. Batch 35761 to 35820 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8868.6240234375[0m	
+[0mGPU[0m	[0m1174892544 / 5032706048[0m	
+[0m: 51% done[0m	[0m00:31:38 left[0m	
+[0m.:. Batch 39421 to 39480 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8937.8701171875[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 56% done[0m	[0m00:28:26 left[0m	
+[0m.:. Batch 43021 to 43080 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8941.353515625[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 61% done[0m	[0m00:25:14 left[0m	
+[0m.:. Batch 46621 to 46680 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8945.3447265625[0m	
+[0mGPU[0m	[0m1139634176 / 5032706048[0m	
+[0m: 66% done[0m	[0m00:22:03 left[0m	
+[0m.:. Batch 50281 to 50340 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9013.875[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 71% done[0m	[0m00:18:48 left[0m	
+[0m.:. Batch 53881 to 53940 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9017.845703125[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 76% done[0m	[0m00:15:37 left[0m	
+[0m.:. Batch 57481 to 57540 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9021.1103515625[0m	
+[0mGPU[0m	[0m1104375808 / 5032706048[0m	
+[0m: 81% done[0m	[0m00:12:26 left[0m	
+[0m.:. Batch 61141 to 61200 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9090.1435546875[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 86% done[0m	[0m00:09:12 left[0m	
+[0m.:. Batch 64741 to 64800 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9110.0185546875[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 91% done[0m	[0m00:06:01 left[0m	
+[0m.:. Batch 68341 to 68400 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9114.3671875[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m: 96% done[0m	[0m00:02:50 left[0m	
+[0m.:. Batch 71941 to 72000 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9117.50390625[0m	
+[0mGPU[0m	[0m1068068864 / 5032706048[0m	
+[0m.:. End of Epoch n° 14[0m	
+[0m: Real time to learn 1 batch = 00:00:03[0m	
+[0m: Real time to learn full batch = 01:03:58[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 1.020385865537%[0m	
+[0m: average rowUcol correct (VOC measure): 0.11262062575096%[0m	
+[0m: > global correct: 1.0327950447959%[0m	
+[0m# ... saving model to /home/cadene/doc/DeepRecipes/convnet/rslt/overfat+2+8e-3/model.t7[0m	
+[0m[0m	
+[0m# Epoch n° 15[0m	
+[0m.:. Batch 1 to 60 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m10023.630859375[0m	
+[0mGPU[0m	[0m1562734592 / 5032706048[0m	
+[0m: 1% done[0m	[0m02:08:25 left[0m	
+[0m.:. Batch 3241 to 3300 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8689.92578125[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 6% done[0m	[0m01:06:57 left[0m	
+[0m.:. Batch 6841 to 6900 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8694.8017578125[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 11% done[0m	[0m01:01:41 left[0m	
+[0m.:. Batch 10441 to 10500 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8700.5517578125[0m	
+[0mGPU[0m	[0m1245409280 / 5032706048[0m	
+[0m: 16% done[0m	[0m00:56:54 left[0m	
+[0m.:. Batch 14101 to 14160 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8769.2451171875[0m	
+[0mGPU[0m	[0m1210150912 / 5032706048[0m	
+[0m: 21% done[0m	[0m00:52:49 left[0m	
+[0m.:. Batch 17701 to 17760 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8776.876953125[0m	
+[0mGPU[0m	[0m1210413056 / 5032706048[0m	
+[0m: 26% done[0m	[0m00:49:07 left[0m	
+[0m.:. Batch 21301 to 21360 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8780.74609375[0m	
+[0mGPU[0m	[0m1210413056 / 5032706048[0m	
+[0m: 31% done[0m	[0m00:45:35 left[0m	
+[0m.:. Batch 24961 to 25020 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8849.720703125[0m	
+[0mGPU[0m	[0m1175154688 / 5032706048[0m	
+[0m: 36% done[0m	[0m00:42:07 left[0m	
+[0m.:. Batch 28561 to 28620 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8853.279296875[0m	
+[0mGPU[0m	[0m1175154688 / 5032706048[0m	
+[0m: 41% done[0m	[0m00:38:45 left[0m	
+[0m.:. Batch 32161 to 32220 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8865.0087890625[0m	
+[0mGPU[0m	[0m1175154688 / 5032706048[0m	
+[0m: 46% done[0m	[0m00:35:25 left[0m	
+[0m.:. Batch 35761 to 35820 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8869.220703125[0m	
+[0mGPU[0m	[0m1175154688 / 5032706048[0m	
+[0m: 51% done[0m	[0m00:32:04 left[0m	
+[0m.:. Batch 39421 to 39480 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8937.7919921875[0m	
+[0mGPU[0m	[0m1139896320 / 5032706048[0m	
+[0m: 56% done[0m	[0m00:28:47 left[0m	
+[0m.:. Batch 43021 to 43080 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8941.4873046875[0m	
+[0mGPU[0m	[0m1139896320 / 5032706048[0m	
+[0m: 61% done[0m	[0m00:25:32 left[0m	
+[0m.:. Batch 46621 to 46680 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8944.8896484375[0m	
+[0mGPU[0m	[0m1139896320 / 5032706048[0m	
+[0m: 66% done[0m	[0m00:22:17 left[0m	
+[0m.:. Batch 50281 to 50340 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9013.8046875[0m	
+[0mGPU[0m	[0m1104637952 / 5032706048[0m	
+[0m: 71% done[0m	[0m00:18:59 left[0m	
+[0m.:. Batch 53881 to 53940 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9017.7880859375[0m	
+[0mGPU[0m	[0m1104637952 / 5032706048[0m	
+[0m: 76% done[0m	[0m00:15:46 left[0m	
+[0m.:. Batch 57481 to 57540 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9021.4013671875[0m	
+[0mGPU[0m	[0m1104637952 / 5032706048[0m	
+[0m: 81% done[0m	[0m00:12:32 left[0m	
+[0m.:. Batch 61141 to 61200 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9090.3681640625[0m	
+[0mGPU[0m	[0m1068331008 / 5032706048[0m	
+[0m: 86% done[0m	[0m00:09:16 left[0m	
+[0m.:. Batch 64741 to 64800 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9110.26171875[0m	
+[0mGPU[0m	[0m1068331008 / 5032706048[0m	
+[0m: 91% done[0m	[0m00:06:03 left[0m	
+[0m.:. Batch 68341 to 68400 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9113.9873046875[0m	
+[0mGPU[0m	[0m1068331008 / 5032706048[0m	
+[0m: 96% done[0m	[0m00:02:51 left[0m	
+[0m.:. Batch 71941 to 72000 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9117.3544921875[0m	
+[0mGPU[0m	[0m1068331008 / 5032706048[0m	
+[0m.:. End of Epoch n° 15[0m	
+[0m: Real time to learn 1 batch = 00:00:03[0m	
+[0m: Real time to learn full batch = 01:04:24[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 1.0189682693626%[0m	
+[0m: average rowUcol correct (VOC measure): 0.11511147921296%[0m	
+[0m: > global correct: 1.0300298639531%[0m	
+[0m# ... saving model to /home/cadene/doc/DeepRecipes/convnet/rslt/overfat+2+8e-3/model.t7[0m	
+[0m[0m	
+[0m# Epoch n° 16[0m	
+[0m.:. Batch 1 to 60 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m10023.630859375[0m	
+[0mGPU[0m	[0m1562996736 / 5032706048[0m	
+[0m: 1% done[0m	[0m03:28:46 left[0m	
+[0m.:. Batch 3241 to 3300 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8689.7744140625[0m	
+[0mGPU[0m	[0m1245671424 / 5032706048[0m	
+[0m: 6% done[0m	[0m01:14:44 left[0m	
+[0m.:. Batch 6841 to 6900 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8694.826171875[0m	
+[0mGPU[0m	[0m1245671424 / 5032706048[0m	
+[0m: 11% done[0m	[0m01:04:22 left[0m	
+[0m.:. Batch 10441 to 10500 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8700.830078125[0m	
+[0mGPU[0m	[0m1245671424 / 5032706048[0m	
+[0m: 16% done[0m	[0m00:58:36 left[0m	
+[0m.:. Batch 14101 to 14160 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8769.208984375[0m	
+[0mGPU[0m	[0m1210413056 / 5032706048[0m	
+[0m: 21% done[0m	[0m00:54:01 left[0m	
+[0m.:. Batch 17701 to 17760 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8777.046875[0m	
+[0mGPU[0m	[0m1210413056 / 5032706048[0m	
+[0m: 26% done[0m	[0m00:50:03 left[0m	
+[0m.:. Batch 21301 to 21360 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8780.8466796875[0m	
+[0mGPU[0m	[0m1210413056 / 5032706048[0m	
+[0m: 31% done[0m	[0m00:46:19 left[0m	
+[0m.:. Batch 24961 to 25020 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8849.5478515625[0m	
+[0mGPU[0m	[0m1175154688 / 5032706048[0m	
+[0m: 36% done[0m	[0m00:42:41 left[0m	
+[0m.:. Batch 28561 to 28620 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8853.130859375[0m	
+[0mGPU[0m	[0m1175154688 / 5032706048[0m	
+[0m: 41% done[0m	[0m00:39:13 left[0m	
+[0m.:. Batch 32161 to 32220 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8865.2392578125[0m	
+[0mGPU[0m	[0m1175154688 / 5032706048[0m	
+[0m: 46% done[0m	[0m00:35:48 left[0m	
+[0m.:. Batch 35761 to 35820 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8868.6279296875[0m	
+[0mGPU[0m	[0m1175154688 / 5032706048[0m	
+[0m: 51% done[0m	[0m00:32:23 left[0m	
+[0m.:. Batch 39421 to 39480 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8937.7685546875[0m	
+[0mGPU[0m	[0m1139896320 / 5032706048[0m	
+[0m: 56% done[0m	[0m00:29:03 left[0m	
+[0m.:. Batch 43021 to 43080 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8941.4453125[0m	
+[0mGPU[0m	[0m1139896320 / 5032706048[0m	
+[0m: 61% done[0m	[0m00:25:45 left[0m	
+[0m.:. Batch 46621 to 46680 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8945.59375[0m	
+[0mGPU[0m	[0m1139896320 / 5032706048[0m	
+[0m: 66% done[0m	[0m00:22:28 left[0m	
+[0m.:. Batch 50281 to 50340 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9013.875[0m	
+[0mGPU[0m	[0m1104637952 / 5032706048[0m	
+[0m: 71% done[0m	[0m00:19:08 left[0m	
+[0m.:. Batch 53881 to 53940 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9017.6943359375[0m	
+[0mGPU[0m	[0m1104637952 / 5032706048[0m	
+[0m: 76% done[0m	[0m00:15:52 left[0m	
+[0m.:. Batch 57481 to 57540 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9021.2841796875[0m	
+[0mGPU[0m	[0m1104637952 / 5032706048[0m	
+[0m: 81% done[0m	[0m00:12:37 left[0m	
+[0m.:. Batch 61141 to 61200 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9090.521484375[0m	
+[0mGPU[0m	[0m1068331008 / 5032706048[0m	
+[0m: 86% done[0m	[0m00:09:20 left[0m	
+[0m.:. Batch 64741 to 64800 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9110.26171875[0m	
+[0mGPU[0m	[0m1068331008 / 5032706048[0m	
+[0m: 91% done[0m	[0m00:06:06 left[0m	
+[0m.:. Batch 68341 to 68400 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9113.91015625[0m	
+[0mGPU[0m	[0m1068331008 / 5032706048[0m	
+[0m: 96% done[0m	[0m00:02:52 left[0m	
+[0m.:. Batch 71941 to 72000 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9117.71875[0m	
+[0mGPU[0m	[0m1068331008 / 5032706048[0m	
+[0m.:. End of Epoch n° 16[0m	
+[0m: Real time to learn 1 batch = 00:00:03[0m	
+[0m: Real time to learn full batch = 01:04:46[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 0.96096333190061%[0m	
+[0m: average rowUcol correct (VOC measure): 0.10853550295428%[0m	
+[0m: > global correct: 0.97057847583232%[0m	
+[0m# ... saving model to /home/cadene/doc/DeepRecipes/convnet/rslt/overfat+2+8e-3/model.t7[0m	
+[0m[0m	
+[0m# Epoch n° 17[0m	
+[0m.:. Batch 1 to 60 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m10023.630859375[0m	
+[0mGPU[0m	[0m1562996736 / 5032706048[0m	
+[0m: 1% done[0m	[0m02:35:32 left[0m	
+[0m.:. Batch 3241 to 3300 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8690.1689453125[0m	
+[0mGPU[0m	[0m1245671424 / 5032706048[0m	
+[0m: 6% done[0m	[0m01:26:35 left[0m	
+[0m.:. Batch 6841 to 6900 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8694.4462890625[0m	
+[0mGPU[0m	[0m1245671424 / 5032706048[0m	
+[0m: 11% done[0m	[0m01:10:12 left[0m	
+[0m.:. Batch 10441 to 10500 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8700.2822265625[0m	
+[0mGPU[0m	[0m1245671424 / 5032706048[0m	
+[0m: 16% done[0m	[0m01:02:17 left[0m	
+[0m.:. Batch 14101 to 14160 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8769.4541015625[0m	
+[0mGPU[0m	[0m1210413056 / 5032706048[0m	
+[0m: 21% done[0m	[0m00:56:40 left[0m	
+[0m.:. Batch 17701 to 17760 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8776.947265625[0m	
+[0mGPU[0m	[0m1210413056 / 5032706048[0m	
+[0m: 26% done[0m	[0m00:52:02 left[0m	
+[0m.:. Batch 21301 to 21360 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8780.9453125[0m	
+[0mGPU[0m	[0m1210413056 / 5032706048[0m	
+[0m: 31% done[0m	[0m00:47:52 left[0m	
+[0m.:. Batch 24961 to 25020 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8849.9873046875[0m	
+[0mGPU[0m	[0m1175154688 / 5032706048[0m	
+[0m: 36% done[0m	[0m00:43:56 left[0m	
+[0m.:. Batch 28561 to 28620 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8853.451171875[0m	
+[0mGPU[0m	[0m1175154688 / 5032706048[0m	
+[0m: 41% done[0m	[0m00:40:13 left[0m	
+[0m.:. Batch 32161 to 32220 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8865.0146484375[0m	
+[0mGPU[0m	[0m1175154688 / 5032706048[0m	
+[0m: 46% done[0m	[0m00:36:37 left[0m	
+[0m.:. Batch 35761 to 35820 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8868.9404296875[0m	
+[0mGPU[0m	[0m1175154688 / 5032706048[0m	
+[0m: 51% done[0m	[0m00:33:03 left[0m	
+[0m.:. Batch 39421 to 39480 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8937.6767578125[0m	
+[0mGPU[0m	[0m1139896320 / 5032706048[0m	
+[0m: 56% done[0m	[0m00:29:36 left[0m	
+[0m.:. Batch 43021 to 43080 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8941.5888671875[0m	
+[0mGPU[0m	[0m1139896320 / 5032706048[0m	
+[0m: 61% done[0m	[0m00:26:12 left[0m	
+[0m.:. Batch 46621 to 46680 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8945.0859375[0m	
+[0mGPU[0m	[0m1139896320 / 5032706048[0m	
+[0m: 66% done[0m	[0m00:22:50 left[0m	
+[0m.:. Batch 50281 to 50340 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9014.2158203125[0m	
+[0mGPU[0m	[0m1104637952 / 5032706048[0m	
+[0m: 71% done[0m	[0m00:19:26 left[0m	
+[0m.:. Batch 53881 to 53940 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9018.01171875[0m	
+[0mGPU[0m	[0m1104637952 / 5032706048[0m	
+[0m: 76% done[0m	[0m00:16:06 left[0m	
+[0m.:. Batch 57481 to 57540 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9021.517578125[0m	
+[0mGPU[0m	[0m1104637952 / 5032706048[0m	
+[0m: 81% done[0m	[0m00:12:48 left[0m	
+[0m.:. Batch 61141 to 61200 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9090.259765625[0m	
+[0mGPU[0m	[0m1068331008 / 5032706048[0m	
+[0m: 86% done[0m	[0m00:09:27 left[0m	
+[0m.:. Batch 64741 to 64800 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9109.8955078125[0m	
+[0mGPU[0m	[0m1068331008 / 5032706048[0m	
+[0m: 91% done[0m	[0m00:06:10 left[0m	
+[0m.:. Batch 68341 to 68400 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9113.31640625[0m	
+[0mGPU[0m	[0m1068331008 / 5032706048[0m	
+[0m: 96% done[0m	[0m00:02:54 left[0m	
+[0m.:. Batch 71941 to 72000 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m9117.552734375[0m	
+[0mGPU[0m	[0m1068331008 / 5032706048[0m	
+[0m.:. End of Epoch n° 17[0m	
+[0m: Real time to learn 1 batch = 00:00:03[0m	
+[0m: Real time to learn full batch = 01:05:34[0m	
+[0m# Confusion Matrix[0m	
+[0m: average row correct: 1.0091333099097%[0m	
+[0m: average rowUcol correct (VOC measure): 0.10949518545392%[0m	
+[0m: > global correct: 1.0189691405818%[0m	
+[0m# ... saving model to /home/cadene/doc/DeepRecipes/convnet/rslt/overfat+2+8e-3/model.t7[0m	
+[0m[0m	
+[0m# Epoch n° 18[0m	
+[0m.:. Batch 1 to 60 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m10023.755859375[0m	
+[0mGPU[0m	[0m1562996736 / 5032706048[0m	
+[0m: 1% done[0m	[0m02:08:22 left[0m	
