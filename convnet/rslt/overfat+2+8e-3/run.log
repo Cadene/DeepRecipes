@@ -2045,3 +2045,29 @@ momentum : 0.6
 [0mCPU[0m	[0;36m10023.755859375[0m	
 [0mGPU[0m	[0m1562996736 / 5032706048[0m	
 [0m: 1% done[0m	[0m02:08:22 left[0m	
+[0m.:. Batch 3241 to 3300 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8690.0498046875[0m	
+[0mGPU[0m	[0m1245671424 / 5032706048[0m	
+[0m: 6% done[0m	[0m01:19:32 left[0m	
+[0m.:. Batch 6841 to 6900 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8694.8369140625[0m	
+[0mGPU[0m	[0m1245671424 / 5032706048[0m	
+[0m: 11% done[0m	[0m01:06:42 left[0m	
+[0m.:. Batch 10441 to 10500 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8700.71484375[0m	
+[0mGPU[0m	[0m1245671424 / 5032706048[0m	
+[0m: 16% done[0m	[0m01:00:08 left[0m	
+[0m.:. Batch 14101 to 14160 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8769.146484375[0m	
+[0mGPU[0m	[0m1210413056 / 5032706048[0m	
+[0m: 21% done[0m	[0m00:55:06 left[0m	
+[0m.:. Batch 17701 to 17760 on 72328 images[0m	
+[0mMemory usage[0m	
+[0mCPU[0m	[0;36m8777.166015625[0m	
+[0mGPU[0m	[0m1210413056 / 5032706048[0m	
+[0m: 26% done[0m	[0m00:51:10 left[0m	
+Killed

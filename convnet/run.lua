@@ -7,7 +7,7 @@ local SpatialConvolution = nn.SpatialConvolution
 local SpatialConvolutionMM = nn.SpatialConvolutionMM
 local SpatialMaxPooling = nn.SpatialMaxPooling
 
-local cuda = false;
+local cuda = true;
 
 if cuda then
    require 'cunn'
@@ -19,7 +19,7 @@ end
 
 -- OverFeat input arguements
 local network  = 'big'
-local filename = '../data/bee.jpg'
+local filename = 'bee.jpg'
 
 -- system parameters
 local threads = 4
@@ -164,7 +164,7 @@ img:add(-118.380948):div(61.896913)  -- fixed distn ~ N(118.380948, 61.896913^2)
 if cuda then 
    img = img:cuda():view(1, img:size(1), img:size(2), img:size(3))
    local out = net:forward(img):clone():float()
-   prob, idx = torch.max(out[1], 1)
+   prob, idx = torch.max(out, 1)
 else
    prob, idx = torch.max(net:forward(img), 1)
 end
