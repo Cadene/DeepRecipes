@@ -8,7 +8,7 @@ loadm="false"
 #path2load="/Users/remicadene/data/recipe_101_tiny/"
 path2load="/home/cadene/data/recipe_101_clean/"
 
-name="overfat+$gpu+$lr"
+name="overfat+$gpu"
 path2save="./rslt/$name"
 mkdir $path2save
 echo "CUDA_VISIBLE_DEVICES=$gpu th main.lua \
@@ -21,7 +21,7 @@ echo "CUDA_VISIBLE_DEVICES=$gpu th main.lua \
     -cudnn true \
     -4d_tensor true \
     -type_model overfeat \
-    -pretrain_model false \
+    -pretrain_model true \
     -type_optimizer SGD_overfeat \
     -learning_rate $lr \
     -learning_rate_decay 0 \

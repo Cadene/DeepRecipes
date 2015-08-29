@@ -41,3 +41,15 @@ function LayerFactory.SpatialMaxPooling(opt, ...)
     end
     return nn.SpatialMaxPooling(...)
 end
+
+function LayerFactory.SpatialPooling(opt, ...)
+    --[[
+        :Arg: opt.ccn2
+    ]]
+    local arg = {...}
+    if opt.maxpooling then
+        return LayerFactory.SpatialMaxPooling(opt, ...)
+    else
+        return nn.SpatialAveragePooling(opt, ...)
+    end
+end

@@ -78,7 +78,7 @@ function ImgDataset.__prepare_img(path2img, dim_in, dim_out, crop_type, flip, me
     else
         offsety = offsety + math.floor((rh-dim)/2)
     end
-    img = img_scale[{{},{offsety,offsety+dim-1},{offsetx,offsetx+dim-1}}]:floor()
+    img = img_scale[{{},{offsety,offsety+dim-1},{offsetx,offsetx+dim-1}}]
 
     if crop_type then
         local w1, h1
