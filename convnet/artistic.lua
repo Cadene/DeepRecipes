@@ -2,7 +2,7 @@ require 'torch'
 require 'image'
 require 'nn'
 require 'src/Tools'
-require 'src/ArtistCriterion'
+require 'src/ArtistContentCriterion'
 require 'src/SpatialArtisticConvolution'
 
 ------------------------------------------------------------------------
@@ -125,25 +125,31 @@ prepare = function (path2img, dim_in, dim_out)
 end
 
 layer = {1, 4, 7, 9, 11, 13}
-l = layer[6]
+l = layer[1]
 
-criterion = nn.ArtistCriterion()
+criterion = nn.ArtistContentCriterion()
 
 input_origin = prepare('bee.jpg')
 input_gener  = prepare('fraise.jpg')
-
+input_gener  = torch.Tensor(3,221,221):fill(1)
 
 activ_origin = model:forward(input_origin):clone()
 activ_gener  = model:forward(input_gener):clone()
 
-for i=1, 96 do
-    image.save('test/bee_layer'..i..'.jpg',activ_origin[i])
-end
+-- for i=1, 96 do
+--     image.save('test/bee_layer'..i..'.jpg',activ_origin[i])
+-- end
 
 loss = criterion:forward(activ_origin, activ_gener)
 print('loss', loss)
 
 df_di = criterion:backward(activ_origin, activ_gener)
+
+g = model:updateGradInput(input_origin, df_di)
+
+input_gener:add(g:mul(10/torch.abs(g):mean()))
+
+image.save('bee-layer'..l..'.jpg', input_gener)
 
 
 

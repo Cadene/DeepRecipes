@@ -1,13 +1,13 @@
-local ArtistContentCriterion, parent = torch.class(
-    'nn.ArtistContentCriterion',
+local ArtistStyleCriterion, parent = torch.class(
+    'nn.ArtistStyleCriterion',
     'nn.Criterion'
 )
 
-function ArtistContentCriterion:__init()
+function ArtistStyleCriterion:__init()
     parent.__init(self)
 end
 
-function ArtistContentCriterion:updateOutput(activ_origin, activ_gener)
+function ArtistStyleCriterion:updateOutput(activ_origin, activ_gener)
     local nDimension = activ_origin:nDimension()
     local size = activ_origin:size()
     if nDimension ~= activ_gener:nDimension() then
@@ -33,7 +33,7 @@ function ArtistContentCriterion:updateOutput(activ_origin, activ_gener)
     return loss
 end
 
-function ArtistContentCriterion:updateGradInput(activ_origin, activ_gener)  
+function ArtistStyleCriterion:updateGradInput(activ_origin, activ_gener)  
     local gradInput = torch.FloatTensor():resizeAs(activ_origin)
     for i = 1, activ_origin:size(1) do
         for j = 1, activ_origin:size(2) do
