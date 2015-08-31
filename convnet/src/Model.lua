@@ -7,7 +7,8 @@ local Model = torch.class('Model')
 
 function Model:__init(m)
     self.m = m
-    self.parameters, self.gradParameters = self.m:getParameters()
+    parameters, gradParameters = self.m:getParameters()
+    -- self.parameters, self.gradParameters = self.m:getParameters()
 end
 
 function Model:__tostring__()
@@ -45,8 +46,8 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
 
     trainset:shuffle()
     self.m:training()
-    local parameters     = self.parameters --beware of the cuda runtime error - out of memory
-    local gradParameters = self.gradParameters
+    -- local parameters     = self.parameters --beware of the cuda runtime error - out of memory
+    -- local gradParameters = self.gradParameters
 
     local inputs_table  = {}
     local targets_table = {}
@@ -87,12 +88,12 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 end
 
                 print('gradParam t-1', gradParameters[1])
-                print('gradParam t-1', self.gradParameters[1])
+                -- print('gradParam t-1', self.gradParameters[1])
 
                 self.m:zeroGradParameters()
 
                 print('gradParam t0', gradParameters[1])
-                print('gradParam t0', self.gradParameters[1])
+                -- print('gradParam t0', self.gradParameters[1])
 
                 local outputs = self.m:forward(inputs)
 
@@ -110,7 +111,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 table.insert(conf_targets, targets)
 
                 print('gradParam t1', gradParameters[1])
-                print('gradParam t1', self.gradParameters[1])
+                -- print('gradParam t1', self.gradParameters[1])
 
                 -- local tbatchadd = torch.Timer()
                 -- confusion:batchAdd(argmax_outputs, targets)
