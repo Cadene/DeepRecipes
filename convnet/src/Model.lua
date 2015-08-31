@@ -47,8 +47,8 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
 
     trainset:shuffle()
     self.m:training()
-    local parameters = self.parameters --beware of the cuda runtime error - out of memory
-    local gradParameters = self.gradParameters
+    -- local parameters = self.parameters --beware of the cuda runtime error - out of memory
+    -- local gradParameters = self.gradParameters
 
     local inputs_table  = {}
     local targets_table = {}
