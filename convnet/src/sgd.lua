@@ -83,6 +83,7 @@ return function (opfunc, x, config, state)
       x:add(-clr, state.deltaParameters)
       --print('x_after', x[1], 'x_last', x[last])
    else
+      print('sgd', clr, dfdx[{{1,100}}]:mean())
       x:add(-clr, dfdx)
    end
 
