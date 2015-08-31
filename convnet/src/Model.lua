@@ -101,7 +101,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
 
                 local df_do = criterion:backward(outputs, targets)  
                 
-                gradParameters = self.m:backward(inputs, df_do)
+                self.m:backward(inputs, df_do)
 
                 local _, argmax_outputs = outputs:max(2)
                 argmax_outputs:resize(targets:size())
