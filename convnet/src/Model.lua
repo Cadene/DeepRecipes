@@ -7,7 +7,7 @@ local Model = torch.class('Model')
 
 function Model:__init(m)
     self.m = m
-    self.parameters, selfgradParameters = self.m:getParameters()
+    self.parameters, self.gradParameters = self.m:getParameters()
 end
 
 function Model:__tostring__()
@@ -86,13 +86,10 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                     parameters:copy(x)
                 end
 
-                if t ~= 1 then
-                    print('gradParam t-1', gradParameters[1])
-                    print('gradParam t-1', self.gradParameters[1])
-                end
+                print('gradParam t-1', gradParameters[1])
+                print('gradParam t-1', self.gradParameters[1])
 
                 self.m:zeroGradParameters()
-                gradParameters:fill(0)
 
                 print('gradParam t0', gradParameters[1])
                 print('gradParam t0', self.gradParameters[1])
