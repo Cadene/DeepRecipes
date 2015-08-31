@@ -88,6 +88,8 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                     parameters:copy(x)
                 end
 
+                print('gradParam 0', gradParameters[0], gradParameters[{{1,100}}])
+
                 self.m:zeroGradParameters()
                 local outputs = self.m:forward(inputs)
 
@@ -96,13 +98,15 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
 
                 local df_do = criterion:backward(outputs, targets)  
                 
-                gradInput = self.m:backward(inputs, df_do)
+                self.m:backward(inputs, df_do)
 
                 local _, argmax_outputs = outputs:max(2)
                 argmax_outputs:resize(targets:size())
 
                 table.insert(conf_outputs, argmax_outputs)
                 table.insert(conf_targets, targets)
+
+                print('gradParam 1', gradParameters[0], gradParameters[{{1,100}}])
 
                 -- local tbatchadd = torch.Timer()
                 -- confusion:batchAdd(argmax_outputs, targets)
