@@ -89,6 +89,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 end
         
                 self.m:zeroGradParameters()
+                gradParameters:fill(0)
 
                 print('gradParam t0', gradParameters[0])
 
