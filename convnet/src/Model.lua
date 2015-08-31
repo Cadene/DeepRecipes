@@ -47,6 +47,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
 
     trainset:shuffle()
     self.m:training()
+    self.m:evaluate() -- à enlever
     local parameters     = self.parameters --beware of the cuda runtime error - out of memory
     local gradParameters = self.gradParameters
 
