@@ -145,7 +145,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 self.gradParameters:div(#inputs)
                 f = f / #inputs
                 return f, self.gradParameters -- f and df/dX
-            -- end
+            end
         end
 
         print('param t0', parameters[1], parameters[{{1,1000}}]:mean())
