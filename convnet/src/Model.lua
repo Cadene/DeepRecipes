@@ -87,10 +87,11 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 if x ~= parameters then -- optim
                     parameters:copy(x)
                 end
-
-                print('gradParam t0', gradParameters[0])
         
                 self.m:zeroGradParameters()
+
+                print('gradParam t0', gradParameters[0])
+
                 local outputs = self.m:forward(inputs)
 
                 local f = criterion:forward(outputs, targets)
