@@ -7,9 +7,7 @@ local Model = torch.class('Model')
 
 function Model:__init(m)
     self.m = m
-    local parameters, gradParameters = m:getParameters()
-    self.parameters = parameters
-    self.gradParameters = gradParameters
+    self.parameters, selfgradParameters = self.m:getParameters()
 end
 
 function Model:__tostring__()
@@ -89,11 +87,13 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 end
         
                 print('gradParam t-1', gradParameters[1])
+                print('gradParam t-1', self.gradParameters[1])
 
                 self.m:zeroGradParameters()
                 -- gradParameters:fill(0)
 
                 print('gradParam t0', gradParameters[1])
+                print('gradParam t0', self.gradParameters[1])
 
                 local outputs = self.m:forward(inputs)
 
@@ -102,7 +102,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
 
                 local df_do = criterion:backward(outputs, targets)  
                 
-                self.m:backward(inputs, df_do)
+                gradParameters = self.m:backward(inputs, df_do)
 
                 local _, argmax_outputs = outputs:max(2)
                 argmax_outputs:resize(targets:size())
@@ -111,6 +111,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 table.insert(conf_targets, targets)
 
                 print('gradParam t1', gradParameters[1])
+                print('gradParam t1', self.gradParameters[1])
 
                 -- local tbatchadd = torch.Timer()
                 -- confusion:batchAdd(argmax_outputs, targets)
