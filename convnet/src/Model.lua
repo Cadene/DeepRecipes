@@ -14,7 +14,7 @@ end
 function Model:__tostring__()
     return '\nModel :\n'
         ..self.m:__tostring__()..'\n'
-        ..self.parameters:size(1)..' parameters'
+        ..parameters:size(1)..' parameters'
 end
 
 function Model:add(layer)
