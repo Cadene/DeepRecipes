@@ -136,11 +136,8 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                     local df_do = criterion:backward(output, targets[i])
                     gradInput = self.m:backward(inputs[i], df_do)
 
-                    local _, argmax_outputs = outputs:max(2)
-                    argmax_outputs:resize(targets:size())
-                    -- confusion:add(output, targets[i]:squeeze())
-                    table.insert(conf_outputs, argmax_outputs)
-                    table.insert(conf_targets, targets)
+                    table.insert(conf_outputs, output)
+                    table.insert(conf_targets, target)
                 end
                 self.gradParameters:div(#inputs)
                 f = f / #inputs
