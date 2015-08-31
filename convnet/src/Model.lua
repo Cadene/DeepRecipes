@@ -135,6 +135,8 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
 
         print(parameters[{{1,1000}}]:mean())
         optimizer:optimize(feval, parameters)
+        print(parameters[1])
+        print(parameters[1000])
         print(parameters[{{1,1000}}]:mean())
         print(self.parameters[{{1,1000}}]:mean())
 

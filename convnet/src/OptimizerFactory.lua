@@ -36,7 +36,7 @@ function OptimizerFactory.generate_sgd(opt, config)
     config.learningRateDecay = opt.learningRateDecay
     config.momentum          = opt.momentum
     config.weightDecay       = opt.weight_decay
-    config.nesterov          = true
+    config.nesterov          = false
     config.dampening         = 0
     -- config.learningRates     = torch.Tensor(603):fill(5e-2)
     return Optimizer(method, config)
