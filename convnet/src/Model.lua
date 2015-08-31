@@ -137,7 +137,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                     gradInput = self.m:backward(inputs[i], df_do)
 
                     table.insert(conf_outputs, output)
-                    table.insert(conf_targets, target)
+                    table.insert(conf_targets, targets[i])
                 end
                 self.gradParameters:div(#inputs)
                 f = f / #inputs
