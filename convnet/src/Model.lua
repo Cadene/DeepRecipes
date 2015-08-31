@@ -171,7 +171,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
     s = timer:time().real
     print(": Real time to learn full batch = "..string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60))
 
-    if opt.['4d_tensor'] then
+    if opt['4d_tensor'] then
         for i = 1, nb_batch_max do
             confusion:batchAdd(conf_outputs[i], conf_targets[i])
         end
