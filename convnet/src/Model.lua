@@ -136,8 +136,8 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                     local df_do = criterion:backward(output, targets[i])
                     gradInput = self.m:backward(inputs[i], df_do)
 
-                    table.insert(conf_outputs, output)
-                    table.insert(conf_targets, targets[i])
+                    confusion:add(output, targets[i])
+
                 end
                 self.gradParameters:div(#inputs)
                 f = f / #inputs
@@ -171,10 +171,6 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
     if opt['4d_tensor'] then
         for i = 1, nb_batch_max do
             confusion:batchAdd(conf_outputs[i], conf_targets[i])
-        end
-    else
-        for i = 1, #conf_outputs do
-            confusion:add(conf_outputs[i], conf_targets[i])
         end
     end
 
