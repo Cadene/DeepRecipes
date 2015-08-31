@@ -88,10 +88,12 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                     parameters:copy(x)
                 end
         
+                print('gradParam t-1', gradParameters[1])
+
                 self.m:zeroGradParameters()
                 -- gradParameters:fill(0)
 
-                --print('gradParam t0', gradParameters[0])
+                print('gradParam t0', gradParameters[1])
 
                 local outputs = self.m:forward(inputs)
 
@@ -108,7 +110,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 table.insert(conf_outputs, argmax_outputs)
                 table.insert(conf_targets, targets)
 
-                --print('gradParam t1', gradParameters[0])
+                print('gradParam t1', gradParameters[1])
 
                 -- local tbatchadd = torch.Timer()
                 -- confusion:batchAdd(argmax_outputs, targets)
@@ -139,9 +141,9 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
             -- end
         end
 
-        print('param t0', parameters[0], parameters[{{1,1000}}]:mean())
+        print('param t0', parameters[1], parameters[{{1,1000}}]:mean())
         optimizer:optimize(feval, parameters)
-        print('param t1', parameters[0], parameters[{{1,1000}}]:mean())
+        print('param t1', parameters[1], parameters[{{1,1000}}]:mean())
 
         if pc_done > pc_max[2] then
             s = timer:time().real / batch_to * (trainset:size() - batch_to)
