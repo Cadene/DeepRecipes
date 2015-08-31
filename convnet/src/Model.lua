@@ -86,7 +86,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                     parameters:copy(x)
                 end
 
-                if t = 1 then
+                if t ~= 1 then
                     print('gradParam t-1', gradParameters[1])
                     print('gradParam t-1', self.gradParameters[1])
                 end
