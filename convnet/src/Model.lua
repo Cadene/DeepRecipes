@@ -47,8 +47,8 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
 
     trainset:shuffle()
     self.m:training()
-    -- local parameters = self.parameters --beware of the cuda runtime error - out of memory
-    -- local gradParameters = self.gradParameters
+    local parameters     = self.parameters --beware of the cuda runtime error - out of memory
+    local gradParameters = self.gradParameters
 
     local inputs_table  = {}
     local targets_table = {}
@@ -133,7 +133,10 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
             end
         end
 
+        print(parameters:mean())
         optimizer:optimize(feval, parameters)
+        print(parameters:mean())
+        print(model.parameters:mean())
 
         if pc_done > pc_max[2] then
             s = timer:time().real / batch_to * (trainset:size() - batch_to)

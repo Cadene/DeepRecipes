@@ -107,9 +107,6 @@ g.optimizer = optimizer
 g.log_train = log_train
 g.log_test  = log_test
 
-parameters = model.parameters
-gradParameters = model.gradParameters
-
 ------------------------------------------------------------------------
 -- Running
 
