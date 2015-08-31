@@ -38,7 +38,6 @@ function Dataset:get_batch_3D(index_batch, opt)
     for i = index_batch, math.min(index_batch+opt.batch_size-1, self:size()) do
         local input, target = self:get(i)
         if opt.cuda then
-            print(inputs:size())
             input  = input:cuda()
             target = target:cuda()
         end
