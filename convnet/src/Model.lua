@@ -120,26 +120,31 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
 
                 -- gradParameters:div(#inputs) ???
                 -- f = f / inputs:size(1) ???
-                return f, gradParameters
+                return f, self.gradParameters
             end
         else
-            -- feval = function(x)
-            --     if x ~= parameters then -- optim
-            --         parameters:copy(x)
-            --     end
-            --     self.m:zeroGradParameters()
-            --     local f = 0
-            --     for i = 1, #inputs do
-            --         local output = self.m:forward(inputs[i])
-            --         local err = criterion:forward(output, targets[i])
-            --         f = f + err
-            --         local df_do = criterion:backward(output, targets[i])
-            --         gradInput = self.m:backward(inputs[i], df_do)
-            --         confusion:add(output, targets[i]:squeeze())
-            --     end
-            --     gradParameters:div(#inputs)
-            --     f = f / #inputs
-            --     return f, gradParameters -- f and df/dX
+            feval = function(x)
+                if x ~= parameters then -- optim
+                    parameters:copy(x)
+                end
+                self.m:zeroGradParameters()
+                local f = 0
+                for i = 1, #inputs do
+                    local output = self.m:forward(inputs[i])
+                    local err = criterion:forward(output, targets[i])
+                    f = f + err
+                    local df_do = criterion:backward(output, targets[i])
+                    gradInput = self.m:backward(inputs[i], df_do)
+
+                    local _, argmax_outputs = outputs:max(2)
+                    argmax_outputs:resize(targets:size())
+                    -- confusion:add(output, targets[i]:squeeze())
+                    table.insert(conf_outputs, argmax_outputs)
+                    table.insert(conf_targets, targets)
+                end
+                self.gradParameters:div(#inputs)
+                f = f / #inputs
+                return f, self.gradParameters -- f and df/dX
             -- end
         end
 
@@ -166,9 +171,16 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
     s = timer:time().real
     print(": Real time to learn full batch = "..string.format("%.2d:%.2d:%.2d", s/(60*60), s/60%60, s%60))
 
-    for i = 1, nb_batch_max do
-        confusion:batchAdd(conf_outputs[i], conf_targets[i])
+    if opt.['4d_tensor'] then
+        for i = 1, nb_batch_max do
+            confusion:batchAdd(conf_outputs[i], conf_targets[i])
+        end
+    else
+        for i = 1, #conf_outputs do
+            confusion:add(conf_outputs[i], conf_targets[i])
+        end
     end
+
     confusion:updateValids()
     print("# Confusion Matrix")
     print(": average row correct: "..(confusion.averageValid*100).."%")
