@@ -148,9 +148,9 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
             end
         end
 
-        print('param t0', parameters[1], parameters[{{1,1000}}]:mean())
+        print('param t0', parameters[1], parameters[{{1,10}}]:mean())
         optimizer:optimize(feval, parameters)
-        print('param t1', parameters[1], parameters[{{1,1000}}]:mean())
+        print('param t1', parameters[1], parameters[{{1,10}}]:mean())
 
         if pc_done > pc_max[2] then
             s = timer:time().real / batch_to * (trainset:size() - batch_to)
