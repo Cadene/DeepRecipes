@@ -88,10 +88,8 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                     parameters:copy(x)
                 end
 
-
-                print(gradParameters:size())
-                --print('gradParam 0', gradParameters[0], gradParameters[{{1,100}}])
-
+                print('gradParam t0', gradParameters[0])
+        
                 self.m:zeroGradParameters()
                 local outputs = self.m:forward(inputs)
 
@@ -108,7 +106,7 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 table.insert(conf_outputs, argmax_outputs)
                 table.insert(conf_targets, targets)
 
-                --print('gradParam 1', gradParameters[0], gradParameters[{{1,100}}])
+                print('gradParam t1', gradParameters[0])
 
                 -- local tbatchadd = torch.Timer()
                 -- confusion:batchAdd(argmax_outputs, targets)
@@ -119,32 +117,29 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 return f, gradParameters
             end
         else
-            feval = function(x)
-                if x ~= parameters then -- optim
-                    parameters:copy(x)
-                end
-                self.m:zeroGradParameters()
-                local f = 0
-                for i = 1, #inputs do
-                    local output = self.m:forward(inputs[i])
-                    local err = criterion:forward(output, targets[i])
-                    f = f + err
-                    local df_do = criterion:backward(output, targets[i])
-                    gradInput = self.m:backward(inputs[i], df_do)
-                    confusion:add(output, targets[i]:squeeze())
-                end
-                gradParameters:div(#inputs)
-                f = f / #inputs
-                return f, gradParameters -- f and df/dX
-            end
+            -- feval = function(x)
+            --     if x ~= parameters then -- optim
+            --         parameters:copy(x)
+            --     end
+            --     self.m:zeroGradParameters()
+            --     local f = 0
+            --     for i = 1, #inputs do
+            --         local output = self.m:forward(inputs[i])
+            --         local err = criterion:forward(output, targets[i])
+            --         f = f + err
+            --         local df_do = criterion:backward(output, targets[i])
+            --         gradInput = self.m:backward(inputs[i], df_do)
+            --         confusion:add(output, targets[i]:squeeze())
+            --     end
+            --     gradParameters:div(#inputs)
+            --     f = f / #inputs
+            --     return f, gradParameters -- f and df/dX
+            -- end
         end
 
-        print(parameters[{{1,1000}}]:mean())
+        print('param t0', parameters[0], parameters[{{1,1000}}]:mean())
         optimizer:optimize(feval, parameters)
-        print(parameters[1])
-        print(parameters[1000])
-        print(parameters[{{1,1000}}]:mean())
-        print(self.parameters[{{1,1000}}]:mean())
+        print('param t1', parameters[0], parameters[{{1,1000}}]:mean())
 
         if pc_done > pc_max[2] then
             s = timer:time().real / batch_to * (trainset:size() - batch_to)
