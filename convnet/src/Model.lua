@@ -85,14 +85,14 @@ function Model:train(database, criterion, optimizer, logger, opt, epoch)
                 if x ~= parameters then -- optim
                     parameters:copy(x)
                 end
-            
-                if t ~= 1 then
+
+                if t = 1 then
                     print('gradParam t-1', gradParameters[1])
                     print('gradParam t-1', self.gradParameters[1])
                 end
 
                 self.m:zeroGradParameters()
-                -- gradParameters:fill(0)
+                gradParameters:fill(0)
 
                 print('gradParam t0', gradParameters[1])
                 print('gradParam t0', self.gradParameters[1])
